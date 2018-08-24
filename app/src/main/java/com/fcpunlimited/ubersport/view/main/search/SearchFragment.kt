@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.view.main
+package com.fcpunlimited.ubersport.view.main.search
 
 import android.content.Context
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.view.main.presenter
+package com.fcpunlimited.ubersport.view.main.search
 
 class SearchPresenter {
 

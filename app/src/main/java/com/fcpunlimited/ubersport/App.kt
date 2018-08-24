@@ -1,7 +1,7 @@
 package com.fcpunlimited.ubersport
 
 import android.app.Application
-import com.fcpunlimited.ubersport.view.main.presenter.SearchPresenter
+import com.fcpunlimited.ubersport.view.main.search.SearchPresenter
 import org.koin.android.ext.android.startKoin
 import org.koin.dsl.module.applicationContext
 
