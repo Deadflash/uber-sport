@@ -2,16 +2,23 @@ package com.fcpunlimited.ubersport.view.main.search
 
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import com.fcpunlimited.ubersport.R
+import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.search_sheet.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class SearchFragment : Fragment() {
+
+    private var sheetBehavior: BottomSheetBehavior<LinearLayout>? = null
 
     private var param1: String? = null
     private var param2: String? = null
@@ -38,6 +45,15 @@ class SearchFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        sheetBehavior = BottomSheetBehavior.from(searchSheet)
+
+        btSheet.onClick {
+            sheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
     }
 
     override fun onAttach(context: Context) {
