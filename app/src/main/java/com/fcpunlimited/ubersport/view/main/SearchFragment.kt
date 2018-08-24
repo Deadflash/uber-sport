@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.view
+package com.fcpunlimited.ubersport.view.main
 
 import android.content.Context
 import android.os.Bundle
