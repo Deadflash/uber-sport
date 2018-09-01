@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.EventDto
+import com.fcpunlimited.ubersport.struct.EventType
 import kotlinx.android.synthetic.main.fragment_search.*
 import java.util.*
 
@@ -51,16 +52,17 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val events = Arrays.asList(EventDto("Football", 123L,"address"),
-                EventDto("Football", 123L,"address"),
-                EventDto("Football", 123L,"address"),
-                EventDto("Football", 123L,"address"),
-                EventDto("Football", 123L,"address"),
-                EventDto("Football", 123L,"address"),
-                EventDto("Football", 123L,"address"))
+        val events = Arrays.asList(EventDto("Football", 123L, "address", EventType.FOOTBALL),
+                EventDto("Alco Trash", 321, "address", EventType.ALCO_TRASH),
+                EventDto("Football", 123L, "address", EventType.FOOTBALL),
+                EventDto("Football", 123L, "address", EventType.FOOTBALL),
+                EventDto("Alco Trash", 321, "address", EventType.ALCO_TRASH),
+                EventDto("Football", 123L, "address", EventType.FOOTBALL),
+                EventDto("Football", 123L, "address", EventType.FOOTBALL))
 
         search_recycler.layoutManager = LinearLayoutManager(this.context)
         search_recycler.adapter = SearchAdapter(events)
+        search_recycler.setHasFixedSize(true)
     }
 
     override fun onAttach(context: Context) {

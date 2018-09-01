@@ -2,14 +2,12 @@
 <android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="185dp"
     android:layout_marginBottom="10dp"
     android:orientation="vertical"
     app:cardBackgroundColor="@color/grey"
     app:cardCornerRadius="16dp"
-    app:cardElevation="15dp"
-    app:strokeColor="@color/colorPrimary"
-    app:strokeWidth="1dp">
+    app:cardElevation="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,9 +17,22 @@
         <RelativeLayout
             android:id="@+id/header_layout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/search_header_rect"
+            android:layout_height="50dp"
             android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="230dp"
+                android:layout_height="match_parent"
+                android:id="@+id/iv_event_type_header"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:src="@drawable/football_header"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/iv_search_header_gradient"
+                android:src="@drawable/search_football_header_rect"/>
 
             <TextView
                 android:id="@+id/tv_event_name_header"
@@ -30,21 +41,22 @@
                 android:layout_alignParentStart="true"
                 android:ellipsize="end"
                 android:fontFamily="@font/roboto_bold"
-                android:gravity="center|left"
-                android:paddingLeft="@dimen/large_text"
+                android:gravity="center|end"
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/medium_text"
                 android:text="Event Name"
                 android:textColor="@color/white" />
 
-            <TextView
-                android:id="@+id/tv_event_time_to_start"
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:fontFamily="@font/roboto_bold"
-                android:gravity="center|end"
-                android:paddingEnd="@dimen/large_text"
-                android:text="Time to start"
-                android:textColor="@color/white" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_event_time_to_start"-->
+                <!--android:layout_width="150dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:fontFamily="@font/roboto_bold"-->
+                <!--android:gravity="center|end"-->
+                <!--android:paddingEnd="@dimen/large_text"-->
+                <!--android:text="Time to start"-->
+                <!--android:textColor="@color/white" />-->
 
         </RelativeLayout>
 
