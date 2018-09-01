@@ -5,21 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".view.main.search.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="FRAG SEARCH"/>
+        android:clipToPadding="false"
+        android:padding="8dp"
+        android:paddingBottom="20dp">
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btSheet"
-        android:text="sheet"
-        android:gravity="center"
-        android:layout_gravity="center"/>
-
-    <include layout="@layout/search_sheet" />
+    </android.support.v7.widget.RecyclerView>
 
 </android.support.design.widget.CoordinatorLayout>

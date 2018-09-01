@@ -4,14 +4,15 @@ import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.fcpunlimited.ubersport.R
+import com.fcpunlimited.ubersport.struct.EventDto
 import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.search_sheet.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import java.util.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -49,11 +50,17 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sheetBehavior = BottomSheetBehavior.from(searchSheet)
 
-        btSheet.onClick {
-            sheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
-        }
+        val events = Arrays.asList(EventDto("Football", 123L,"address"),
+                EventDto("Football", 123L,"address"),
+                EventDto("Football", 123L,"address"),
+                EventDto("Football", 123L,"address"),
+                EventDto("Football", 123L,"address"),
+                EventDto("Football", 123L,"address"),
+                EventDto("Football", 123L,"address"))
+
+        search_recycler.layoutManager = LinearLayoutManager(this.context)
+        search_recycler.adapter = SearchAdapter(events)
     }
 
     override fun onAttach(context: Context) {

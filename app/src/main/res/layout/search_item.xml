@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/grey"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="15dp"
+    app:strokeColor="@color/colorPrimary"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/search_header_rect"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_event_name_header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/large_text"
+                android:text="Event Name"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_event_time_to_start"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center|end"
+                android:paddingEnd="@dimen/large_text"
+                android:text="Time to start"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_event_address_topic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Место"
+                        android:textSize="@dimen/medium_text" />
+
+                    <ImageView
+                        android:id="@+id/iv_point"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toEndOf="@id/tv_event_address_topic"
+                        android:src="@drawable/baseline_place_24" />
+
+                    <TextView
+                        android:id="@+id/tv_event_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_event_address_topic"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto_light"
+                        android:maxLines="1"
+                        android:text="place"
+                        android:textSize="@dimen/medium_text" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_event_date_topic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="Дата"
+                        android:textSize="@dimen/medium_text" />
+
+                    <TextView
+                        android:id="@+id/tv_event_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:gravity="end"
+                        android:text="Date"
+                        android:textSize="@dimen/medium_text" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_event_players_topic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:text="Учасники"
+                        android:textSize="@dimen/medium_text" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/tv_event_players_topic">
+
+                        <LinearLayout
+                            android:id="@+id/players_layout"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/iv_event_player_1"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                app:civ_border_color="@color/white"
+                                app:civ_border_width="1dp" />
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/iv_event_player_2"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_marginLeft="-6dp"
+                                app:civ_border_color="@color/white"
+                                app:civ_border_width="1dp" />
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/iv_event_player_3"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_marginLeft="-6dp"
+                                app:civ_border_color="@color/white"
+                                app:civ_border_width="1dp" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_event_players_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/players_layout"
+                            android:layout_toEndOf="@id/players_layout"
+                            android:layout_alignTop="@id/players_layout"
+                            android:fontFamily="@font/roboto_light"
+                            android:gravity="center"
+                            android:text="3+"
+                            android:textSize="@dimen/medium_text" />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|end">
+
+                    <android.support.design.button.MaterialButton
+                        android:id="@+id/bt_event_join"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/roboto_light"
+                        android:text="join"
+                        android:textSize="@dimen/small_text" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.design.card.MaterialCardView>

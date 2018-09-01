@@ -1,11 +1,14 @@
 package com.fcpunlimited.ubersport.view.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.design.internal.BottomNavigationItemView
+import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.utils.BottomNavHelper
 import com.fcpunlimited.ubersport.view.main.search.SearchFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        BottomNavHelper.disableShiftMode(navigation)
+//        navigation.disableShiftMode()
 
         fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
@@ -27,6 +30,27 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(fragment as SearchFragment)
         }
     }
+
+//    @SuppressLint("RestrictedApi")
+//    fun BottomNavigationView.disableShiftMode() {
+//        val menuView = getChildAt(0) as BottomNavigationMenuView
+//        try {
+//            val shiftingMode = menuView::class.java.getDeclaredField("mShiftingMode")
+//            shiftingMode.isAccessible = true
+//            shiftingMode.setBoolean(menuView, false)
+//            shiftingMode.isAccessible = false
+//            for (i in 0 until menuView.childCount) {
+//                val item = menuView.getChildAt(i) as BottomNavigationItemView
+//                item.setShifting(false)
+//                // set once again checked value, so view will be updated
+//                item.setChecked(item.itemData.isChecked)
+//            }
+//        } catch (e: NoSuchFieldException) {
+//            Log.e("BNV_HELPER", "Unable to get shift mode field", e)
+//        } catch (e: IllegalStateException) {
+//            Log.e("BNV_HELPER", "Unable to change value of shift mode", e)
+//        }
+//    }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
