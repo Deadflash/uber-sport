@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.EventDto
 import com.fcpunlimited.ubersport.struct.EventType
+import com.fcpunlimited.ubersport.view.description.DescriptionActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.search_item.view.*
 import org.jetbrains.anko.image
+import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.*
 
 
-class SearchAdapter(private val events: List<EventDto>) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+class SearchRecyclerAdapter(private val events: List<EventDto>) : RecyclerView.Adapter<SearchRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
             ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.search_item, parent, false))
@@ -33,13 +36,13 @@ class SearchAdapter(private val events: List<EventDto>) : RecyclerView.Adapter<S
                 holder.ivEventHeaderGradient.image =
                         ContextCompat.getDrawable(holder.itemView.context, R.drawable.search_football_header_rect)
             }
-            EventType.ALCO_TRASH -> {
-                holder.ivEventTypeHeader.image =
-                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.alco_trash)
-                holder.ivEventHeaderGradient.image =
-                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.search_alco_trash_header_rect)
-
-            }
+//            EventType.ALCO_TRASH -> {
+//                holder.ivEventTypeHeader.image =
+//                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.alco_trash)
+//                holder.ivEventHeaderGradient.image =
+//                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.search_alco_trash_header_rect)
+//
+//            }
             else -> holder.ivEventTypeHeader.image =
                     ContextCompat.getDrawable(holder.itemView.context, R.drawable.football_header)
         }
@@ -61,6 +64,8 @@ class SearchAdapter(private val events: List<EventDto>) : RecyclerView.Adapter<S
         Picasso.get().load("http://i.imgur.com/DvpvklR.png")
                 .fit()
                 .into(holder.ivEventPlayerThree)
+
+        holder.itemView.onClick { holder.itemView.context.startActivity<DescriptionActivity>() }
 
     }
 

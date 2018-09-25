@@ -60,9 +60,9 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_create -> {
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_statistics -> {
-                return@OnNavigationItemSelectedListener true
-            }
+//            R.id.navigation_statistics -> {
+//                return@OnNavigationItemSelectedListener true
+//            }
             R.id.navigation_profile -> {
                 return@OnNavigationItemSelectedListener true
             }

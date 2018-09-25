@@ -61,7 +61,7 @@ class SearchFragment : Fragment() {
                 EventDto("Football", 123L, "address", EventType.FOOTBALL))
 
         search_recycler.layoutManager = LinearLayoutManager(this.context)
-        search_recycler.adapter = SearchAdapter(events)
+        search_recycler.adapter = SearchRecyclerAdapter(events)
         search_recycler.setHasFixedSize(true)
     }
 

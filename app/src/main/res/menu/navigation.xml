@@ -11,10 +11,10 @@
         android:icon="@drawable/baseline_note_add_24"
         android:title="" />
 
-    <item
-        android:id="@+id/navigation_statistics"
-        android:icon="@drawable/baseline_assessment_24"
-        android:title=""/>
+    <!--<item-->
+        <!--android:id="@+id/navigation_statistics"-->
+        <!--android:icon="@drawable/baseline_assessment_24"-->
+        <!--android:title=""/>-->
 
     <item
         android:id="@+id/navigation_profile"

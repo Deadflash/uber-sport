@@ -7,7 +7,7 @@
     android:orientation="vertical"
     app:cardBackgroundColor="@color/grey"
     app:cardCornerRadius="16dp"
-    app:cardElevation="10dp">
+    app:cardElevation="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="230dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/iv_event_type_header"
                 android:scaleType="centerCrop"
@@ -41,7 +41,8 @@
                 android:layout_alignParentStart="true"
                 android:ellipsize="end"
                 android:fontFamily="@font/roboto_bold"
-                android:gravity="center|end"
+                android:gravity="center|start"
+                android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:textSize="@dimen/medium_text"
                 android:text="Event Name"
