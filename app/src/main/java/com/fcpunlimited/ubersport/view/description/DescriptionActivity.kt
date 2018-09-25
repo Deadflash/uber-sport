@@ -1,6 +1,6 @@
 package com.fcpunlimited.ubersport.view.description
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.fcpunlimited.ubersport.R
 
@@ -10,8 +10,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_description.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class DescriptionActivity : AppCompatActivity(), OnMapReadyCallback {
 

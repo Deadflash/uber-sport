@@ -1,7 +1,7 @@
 package com.fcpunlimited.ubersport.view.main.search
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +12,6 @@ import com.fcpunlimited.ubersport.view.description.DescriptionActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.search_item.view.*
 import org.jetbrains.anko.image
-import org.jetbrains.anko.sdk25.coroutines.onClick
-import org.jetbrains.anko.*
 
 
 class SearchRecyclerAdapter(private val events: List<EventDto>) : RecyclerView.Adapter<SearchRecyclerAdapter.ViewHolder>() {
