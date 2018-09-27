@@ -124,12 +124,29 @@
 
                 </RelativeLayout>
 
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/view_pager"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                </androidx.viewpager.widget.ViewPager>
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </androidx.viewpager.widget.ViewPager>
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:id="@+id/tab_layout"
+                        android:background="@color/transparent"
+                        app:tabBackground="@drawable/tab_selector"
+                        app:tabGravity="center"
+                        app:tabIndicatorHeight="0dp">
+
+                    </com.google.android.material.tabs.TabLayout>
+
+                </FrameLayout>
 
             </LinearLayout>
 

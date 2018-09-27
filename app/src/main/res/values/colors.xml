@@ -9,6 +9,7 @@
     <color name="grey">#D8DADA</color>
     <color name="green">#196c00</color>
     <!--TRANSPARENT-->
+    <color name="transparent">#00000000</color>
     <color name="blackTransparent">#46000000</color>
     <color name="colorPrimaryTransparent">#64ac5eec</color>
     <color name="greenTransparent">#64196c00</color>

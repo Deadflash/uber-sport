@@ -28,9 +28,10 @@ class DescriptionActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun initViewPager() {
         view_pager.adapter = DescriptionPagerAdapter(supportFragmentManager)
+        tab_layout.setupWithViewPager(view_pager, true)
     }
 
-    private fun initMap(){
+    private fun initMap() {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
