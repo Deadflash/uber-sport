@@ -17,7 +17,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/grey"
             android:orientation="vertical">
 
             <FrameLayout
@@ -32,53 +31,113 @@
                     tools:context=".view.description.DescriptionActivity" />
 
                 <ImageView
+                    android:id="@+id/iv_close"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="end"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="20dp"
                     android:scaleType="center"
-                    android:id="@+id/iv_close"
                     android:src="@drawable/baseline_close_24" />
 
             </FrameLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="120dp"
-                android:layout_height="46dp"
-                app:cornerRadius="@dimen/corner_radius"
+                android:layout_height="48dp"
                 android:layout_gravity="center"
-                android:text="JOIN"
+                android:layout_marginTop="-24dp"
                 android:fontFamily="@font/roboto_light"
-                android:layout_marginTop="-23dp" />
+                android:text="JOIN"
+                app:cornerRadius="@dimen/corner_radius" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="-25dp"
+                android:background="@color/grey"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-10dp"
-                android:orientation="vertical"
-                android:layout_margin="8dp">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvEventName"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/roboto_bold"
-                    android:maxLines="2"
+                    android:orientation="horizontal"
+                    android:background="@color/grey"
                     android:padding="8dp"
-                    android:text="EVENT NAME"
-                    android:textSize="@dimen/large_text" />
+                    android:elevation="5dp">
+
+                    <TextView
+                        android:id="@+id/tvEventName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/author_layout"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto_bold"
+                        android:maxLines="2"
+                        android:padding="8dp"
+                        android:text="Football"
+                        android:textSize="@dimen/large_text" />
+
+                    <LinearLayout
+                        android:id="@+id/author_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/ivAuthorAvatar"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_author"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_light"
+                            android:layout_gravity="end"
+                            android:text="Author"
+                            android:textSize="@dimen/small_text" />
+
+                        <TextView
+                            android:id="@+id/tv_author_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:fontFamily="@font/roboto_light"
+                            android:text="Pahom"
+                            android:textSize="@dimen/small_text" />
+                    </LinearLayout>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivAuthorAvatar"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/pahom"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="1dp" />
+
+                </RelativeLayout>
 
                 <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/view_pager">
-
+                    android:layout_height="match_parent">
 
                 </androidx.viewpager.widget.ViewPager>
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:elevation="5dp"
+                android:background="@color/grey"/>
 
         </LinearLayout>
 

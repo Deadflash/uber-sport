@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.struct
+package com.fcpunlimited.ubersport.struct.event
 
 data class EventDto(
         var eventName: String,

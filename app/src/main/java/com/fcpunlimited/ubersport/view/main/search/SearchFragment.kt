@@ -10,8 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.struct.EventDto
-import com.fcpunlimited.ubersport.struct.EventType
+import com.fcpunlimited.ubersport.struct.event.EventDto
+import com.fcpunlimited.ubersport.struct.event.EventType
+import com.fcpunlimited.ubersport.view.adapters.SearchRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import java.util.*
 
@@ -20,7 +21,7 @@ private const val ARG_PARAM2 = "param2"
 
 class SearchFragment : Fragment() {
 
-    private var sheetBehavior: BottomSheetBehavior<LinearLayout>? = null
+//    private var sheetBehavior: BottomSheetBehavior<LinearLayout>? = null
 
     private var param1: String? = null
     private var param2: String? = null

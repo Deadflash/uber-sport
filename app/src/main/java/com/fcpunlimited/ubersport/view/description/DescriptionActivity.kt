@@ -10,6 +10,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_description.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class DescriptionActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -25,7 +27,7 @@ class DescriptionActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun initViewPager() {
-        view_pager.adapter = DescriptionViewPagerAdapter(supportFragmentManager)
+        view_pager.adapter = DescriptionPagerAdapter(supportFragmentManager)
     }
 
     private fun initMap(){

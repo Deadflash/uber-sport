@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.view.description
+package com.fcpunlimited.ubersport.view.description.pages
 
 import android.content.Context
 import android.os.Bundle
@@ -11,15 +11,15 @@ import com.fcpunlimited.ubersport.R
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class SearchPageFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+class DescriptionPage : Fragment() {
+
     private var param1: String? = null
     private var param2: String? = null
 
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                SearchPageFragment().apply {
+                DescriptionPage().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)

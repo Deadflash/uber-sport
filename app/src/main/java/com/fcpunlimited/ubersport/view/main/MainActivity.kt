@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.view.main.search.SearchFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
