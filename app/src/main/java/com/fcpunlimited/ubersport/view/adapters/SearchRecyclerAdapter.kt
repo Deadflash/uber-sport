@@ -25,7 +25,6 @@ class SearchRecyclerAdapter(private val events: List<EventDto>) : RecyclerView.A
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvEventName.text = events[position].eventName
-//        holder.tvEventTimeToStart.text = "Через 20 минут"
         holder.tvEventAddress.text = "Октябрьская улица дом 1"
         holder.tvEventDate.text = "1.09.2018"
 
@@ -36,20 +35,9 @@ class SearchRecyclerAdapter(private val events: List<EventDto>) : RecyclerView.A
                 holder.ivEventHeaderGradient.image =
                         ContextCompat.getDrawable(holder.itemView.context, R.drawable.search_football_header_rect)
             }
-//            EventType.ALCO_TRASH -> {
-//                holder.ivEventTypeHeader.image =
-//                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.alco_trash)
-//                holder.ivEventHeaderGradient.image =
-//                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.search_alco_trash_header_rect)
-//
-//            }
             else -> holder.ivEventTypeHeader.image =
                     ContextCompat.getDrawable(holder.itemView.context, R.drawable.football_header)
         }
-
-//        Picasso.get().load(R.drawable.football_header)
-//                .fit()
-//                .into(holder.ivEventTypeHeader)
 
         Picasso.get().load("http://i.imgur.com/DvpvklR.png")
                 .fit()
@@ -71,14 +59,13 @@ class SearchRecyclerAdapter(private val events: List<EventDto>) : RecyclerView.A
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvEventDate = itemView.tv_event_date
-        val tvEventName = itemView.tv_event_name_header
-        val tvEventAddress = itemView.tv_event_address
-        //        val tvEventTimeToStart = itemView.tv_event_time_to_start
-        val ivEventPlayerOne = itemView.iv_event_player_1
-        val ivEventPlayerTwo = itemView.iv_event_player_2
-        val ivEventPlayerThree = itemView.iv_event_player_3
-        val ivEventTypeHeader = itemView.iv_event_type_header
-        val ivEventHeaderGradient = itemView.iv_search_header_gradient
+        val tvEventDate = itemView.tv_event_date!!
+        val tvEventName = itemView.tv_event_name_header!!
+        val tvEventAddress = itemView.tv_event_address!!
+        val ivEventPlayerOne = itemView.iv_event_player_1!!
+        val ivEventPlayerTwo = itemView.iv_event_player_2!!
+        val ivEventPlayerThree = itemView.iv_event_player_3!!
+        val ivEventTypeHeader = itemView.iv_event_type_header!!
+        val ivEventHeaderGradient = itemView.iv_search_header_gradient!!
     }
 }

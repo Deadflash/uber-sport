@@ -25,13 +25,13 @@
                 android:id="@+id/iv_event_type_header"
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
-                android:src="@drawable/football_header"/>
+                app:srcCompat="@drawable/football_header"/>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/iv_search_header_gradient"
-                android:src="@drawable/search_football_header_rect"/>
+                app:srcCompat="@drawable/search_football_header_rect"/>
 
             <TextView
                 android:id="@+id/tv_event_name_header"
@@ -89,7 +89,7 @@
                         android:layout_height="20dp"
                         android:layout_marginLeft="5dp"
                         android:layout_toEndOf="@id/tv_event_address_topic"
-                        android:src="@drawable/baseline_place_24" />
+                        app:srcCompat="@drawable/baseline_place_24" />
 
                     <TextView
                         android:id="@+id/tv_event_address"

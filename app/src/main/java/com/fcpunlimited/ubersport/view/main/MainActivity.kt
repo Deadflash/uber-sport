@@ -1,64 +1,45 @@
 package com.fcpunlimited.ubersport.view.main
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import com.fcpunlimited.ubersport.R
+import com.fcpunlimited.ubersport.view.BaseFragment
+import com.fcpunlimited.ubersport.view.BaseMvpActivity
+import com.fcpunlimited.ubersport.view.main.create_event.CreateEventFragment
 import com.fcpunlimited.ubersport.view.main.search.SearchFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseMvpActivity() {
 
-    private var fragment: Fragment? = null
+    private var searchFragment: SearchFragment? = null
+    private var createEventFragment: CreateEventFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initFragments()
+
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-//        navigation.disableShiftMode()
+        val currentFragment = supportFragmentManager
+                .findFragmentById(R.id.fragment_container) as BaseFragment?
 
-        fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-
-        if (fragment == null) {
-            fragment = SearchFragment.newInstance("", "")
-            replaceFragment(fragment as SearchFragment)
+        if (currentFragment == null) {
+            replaceFragment(searchFragment as BaseFragment)
         }
     }
 
-//    @SuppressLint("RestrictedApi")
-//    fun BottomNavigationView.disableShiftMode() {
-//        val menuView = getChildAt(0) as BottomNavigationMenuView
-//        try {
-//            val shiftingMode = menuView::class.java.getDeclaredField("mShiftingMode")
-//            shiftingMode.isAccessible = true
-//            shiftingMode.setBoolean(menuView, false)
-//            shiftingMode.isAccessible = false
-//            for (i in 0 until menuView.childCount) {
-//                val item = menuView.getChildAt(i) as BottomNavigationItemView
-//                item.setShifting(false)
-//                // set once again checked value, so view will be updated
-//                item.setChecked(item.itemData.isChecked)
-//            }
-//        } catch (e: NoSuchFieldException) {
-//            Log.e("BNV_HELPER", "Unable to get shift mode field", e)
-//        } catch (e: IllegalStateException) {
-//            Log.e("BNV_HELPER", "Unable to change value of shift mode", e)
-//        }
-//    }
-
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private val mOnNavigationItemSelectedListener = BottomNavigationView
+            .OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_search -> {
+                replaceFragment(searchFragment as BaseFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_create -> {
+                replaceFragment(createEventFragment as BaseFragment)
                 return@OnNavigationItemSelectedListener true
             }
-//            R.id.navigation_statistics -> {
-//                return@OnNavigationItemSelectedListener true
-//            }
             R.id.navigation_profile -> {
                 return@OnNavigationItemSelectedListener true
             }
@@ -66,7 +47,17 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun initFragments() {
+        searchFragment = if (searchFragment == null)
+            SearchFragment.newInstance("", "")
+        else searchFragment
+
+        createEventFragment = if (createEventFragment == null)
+            CreateEventFragment.newInstance("", "")
+        else createEventFragment
+    }
+
+    private fun replaceFragment(fragment: BaseFragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 }
