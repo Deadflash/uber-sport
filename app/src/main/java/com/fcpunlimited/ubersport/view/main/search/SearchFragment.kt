@@ -2,19 +2,14 @@ package com.fcpunlimited.ubersport.view.main.search
 
 import android.content.Context
 import android.os.Bundle
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.event.EventDto
 import com.fcpunlimited.ubersport.struct.event.EventType
 import com.fcpunlimited.ubersport.view.BaseFragment
 import com.fcpunlimited.ubersport.view.adapters.SearchRecyclerAdapter
-import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.recycler_container.*
 import java.util.*
 
 private const val ARG_PARAM1 = "param1"
@@ -56,9 +51,9 @@ class SearchFragment : BaseFragment() {
                 EventDto("Football", 123L, "address", EventType.FOOTBALL),
                 EventDto("Football", 123L, "address", EventType.FOOTBALL))
 
-        search_recycler.layoutManager = LinearLayoutManager(this.context)
-        search_recycler.adapter = SearchRecyclerAdapter(events)
-        search_recycler.setHasFixedSize(true)
+        recycler.layoutManager = LinearLayoutManager(this.context)
+        recycler.adapter = SearchRecyclerAdapter(events)
+        recycler.setHasFixedSize(true)
     }
 
     override fun onAttach(context: Context) {
@@ -69,7 +64,7 @@ class SearchFragment : BaseFragment() {
         super.onDetach()
     }
 
-    override fun getFragmentLayout(): Int = R.layout.fragment_search
+    override fun getFragmentLayout(): Int = R.layout.recycler_container
 
     override fun getFragmentTag(): String = SEARCH_FRAGMENT_TAG
 }

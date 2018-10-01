@@ -9,9 +9,9 @@ import com.fcpunlimited.ubersport.view.description.pages.DescriptionParticipants
 class DescriptionPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment = when (position) {
-        0 -> DescriptionParticipantsFragment()
-        1 -> DescriptionPage()
-        else -> DescriptionPage()
+        0 -> DescriptionParticipantsFragment.newInstance("", "")
+        1 -> DescriptionPage.newInstance("", "")
+        else -> DescriptionPage.newInstance("", "")
     }
 
     override fun getCount(): Int = 2

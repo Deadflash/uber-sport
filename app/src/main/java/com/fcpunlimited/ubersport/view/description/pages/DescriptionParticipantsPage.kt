@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.user.ParticipantDto
 import com.fcpunlimited.ubersport.utils.adapter.IListItem
-import com.fcpunlimited.ubersport.view.adapters.ParticipantAdapter
-import kotlinx.android.synthetic.main.fragment_description_participants_page.*
+import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
+import kotlinx.android.synthetic.main.recycler_container.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -42,7 +42,7 @@ class DescriptionParticipantsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_description_participants_page, container, false)
+        return inflater.inflate(R.layout.recycler_container, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,11 +55,11 @@ class DescriptionParticipantsFragment : Fragment() {
                 ParticipantDto("pahom", "", "about how i playing football"),
                 ParticipantDto("pahom", "", "about how i playing football"),
                 ParticipantDto("pahom", "", "about how i playing football"))
-        val adapter = ParticipantAdapter()
+        val adapter = CustomAdapter()
         adapter.add(participants)
-        participants_recycler.layoutManager = LinearLayoutManager(this.context)
-        participants_recycler.adapter = adapter
-        participants_recycler.setHasFixedSize(true)
+        recycler.layoutManager = LinearLayoutManager(this.context)
+        recycler.adapter = adapter
+        recycler.setHasFixedSize(true)
 
 
     }

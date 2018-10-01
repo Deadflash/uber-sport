@@ -14,7 +14,7 @@ abstract class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), IA
     override fun getItemViewType(position: Int) = items[position].getLayoutId()
 
     protected fun inflateByViewType(context: Context?, viewType: Int, parent: ViewGroup) =
-            LayoutInflater.from(context).inflate(viewType, parent, false)
+            LayoutInflater.from(context).inflate(viewType, parent, false)!!
 
     override fun add(newItem: IListItem) {
         items.add(newItem)
