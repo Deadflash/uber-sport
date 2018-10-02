@@ -1,5 +1,6 @@
 package com.fcpunlimited.ubersport.view.adapters
 
+import android.content.Context
 import android.content.Intent
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -17,7 +18,6 @@ import com.squareup.picasso.Picasso
 import org.jetbrains.anko.image
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.singleTop
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class CustomAdapter : BaseListAdapter() {
@@ -34,14 +34,16 @@ class CustomAdapter : BaseListAdapter() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val context = holder.itemView.context
         when (holder) {
-            is ParticipantViewHolder -> bindParticipantsView(holder, position, items)
-            is CreateEventViewHolder -> bindCreateEventView(holder, position, items)
-            is SearchEventViewHolder -> bindSearchView(holder, position, items)
+            is ParticipantViewHolder -> bindParticipantsView(holder, position, items, context)
+            is CreateEventViewHolder -> bindCreateEventView(holder, position, items, context)
+            is SearchEventViewHolder -> bindSearchView(holder, position, items, context)
         }
     }
 
-    private fun bindParticipantsView(holder: ParticipantViewHolder, position: Int, items: ArrayList<IListItem>) {
+    private fun bindParticipantsView(holder: ParticipantViewHolder, position: Int,
+                                     items: ArrayList<IListItem>, context: Context) {
         val participant = items[position] as ParticipantDto
 
         holder.tvParticipantName.text = participant.name
@@ -53,7 +55,8 @@ class CustomAdapter : BaseListAdapter() {
                 .into(holder.ivParticipantAvatar)
     }
 
-    private fun bindCreateEventView(holder: CreateEventViewHolder, position: Int, items: ArrayList<IListItem>) {
+    private fun bindCreateEventView(holder: CreateEventViewHolder, position: Int,
+                                    items: ArrayList<IListItem>, context: Context) {
         val event = items[position] as CreateEventDto
 
         holder.tvEventName.text = event.eventName
@@ -64,10 +67,11 @@ class CustomAdapter : BaseListAdapter() {
                 .error(R.color.colorAccent)
                 .into(holder.ivEventIcon)
 
-        holder.itemView.onClick { holder.itemView.context.toast(event.eventName) }
+        holder.itemView.onClick { context.toast(event.eventName) }
     }
 
-    private fun bindSearchView(holder: SearchEventViewHolder, position: Int, items: ArrayList<IListItem>) {
+    private fun bindSearchView(holder: SearchEventViewHolder, position: Int,
+                               items: ArrayList<IListItem>, context: Context) {
         val event = items[position] as EventDto
 
         holder.tvEventName.text = event.eventName
@@ -77,12 +81,12 @@ class CustomAdapter : BaseListAdapter() {
         when (event.eventType) {
             EventType.FOOTBALL -> {
                 holder.ivEventTypeHeader.image =
-                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.football_header)
+                        ContextCompat.getDrawable(context, R.drawable.football_header)
                 holder.ivEventHeaderGradient.image =
-                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.search_football_header_rect)
+                        ContextCompat.getDrawable(context, R.drawable.search_football_header_rect)
             }
             else -> holder.ivEventTypeHeader.image =
-                    ContextCompat.getDrawable(holder.itemView.context, R.drawable.football_header)
+                    ContextCompat.getDrawable(context, R.drawable.football_header)
         }
 
         Picasso.get().load("http://i.imgur.com/DvpvklR.png")
@@ -98,8 +102,10 @@ class CustomAdapter : BaseListAdapter() {
                 .fit()
                 .into(holder.ivEventPlayerThree)
 
-        holder.itemView.onClick { holder.itemView.context
-                .startActivity(Intent(holder.itemView.context, DescriptionActivity::class.java)
-                        .singleTop()) }
+        holder.itemView.onClick {
+            context
+                    .startActivity(Intent(context, DescriptionActivity::class.java)
+                            .singleTop())
+        }
     }
 }
