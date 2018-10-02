@@ -24,9 +24,10 @@ class MainActivity : BaseMvpActivity(), MainActivityView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        presenter.initFragments()
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        presenter.initFragments()
 
         if (supportFragmentManager.findFragmentById(R.id.fragment_container) == null) {
             presenter.showFragmentByTag(SEARCH_FRAGMENT_TAG)

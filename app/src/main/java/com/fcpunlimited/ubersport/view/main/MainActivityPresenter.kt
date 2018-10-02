@@ -17,17 +17,9 @@ class MainActivityPresenter : MvpPresenter<MainActivityView>() {
     private lateinit var profileFragment: ProfileMvpFragment
 
     fun initFragments() {
-        searchFragment = if (searchFragment == null)
-            SearchMvpFragment.newInstance("", "")
-        else searchFragment
-
-        createEventFragment = if (createEventFragment == null)
-            CreateEventMvpFragment.newInstance("", "")
-        else createEventFragment
-
-        profileFragment = if (profileFragment == null)
-            ProfileMvpFragment.newInstance("", "")
-        else profileFragment
+        searchFragment = SearchMvpFragment.newInstance("", "")
+        createEventFragment = CreateEventMvpFragment.newInstance("", "")
+        profileFragment = ProfileMvpFragment.newInstance("", "")
     }
 
     fun showFragmentByTag(tag: String) {

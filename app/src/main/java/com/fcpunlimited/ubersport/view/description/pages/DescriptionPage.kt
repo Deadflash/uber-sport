@@ -37,7 +37,7 @@ class DescriptionPage : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_search_page, container, false)
+        return inflater.inflate(R.layout.fragment_event_description_page, container, false)
     }
 
     override fun onAttach(context: Context) {
