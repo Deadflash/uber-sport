@@ -1,5 +1,6 @@
 package com.fcpunlimited.ubersport.view.adapters
 
+import android.content.Intent
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import com.fcpunlimited.ubersport.view.description.DescriptionActivity
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.image
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.singleTop
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
@@ -96,6 +98,8 @@ class CustomAdapter : BaseListAdapter() {
                 .fit()
                 .into(holder.ivEventPlayerThree)
 
-        holder.itemView.onClick { holder.itemView.context.startActivity<DescriptionActivity>() }
+        holder.itemView.onClick { holder.itemView.context
+                .startActivity(Intent(holder.itemView.context, DescriptionActivity::class.java)
+                        .singleTop()) }
     }
 }
