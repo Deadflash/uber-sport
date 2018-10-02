@@ -7,17 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import com.arellomobile.mvp.MvpDelegate
 
-
-abstract class BaseFragment: Fragment() {
+abstract class BaseMvpFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(getFragmentLayout(), container, false)
     }
 
-
     private var mIsStateSaved: Boolean = false
-    private var mMvpDelegate: MvpDelegate<out BaseFragment>? = null
+    private var mMvpDelegate: MvpDelegate<out BaseMvpFragment>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,8 +82,9 @@ abstract class BaseFragment: Fragment() {
         return this.mMvpDelegate!!
     }
 
-
-    protected abstract fun getFragmentLayout(): Int
+    abstract fun getFragmentLayout(): Int
 
     abstract fun getFragmentTag(): String
+
+    abstract fun getFragmentMenu(): Int?
 }

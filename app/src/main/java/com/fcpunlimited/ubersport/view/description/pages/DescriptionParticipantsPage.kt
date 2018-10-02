@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.user.ParticipantDto
-import com.fcpunlimited.ubersport.utils.adapter.IListItem
+import com.fcpunlimited.ubersport.view.adapters.IListItem
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import kotlinx.android.synthetic.main.recycler_container.*
 
@@ -59,6 +59,8 @@ class DescriptionParticipantsFragment : Fragment() {
         adapter.add(participants)
         recycler.layoutManager = LinearLayoutManager(this.context)
         recycler.adapter = adapter
+        recycler.setPadding(0, resources.getDimensionPixelOffset(R.dimen.recycler_top_padding),
+                0, 0)
         recycler.setHasFixedSize(true)
 
 

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.arellomobile.mvp.MvpDelegate
 
-open class BaseMvpActivity: AppCompatActivity(){
+abstract class BaseMvpActivity: AppCompatActivity(){
 
     private var mMvpDelegate: MvpDelegate<out BaseMvpActivity>? = null
 

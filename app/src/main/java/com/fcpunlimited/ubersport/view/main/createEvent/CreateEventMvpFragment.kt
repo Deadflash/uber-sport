@@ -6,16 +6,16 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.event.CreateEventDto
-import com.fcpunlimited.ubersport.utils.adapter.IListItem
-import com.fcpunlimited.ubersport.view.BaseFragment
+import com.fcpunlimited.ubersport.utils.layout.FragmentTags.CREATE_EVENT_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
+import com.fcpunlimited.ubersport.view.adapters.IListItem
 import kotlinx.android.synthetic.main.recycler_container.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private const val CREATE_EVENT_FRAGMENT = "createEventFragment"
 
-class CreateEventFragment : BaseFragment() {
+class CreateEventMvpFragment : BaseMvpFragment() {
 
     private var param1: String? = null
     private var param2: String? = null
@@ -23,7 +23,7 @@ class CreateEventFragment : BaseFragment() {
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                CreateEventFragment().apply {
+                CreateEventMvpFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
@@ -58,5 +58,7 @@ class CreateEventFragment : BaseFragment() {
 
     override fun getFragmentLayout(): Int = R.layout.recycler_container
 
-    override fun getFragmentTag(): String = CREATE_EVENT_FRAGMENT
+    override fun getFragmentTag(): String = CREATE_EVENT_FRAGMENT_TAG
+
+    override fun getFragmentMenu(): Int = R.menu.create_event_menu
 }

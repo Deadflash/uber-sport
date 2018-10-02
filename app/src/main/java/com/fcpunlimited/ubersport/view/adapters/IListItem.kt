@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.utils.adapter
+package com.fcpunlimited.ubersport.view.adapters
 
 interface IListItem {
     fun getLayoutId(): Int

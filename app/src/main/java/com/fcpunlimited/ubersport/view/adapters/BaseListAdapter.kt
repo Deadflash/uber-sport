@@ -1,11 +1,11 @@
-package com.fcpunlimited.ubersport.utils.adapter
+package com.fcpunlimited.ubersport.view.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), IAdapter<IListItem> {
+abstract class BaseListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), IAdapter<IListItem> {
 
     protected val items: ArrayList<IListItem> = ArrayList()
 

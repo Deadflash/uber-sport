@@ -1,7 +1,7 @@
 package com.fcpunlimited.ubersport.struct.event
 
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.utils.adapter.IListItem
+import com.fcpunlimited.ubersport.view.adapters.IListItem
 
 data class CreateEventDto(
         var eventName: String,

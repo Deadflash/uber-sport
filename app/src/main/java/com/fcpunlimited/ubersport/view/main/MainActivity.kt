@@ -3,77 +3,90 @@ package com.fcpunlimited.ubersport.view.main
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import com.arellomobile.mvp.presenter.InjectPresenter
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.view.BaseFragment
+import com.fcpunlimited.ubersport.utils.layout.FragmentTags.CREATE_EVENT_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.utils.layout.FragmentTags.PROFILE_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.utils.layout.FragmentTags.SEARCH_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.view.BaseMvpActivity
-import com.fcpunlimited.ubersport.view.main.createEvent.CreateEventFragment
-import com.fcpunlimited.ubersport.view.main.search.SearchFragment
+import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
-class MainActivity : BaseMvpActivity() {
+class MainActivity : BaseMvpActivity(), MainActivityView {
 
-    private var searchFragment: SearchFragment? = null
-    private var createEventFragment: CreateEventFragment? = null
+    @InjectPresenter
+    lateinit var presenter: MainActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        initFragments()
         setSupportActionBar(toolbar)
+        presenter.initFragments()
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        val currentFragment = supportFragmentManager
-                .findFragmentById(R.id.fragment_container) as BaseFragment?
 
-        if (currentFragment == null) {
-            replaceFragment(searchFragment as BaseFragment)
+        if (supportFragmentManager.findFragmentById(R.id.fragment_container) == null) {
+            presenter.showFragmentByTag(SEARCH_FRAGMENT_TAG)
         }
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView
             .OnNavigationItemSelectedListener { item ->
-                toolbar.menu.clear()
                 when (item.itemId) {
                     R.id.navigation_search -> {
-                        replaceFragment(searchFragment as BaseFragment)
-                        toolbar.inflateMenu(R.menu.search_menu)
+                        presenter.showFragmentByTag(SEARCH_FRAGMENT_TAG)
                         return@OnNavigationItemSelectedListener true
                     }
                     R.id.navigation_create -> {
-                        replaceFragment(createEventFragment as BaseFragment)
-                        toolbar.inflateMenu(R.menu.create_event_menu)
+                        presenter.showFragmentByTag(CREATE_EVENT_FRAGMENT_TAG)
                         return@OnNavigationItemSelectedListener true
                     }
                     R.id.navigation_profile -> {
+                        presenter.showFragmentByTag(PROFILE_FRAGMENT_TAG)
                         return@OnNavigationItemSelectedListener true
                     }
                 }
                 false
             }
 
-    private fun initFragments() {
-        searchFragment = if (searchFragment == null)
-            SearchFragment.newInstance("", "")
-        else searchFragment
-
-        createEventFragment = if (createEventFragment == null)
-            CreateEventFragment.newInstance("", "")
-        else createEventFragment
+    override fun replaceFragmentAndMenu(fragment: BaseMvpFragment) {
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
     }
 
-    private fun replaceFragment(fragment: BaseFragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+    override fun onAttachFragment(fragment: Fragment?) {
+        toolbar?.menu?.clear()
+        (fragment as BaseMvpFragment).getFragmentMenu()
+                ?.let { it1 -> toolbar?.inflateMenu(it1) }
+        super.onAttachFragment(fragment)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.search_menu, menu)
-        return true
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        supportFragmentManager.findFragmentById(R.id.fragment_container)
+                ?.let {
+                    (it as BaseMvpFragment).getFragmentMenu()
+                            ?.let { it1 -> menuInflater.inflate(it1, menu) }
+                }
+        return super.onPrepareOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+            when (item.itemId) {
+                R.id.action_filter -> {
+                    toast("filter")
+                    true
+                }
+                R.id.action_create_event -> {
+                    toast("createEvent")
+                    true
+                }
+                else -> {
+                    toast("Unknown item clicked")
+                    false
+                }
+            }
 }
