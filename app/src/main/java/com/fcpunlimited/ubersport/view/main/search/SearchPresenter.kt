@@ -9,11 +9,11 @@ import org.jetbrains.anko.uiThread
 class SearchPresenter : MvpPresenter<SearchView>() {
 
     fun onSwipeRefresh() {
-        viewState.showSwipeRefresh()
+        viewState.onSwipeRefresh(true)
         doAsync {
             Thread.sleep(7000)
             uiThread {
-                viewState.hideSwipeRefresh()
+                viewState.onSwipeRefresh(false)
             }
         }
     }

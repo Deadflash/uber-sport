@@ -69,12 +69,8 @@ class SearchMvpFragment : BaseMvpFragment(), SearchView {
         }
     }
 
-    override fun showSwipeRefresh() {
-        swipe_refresh.isRefreshing = true
-    }
-
-    override fun hideSwipeRefresh() {
-        swipe_refresh.isRefreshing = false
+    override fun onSwipeRefresh(isRefreshing: Boolean) {
+        swipe_refresh.isRefreshing = isRefreshing
     }
 
     override fun onAttach(context: Context) {
