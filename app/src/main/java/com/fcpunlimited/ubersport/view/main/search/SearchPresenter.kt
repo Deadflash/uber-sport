@@ -1,8 +1,20 @@
 package com.fcpunlimited.ubersport.view.main.search
 
-class SearchPresenter {
+import com.arellomobile.mvp.InjectViewState
+import com.arellomobile.mvp.MvpPresenter
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
-    private var test: String = "test"
+@InjectViewState
+class SearchPresenter : MvpPresenter<SearchView>() {
 
-    fun testStr() = test
+    fun onSwipeRefresh() {
+        viewState.showSwipeRefresh()
+        doAsync {
+            Thread.sleep(7000)
+            uiThread {
+                viewState.hideSwipeRefresh()
+            }
+        }
+    }
 }

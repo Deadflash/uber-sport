@@ -4,19 +4,25 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.PresenterType
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.event.EventDto
 import com.fcpunlimited.ubersport.struct.event.EventType
 import com.fcpunlimited.ubersport.utils.layout.FragmentTags.SEARCH_FRAGMENT_TAG
-import com.fcpunlimited.ubersport.view.adapters.IListItem
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
+import com.fcpunlimited.ubersport.view.adapters.IListItem
 import kotlinx.android.synthetic.main.recycler_container.*
+import kotlinx.android.synthetic.main.swipe_refresh_recycler_container.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class SearchMvpFragment : BaseMvpFragment() {
+class SearchMvpFragment : BaseMvpFragment(), SearchView {
+
+    @InjectPresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
+    lateinit var presenter: SearchPresenter
 
     private var param1: String? = null
     private var param2: String? = null
@@ -57,6 +63,18 @@ class SearchMvpFragment : BaseMvpFragment() {
         recycler.layoutManager = LinearLayoutManager(this.context)
         recycler.adapter = adapter
         recycler.setHasFixedSize(true)
+
+        swipe_refresh.setOnRefreshListener {
+            presenter.onSwipeRefresh()
+        }
+    }
+
+    override fun showSwipeRefresh() {
+        swipe_refresh.isRefreshing = true
+    }
+
+    override fun hideSwipeRefresh() {
+        swipe_refresh.isRefreshing = false
     }
 
     override fun onAttach(context: Context) {
@@ -67,7 +85,7 @@ class SearchMvpFragment : BaseMvpFragment() {
         super.onDetach()
     }
 
-    override fun getFragmentLayout(): Int = R.layout.recycler_container
+    override fun getFragmentLayout(): Int = R.layout.swipe_refresh_recycler_container
 
     override fun getFragmentTag(): String = SEARCH_FRAGMENT_TAG
 

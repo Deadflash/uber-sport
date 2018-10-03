@@ -10,7 +10,7 @@ import com.fcpunlimited.ubersport.view.main.profile.ProfileMvpFragment
 import com.fcpunlimited.ubersport.view.main.search.SearchMvpFragment
 
 @InjectViewState
-class MainActivityPresenter : MvpPresenter<MainActivityView>() {
+class MainActivityPresenter : MvpPresenter<MainView>() {
 
     private lateinit var searchFragment: SearchMvpFragment
     private lateinit var createEventFragment: CreateEventMvpFragment

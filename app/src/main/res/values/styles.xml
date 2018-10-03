@@ -13,6 +13,11 @@
 
         <item name="fontFamily">@font/roboto_regular</item>
     </style>
+    
+    <style name="Splash" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 
     <style name="Theme.Transparent" parent="AppTheme">
         <item name="android:windowIsTranslucent">true</item>

@@ -49,7 +49,7 @@ abstract class BaseMvpActivity: AppCompatActivity(){
         }
     }
 
-    private fun getMvpDelegate(): MvpDelegate<*> {
+    fun getMvpDelegate(): MvpDelegate<*> {
         if (mMvpDelegate == null) {
             mMvpDelegate = MvpDelegate<BaseMvpActivity>(this)
         }
