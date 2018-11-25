@@ -24,7 +24,7 @@ class MainActivity : BaseMvpActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+//        setSupportActionBar(toolbar)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
@@ -61,9 +61,9 @@ class MainActivity : BaseMvpActivity(), MainView {
     }
 
     override fun onAttachFragment(fragment: Fragment?) {
-        toolbar?.menu?.clear()
-        (fragment as BaseMvpFragment).getFragmentMenu()
-                ?.let { it1 -> toolbar?.inflateMenu(it1) }
+//        toolbar?.menu?.clear()
+//        (fragment as BaseMvpFragment).getFragmentMenu()
+//                ?.let { it1 -> toolbar?.inflateMenu(it1) }
         super.onAttachFragment(fragment)
     }
 

@@ -81,7 +81,7 @@ class SearchMvpFragment : BaseMvpFragment(), SearchView {
         super.onDetach()
     }
 
-    override fun getFragmentLayout(): Int = R.layout.swipe_refresh_recycler_container
+    override fun getFragmentLayout(): Int = R.layout.fragment_search
 
     override fun getFragmentTag(): String = SEARCH_FRAGMENT_TAG
 

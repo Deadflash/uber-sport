@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/iv_search_header_gradient"
-                app:srcCompat="@drawable/search_football_header_rect"/>
+                app:srcCompat="@drawable/rounded_border_rect"/>
 
             <TextView
                 android:id="@+id/tv_event_name_header"

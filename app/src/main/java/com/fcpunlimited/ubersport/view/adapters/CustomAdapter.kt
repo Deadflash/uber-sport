@@ -83,7 +83,7 @@ class CustomAdapter : BaseListAdapter() {
                 holder.ivEventTypeHeader.image =
                         ContextCompat.getDrawable(context, R.drawable.football_header)
                 holder.ivEventHeaderGradient.image =
-                        ContextCompat.getDrawable(context, R.drawable.search_football_header_rect)
+                        ContextCompat.getDrawable(context, R.drawable.rounded_border_rect)
             }
             else -> holder.ivEventTypeHeader.image =
                     ContextCompat.getDrawable(context, R.drawable.football_header)
