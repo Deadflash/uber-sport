@@ -71,7 +71,7 @@ class MainActivity : BaseMvpActivity(), MainView {
         supportFragmentManager.findFragmentById(R.id.fragment_container)
                 ?.let {
                     (it as BaseMvpFragment).getFragmentMenu()
-                            ?.let { it1 -> menuInflater.inflate(it1, menu) }
+                            ?.let { menuLayout -> menuInflater.inflate(menuLayout, menu) }
                 }
         return super.onPrepareOptionsMenu(menu)
     }
