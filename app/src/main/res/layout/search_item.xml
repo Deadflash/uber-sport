@@ -2,9 +2,8 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="185dp"
+    android:layout_height="240dp"
     android:layout_marginBottom="10dp"
-    app:cardBackgroundColor="@color/grey"
     app:cardCornerRadius="16dp"
     app:cardElevation="5dp">
 
@@ -13,215 +12,120 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/header_layout"
+        <include
+            layout="@layout/container_game_header"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/iv_event_type_header"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                app:srcCompat="@drawable/football_header"/>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/iv_search_header_gradient"
-                app:srcCompat="@drawable/rounded_border_rect"/>
-
-            <TextView
-                android:id="@+id/tv_event_name_header"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:ellipsize="end"
-                android:fontFamily="@font/roboto_bold"
-                android:gravity="center|start"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:textSize="@dimen/medium_text"
-                android:text="Event Name"
-                android:textColor="@color/white" />
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_event_time_to_start"-->
-                <!--android:layout_width="150dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_alignParentEnd="true"-->
-                <!--android:fontFamily="@font/roboto_bold"-->
-                <!--android:gravity="center|end"-->
-                <!--android:paddingEnd="@dimen/large_text"-->
-                <!--android:text="Time to start"-->
-                <!--android:textColor="@color/white" />-->
-
-        </RelativeLayout>
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
+            <View
+                android:id="@+id/horizontal_divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toTopOf="@+id/vertical_divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+            <View
+                android:id="@+id/vertical_divider"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="@color/grey"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontal_divider" />
 
-                    <TextView
-                        android:id="@+id/tv_event_address_topic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Место"
-                        android:textSize="@dimen/medium_text" />
-
-                    <ImageView
-                        android:id="@+id/iv_point"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toEndOf="@id/tv_event_address_topic"
-                        app:srcCompat="@drawable/baseline_place_24" />
-
-                    <TextView
-                        android:id="@+id/tv_event_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_event_address_topic"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/roboto_light"
-                        android:maxLines="1"
-                        android:text="place"
-                        android:textSize="@dimen/medium_text" />
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_event_date_topic"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="Дата"
-                        android:textSize="@dimen/medium_text" />
-
-                    <TextView
-                        android:id="@+id/tv_event_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_light"
-                        android:gravity="end"
-                        android:text="Date"
-                        android:textSize="@dimen/medium_text" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/tv_event_players_topic"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_light"
-                        android:text="Учасники"
-                        android:textSize="@dimen/medium_text" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@id/tv_event_players_topic">
-
-                        <LinearLayout
-                            android:id="@+id/players_layout"
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/iv_event_player_1"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                app:civ_border_color="@color/white"
-                                app:civ_border_width="1dp" />
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/iv_event_player_2"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_marginLeft="-6dp"
-                                app:civ_border_color="@color/white"
-                                app:civ_border_width="1dp" />
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/iv_event_player_3"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_marginLeft="-6dp"
-                                app:civ_border_color="@color/white"
-                                app:civ_border_width="1dp" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tv_event_players_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/players_layout"
-                            android:layout_toEndOf="@id/players_layout"
-                            android:layout_alignTop="@id/players_layout"
-                            android:fontFamily="@font/roboto_light"
-                            android:gravity="center"
-                            android:text="3+"
-                            android:textSize="@dimen/medium_text" />
-
-                    </RelativeLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/address_constraint_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontal_divider">
 
 
-                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textView6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic__ionicons_svg_md_navigate" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center|end">
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_light"
+                    android:maxLines="2"
+                    android:text="Octyabrscaya st. 1/1 12"
+                    android:textSize="@dimen/small_text"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView3"
+                    app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/bt_event_join"
-                        android:layout_width="100dp"
-                        android:layout_height="40dp"
-                        android:fontFamily="@font/roboto_light"
-                        android:text="join"
-                        android:textSize="@dimen/small_text" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/date_constraint_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/vertical_divider"
+                app:layout_constraintTop_toBottomOf="@+id/horizontal_divider">
 
-            </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_calendar_icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_calendar_date"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic__ionicons_svg_md_calendar" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_calendar_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_light"
+                    android:maxLines="2"
+                    android:text="Friday, 10 jan. 19:00"
+                    android:textSize="@dimen/small_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_calendar_icon"
+                    app:layout_constraintTop_toTopOf="@+id/iv_calendar_icon" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

@@ -14,220 +14,121 @@
         app:cardCornerRadius="@dimen/corner_radius"
         app:cardElevation="5dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <include
+                android:id="@+id/include"
+                layout="@layout/container_game_header"
+                app:layout_constraintBottom_toTopOf="@+id/map"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include"
+                tools:context=".view.description.DescriptionActivity" />
+
+            <ImageView
+                android:id="@+id/iv_address_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintEnd_toStartOf="@+id/tv_address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/map"
+                app:srcCompat="@drawable/avatar" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="Oktyabrskaya st. 1/1 12"
+                android:textSize="@dimen/small_text"
+                android:fontFamily="@font/roboto_light"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_address_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_address_icon"
+                app:layout_constraintTop_toTopOf="@+id/iv_address_icon" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
                 android:background="@color/grey"
-                android:elevation="5dp"
-                android:padding="8dp"
-                android:orientation="horizontal">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_address_icon" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:id="@+id/header_layout">
+            <ImageView
+                android:id="@+id/iv_calendar_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/view2"
+                app:layout_constraintEnd_toStartOf="@+id/tv_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                app:srcCompat="@drawable/avatar" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/ivAuthorAvatar"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_alignParentStart="true"
-                        android:src="@drawable/pahom"
-                        app:civ_border_color="@color/white"
-                        app:civ_border_width="1dp" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/ivSportIcon"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/pahom" />
-
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@id/ivAuthorAvatar"
-                        android:layout_toStartOf="@id/ivSportIcon"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_author"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:ellipsize="end"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:fontFamily="@font/roboto_light"
-                            android:text="Author"
-                            android:textSize="@dimen/small_text" />
-
-                        <TextView
-                            android:id="@+id/tv_author_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/roboto_light"
-                            android:text="Pahom"
-                            android:textSize="@dimen/small_text" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/event_layout"
-                    android:layout_below="@id/header_layout"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="Playing football"
-                        android:textSize="@dimen/large_text" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="2:5 hour"
-                        android:textSize="@dimen/small_text" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/event_layout"
-                    android:id="@+id/divider"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/blackTransparent"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/divider"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Participants"
-                        android:id="@+id/tv_participants"
-                        android:textSize="@dimen/medium_text"
-                        android:fontFamily="@font/roboto_bold"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/medium_text"
-                        android:id="@+id/tv_participants_count"
-                        android:fontFamily="@font/roboto_bold"
-                        android:layout_alignParentEnd="true"
-                        android:text="10/20"/>
-
-                    <ProgressBar
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_participants"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:max="100"
-                        android:progress="50"/>
-
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp">
-
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    tools:context=".view.description.DescriptionActivity" />
-
-                <ImageView
-                    android:id="@+id/iv_close"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="20dp"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/baseline_close_24" />
-
-            </FrameLayout>
-
-            <!--<com.google.android.material.button.MaterialButton-->
-            <!--android:layout_width="120dp"-->
-            <!--android:layout_height="48dp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginTop="-24dp"-->
-            <!--android:fontFamily="@font/roboto_light"-->
-            <!--android:text="JOIN"-->
-            <!--app:cornerRadius="@dimen/corner_radius" />-->
-
-            <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="10dp"-->
-            <!--android:layout_marginTop="-25dp"-->
-            <!--android:background="@color/grey"/>-->
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="8dp"
+                android:text="Friday, 10 jan. 19:00"
+                android:textSize="@dimen/small_text"
+                android:fontFamily="@font/roboto_light"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_calendar_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_calendar_icon"
+                app:layout_constraintTop_toTopOf="@+id/iv_calendar_icon" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <View
+                android:id="@+id/view2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toTopOf="@+id/tv_event_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_calendar_icon" />
 
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/view_pager"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_event_description"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="@dimen/medium_text"
+                android:fontFamily="@font/roboto_light"
+                android:textColor="@color/black"
+                android:text="Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event descriptionSome event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event descriptionSome event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-                    </androidx.viewpager.widget.ViewPager>
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tab_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="24dp"
-                        android:background="@color/transparent"
-                        app:tabBackground="@drawable/tab_selector"
-                        app:tabGravity="center"
-                        app:tabIndicatorHeight="0dp">
-
-                    </com.google.android.material.tabs.TabLayout>
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-            <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/corner_radius"-->
-            <!--android:background="@color/grey"/>-->
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

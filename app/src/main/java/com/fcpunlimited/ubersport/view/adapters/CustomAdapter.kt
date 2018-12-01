@@ -49,7 +49,7 @@ class CustomAdapter : BaseListAdapter() {
         holder.tvParticipantName.text = participant.name
         holder.tvAboutParticipant.text = participant.about
 
-        Picasso.get().load(R.drawable.pahom)
+        Picasso.get().load(R.drawable.avatar)
                 .fit()
                 .error(R.color.colorAccent)
                 .into(holder.ivParticipantAvatar)
@@ -62,7 +62,7 @@ class CustomAdapter : BaseListAdapter() {
         holder.tvEventName.text = event.eventName
 
         Picasso.get()
-                .load(R.drawable.pahom)
+                .load(R.drawable.avatar)
                 .fit()
                 .error(R.color.colorAccent)
                 .into(holder.ivEventIcon)
@@ -74,33 +74,33 @@ class CustomAdapter : BaseListAdapter() {
                                items: ArrayList<IListItem>, context: Context) {
         val event = items[position] as EventDto
 
-        holder.tvEventName.text = event.eventName
-        holder.tvEventAddress.text = "Октябрьская улица дом 1"
-        holder.tvEventDate.text = "1.09.2018"
+//        holder.tvEventName.text = event.eventName
+//        holder.tvEventAddress.text = "Октябрьская улица дом 1"
+//        holder.tvEventDate.text = "1.09.2018"
 
-        when (event.eventType) {
-            EventType.FOOTBALL -> {
-                holder.ivEventTypeHeader.image =
-                        ContextCompat.getDrawable(context, R.drawable.football_header)
-                holder.ivEventHeaderGradient.image =
-                        ContextCompat.getDrawable(context, R.drawable.rounded_border_rect)
-            }
-            else -> holder.ivEventTypeHeader.image =
-                    ContextCompat.getDrawable(context, R.drawable.football_header)
-        }
+//        when (event.eventType) {
+//            EventType.FOOTBALL -> {
+//                holder.ivEventTypeHeader.image =
+//                        ContextCompat.getDrawable(context, R.drawable.football_header)
+//                holder.ivEventHeaderGradient.image =
+//                        ContextCompat.getDrawable(context, R.drawable.rounded_border_rect)
+//            }
+//            else -> holder.ivEventTypeHeader.image =
+//                    ContextCompat.getDrawable(context, R.drawable.football_header)
+//        }
 
-        Picasso.get().load("http://i.imgur.com/DvpvklR.png")
-                .fit()
-                .error(R.color.colorAccent)
-                .into(holder.ivEventPlayerOne)
-
-        Picasso.get().load("http://i.imgur.com/DvpvklR.png")
-                .fit()
-                .into(holder.ivEventPlayerTwo)
-
-        Picasso.get().load("http://i.imgur.com/DvpvklR.png")
-                .fit()
-                .into(holder.ivEventPlayerThree)
+//        Picasso.get().load("http://i.imgur.com/DvpvklR.png")
+//                .fit()
+//                .error(R.color.colorAccent)
+//                .into(holder.ivEventPlayerOne)
+//
+//        Picasso.get().load("http://i.imgur.com/DvpvklR.png")
+//                .fit()
+//                .into(holder.ivEventPlayerTwo)
+//
+//        Picasso.get().load("http://i.imgur.com/DvpvklR.png")
+//                .fit()
+//                .into(holder.ivEventPlayerThree)
 
         holder.itemView.onClick {
             context

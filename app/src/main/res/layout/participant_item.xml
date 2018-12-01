@@ -19,7 +19,7 @@
             android:id="@+id/iv_participant_avatar"
             android:layout_gravity="center|start"
             android:layout_marginStart="8dp"
-            android:src="@drawable/pahom"
+            android:src="@drawable/avatar"
             app:civ_border_width="1dp"
             app:civ_border_color="@color/white"/>
 

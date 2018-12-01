@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg_gradient"
     tools:context=".view.main.MainActivity">
 
     <include
@@ -19,8 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/blue"
         app:elevation="5dp"
+        app:itemIconTint="@color/bottom_icon_color_selector"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/navigation" />
 
