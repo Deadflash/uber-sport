@@ -40,15 +40,15 @@
 
             <ImageView
                 android:id="@+id/iv_address_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/view"
                 app:layout_constraintEnd_toStartOf="@+id/tv_address"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/map"
-                app:srcCompat="@drawable/avatar" />
+                app:srcCompat="@drawable/ic__ionicons_svg_md_navigate" />
 
             <TextView
                 android:id="@+id/tv_address"
@@ -56,9 +56,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="Oktyabrskaya st. 1/1 12"
-                android:textSize="@dimen/small_text"
                 android:fontFamily="@font/roboto_light"
+                android:text="Oktyabrskaya st. 1/1 12"
+                android:textSize="@dimen/extra_small"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_address_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_address_icon"
@@ -68,7 +68,7 @@
                 android:id="@+id/view"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:background="@color/grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -76,15 +76,15 @@
 
             <ImageView
                 android:id="@+id/iv_calendar_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/view2"
                 app:layout_constraintEnd_toStartOf="@+id/tv_date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view"
-                app:srcCompat="@drawable/avatar" />
+                app:srcCompat="@drawable/ic__ionicons_svg_md_calendar" />
 
             <TextView
                 android:id="@+id/tv_date"
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Friday, 10 jan. 19:00"
-                android:textSize="@dimen/small_text"
+                android:textSize="@dimen/extra_small"
                 android:fontFamily="@font/roboto_light"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_calendar_icon"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +103,7 @@
                 android:id="@+id/view2"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:background="@color/grey"
                 app:layout_constraintBottom_toTopOf="@+id/tv_event_description"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -115,13 +115,13 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:textSize="@dimen/medium_text"
                 android:fontFamily="@font/roboto_light"
-                android:textColor="@color/black"
                 android:text="Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event descriptionSome event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event descriptionSome event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description Some event description"
+                android:textColor="@color/natural_black"
+                android:textSize="@dimen/small_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

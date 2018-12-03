@@ -10,6 +10,7 @@ import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.event.EventDto
 import com.fcpunlimited.ubersport.struct.event.EventType
 import com.fcpunlimited.ubersport.utils.layout.FragmentTags.SEARCH_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.utils.toDp
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem
@@ -48,6 +49,8 @@ class SearchMvpFragment : BaseMvpFragment(), SearchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        swipe_refresh.setProgressViewOffset(true,0.toDp,84.toDp)
 
         val events = arrayListOf<IListItem>(EventDto("Football", 123L, "address", EventType.FOOTBALL),
                 EventDto("Alco Trash", 321, "address", EventType.ALCO_TRASH),

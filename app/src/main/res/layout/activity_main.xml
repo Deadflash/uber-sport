@@ -20,7 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/blue"
         app:elevation="5dp"
         app:itemIconTint="@color/bottom_icon_color_selector"
         app:labelVisibilityMode="unlabeled"

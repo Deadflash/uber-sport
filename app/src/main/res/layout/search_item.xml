@@ -2,9 +2,9 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="240dp"
+    android:layout_height="285dp"
     android:layout_marginBottom="10dp"
-    app:cardCornerRadius="16dp"
+    app:cardCornerRadius="8dp"
     app:cardElevation="5dp">
 
     <LinearLayout
@@ -26,7 +26,7 @@
                 android:id="@+id/horizontal_divider"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="18dp"
                 android:background="@color/grey"
                 app:layout_constraintBottom_toTopOf="@+id/vertical_divider"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +48,8 @@
                 android:id="@+id/address_constraint_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,9 +57,9 @@
 
 
                 <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:id="@+id/iv_address_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
@@ -65,6 +67,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/textView6"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:tint="@color/natural_black"
                     app:srcCompat="@drawable/ic__ionicons_svg_md_navigate" />
 
                 <TextView
@@ -77,11 +80,11 @@
                     android:fontFamily="@font/roboto_light"
                     android:maxLines="2"
                     android:text="Octyabrscaya st. 1/1 12"
-                    android:textSize="@dimen/small_text"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+                    android:textSize="@dimen/extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_address_icon"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView3"
-                    app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                    app:layout_constraintStart_toEndOf="@+id/iv_address_icon"
+                    app:layout_constraintTop_toTopOf="@+id/iv_address_icon" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -89,15 +92,15 @@
                 android:id="@+id/date_constraint_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/address_constraint_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/vertical_divider"
-                app:layout_constraintTop_toBottomOf="@+id/horizontal_divider">
+                app:layout_constraintTop_toTopOf="@+id/address_constraint_layout">
 
                 <ImageView
                     android:id="@+id/iv_calendar_icon"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
@@ -105,6 +108,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/tv_calendar_date"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:tint="@color/natural_black"
                     app:srcCompat="@drawable/ic__ionicons_svg_md_calendar" />
 
                 <TextView
@@ -117,7 +121,8 @@
                     android:fontFamily="@font/roboto_light"
                     android:maxLines="2"
                     android:text="Friday, 10 jan. 19:00"
-                    android:textSize="@dimen/small_text"
+                    android:textSize="@dimen/extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_calendar_icon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_calendar_icon"
                     app:layout_constraintTop_toTopOf="@+id/iv_calendar_icon" />

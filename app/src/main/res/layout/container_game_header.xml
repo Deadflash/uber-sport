@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,7 +10,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:padding="4dp"
         android:src="@drawable/avatar"
         app:civ_border_color="@color/blackTransparent"
         app:civ_border_width="1dp"
@@ -23,6 +25,7 @@
         android:layout_height="35dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic__ionicons_svg_md_football"
+        android:tint="@color/natural_black"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/linearLayout"
@@ -49,7 +52,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/roboto_bold"
             android:text="Author"
-            android:textColor="@color/black"
+            android:textColor="@color/natural_black"
             android:textSize="@dimen/large_text" />
 
         <TextView
@@ -68,12 +71,12 @@
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/roboto_bold"
         android:text="Football in Moscow"
-        android:textColor="@color/black"
-        android:textSize="@dimen/medium_text"
+        android:textColor="@color/natural_black"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -97,7 +100,7 @@
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@color/grey"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/tv_participants"
@@ -111,10 +114,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/roboto_bold"
         android:text="Participants"
-        android:textColor="@color/black"
+        android:textColor="@color/natural_black"
         android:textSize="@dimen/medium_text"
         app:layout_constraintEnd_toStartOf="@+id/tv_participants_count"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,14 +128,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/roboto_light"
         android:text="6 / 10"
         android:textSize="@dimen/small_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_participants"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toTopOf="@+id/tv_participants" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -150,8 +152,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_participant_1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/avatar"
@@ -163,8 +165,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_participant_2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/avatar"
@@ -176,8 +178,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_participant_3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginStart="56dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/avatar"
@@ -189,8 +191,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_participant_4"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginStart="76dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/avatar"
@@ -202,8 +204,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_participant_5"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginStart="96dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/avatar"
@@ -215,8 +217,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_participant_plus"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginStart="116dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/avatar"
