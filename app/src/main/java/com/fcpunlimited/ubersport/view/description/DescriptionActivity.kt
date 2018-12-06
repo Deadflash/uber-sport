@@ -2,6 +2,7 @@ package com.fcpunlimited.ubersport.view.description
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ScrollView
 import androidx.transition.Visibility
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.view.BaseMvpActivity
@@ -23,6 +24,7 @@ class DescriptionActivity : BaseMvpActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_description)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        scrollView.fullScroll(ScrollView.FOCUS_UP)
         initMap()
         initParticipants()
 //        initViewPager()
@@ -30,12 +32,12 @@ class DescriptionActivity : BaseMvpActivity(), OnMapReadyCallback {
     }
 
     private fun initParticipants(){
-        iv_participant_1.visibility = View.VISIBLE
-        iv_participant_2.visibility = View.VISIBLE
-        iv_participant_3.visibility = View.VISIBLE
-        iv_participant_4.visibility = View.VISIBLE
-        iv_participant_5.visibility = View.VISIBLE
-        iv_participant_plus.visibility = View.VISIBLE
+        iv_participant_1?.visibility = View.VISIBLE
+        iv_participant_2?.visibility = View.VISIBLE
+        iv_participant_3?.visibility = View.VISIBLE
+        iv_participant_4?.visibility = View.VISIBLE
+        iv_participant_5?.visibility = View.VISIBLE
+        iv_participant_plus?.visibility = View.VISIBLE
     }
 
 //    private fun initViewPager() {
