@@ -9,7 +9,17 @@
         android:layout_height="match_parent"
         android:id="@+id/swipe_refresh">
 
-        <include layout="@layout/recycler_container" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingStart="8dp"
+            android:paddingTop="72dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

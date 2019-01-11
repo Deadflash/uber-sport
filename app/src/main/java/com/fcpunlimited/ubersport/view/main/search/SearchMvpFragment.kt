@@ -14,7 +14,6 @@ import com.fcpunlimited.ubersport.utils.toDp
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem
-import kotlinx.android.synthetic.main.recycler_container.*
 import kotlinx.android.synthetic.main.swipe_refresh_recycler_container.*
 
 private const val ARG_PARAM1 = "param1"

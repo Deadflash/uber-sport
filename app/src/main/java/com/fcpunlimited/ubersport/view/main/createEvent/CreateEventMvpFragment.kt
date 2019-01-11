@@ -56,7 +56,7 @@ class CreateEventMvpFragment : BaseMvpFragment() {
         recycler.setHasFixedSize(true)
     }
 
-    override fun getFragmentLayout(): Int = R.layout.recycler_container
+    override fun getFragmentLayout(): Int = R.layout.fragment_create_event
 
     override fun getFragmentTag(): String = CREATE_EVENT_FRAGMENT_TAG
 
