@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.view.main.createEvent
+package com.fcpunlimited.ubersport.view.main.create_event
 
 
 import android.os.Bundle

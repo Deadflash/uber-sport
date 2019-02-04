@@ -5,7 +5,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.fcpunlimited.ubersport.utils.layout.FragmentTags.CREATE_EVENT_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.utils.layout.FragmentTags.PROFILE_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.utils.layout.FragmentTags.SEARCH_FRAGMENT_TAG
-import com.fcpunlimited.ubersport.view.main.createEvent.CreateEventMvpFragment
+import com.fcpunlimited.ubersport.view.main.create_event.CreateEventMvpFragment
 import com.fcpunlimited.ubersport.view.main.profile.ProfileMvpFragment
 import com.fcpunlimited.ubersport.view.main.search.SearchMvpFragment
 

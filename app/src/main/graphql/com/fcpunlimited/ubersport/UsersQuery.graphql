@@ -1,0 +1,19 @@
+query Users($userFilters: userFilters){
+    users(userFilters: $userFilters){
+    email
+    password
+    nickname
+    id
+    firstName
+    lastName
+    middleName
+    dateOfBirth
+    roles
+    favouriteSports{
+         name
+         id
+         participantsLimit
+       }
+    jwt
+  }
+}
