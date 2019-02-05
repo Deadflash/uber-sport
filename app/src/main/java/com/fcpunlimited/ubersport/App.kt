@@ -1,22 +1,25 @@
 package com.fcpunlimited.ubersport
 
 import android.app.Application
-import com.apollographql.apollo.ApolloClient
-import com.fcpunlimited.ubersport.view.main.search.SearchPresenter
-import okhttp3.OkHttpClient
-import org.koin.android.ext.android.startKoin
-import org.koin.dsl.module.applicationContext
+import com.fcpunlimited.ubersport.di.GraphQlClient
+import com.fcpunlimited.ubersport.di.GraphQlClientImpl
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 
 class App : Application() {
 
-    private val myModules = applicationContext {
-        bean { SearchPresenter() }
+    private val myModules = module {
+//        single { SearchPresenter() }
+        single<GraphQlClient> { GraphQlClientImpl() }
     }
 
     override fun onCreate() {
         super.onCreate()
 
-        startKoin(this, listOf(myModules))
+        startKoin {
+            logger()
+            modules(myModules)
+        }
     }
 }
