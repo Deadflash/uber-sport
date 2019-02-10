@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.di
+package com.fcpunlimited.ubersport.di.gql
 
 import com.apollographql.apollo.ApolloClient
 import okhttp3.OkHttpClient

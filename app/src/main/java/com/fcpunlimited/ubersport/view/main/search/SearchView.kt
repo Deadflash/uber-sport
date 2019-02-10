@@ -8,4 +8,6 @@ interface SearchView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun onSwipeRefresh(isRefreshing: Boolean)
+
+    fun test(message: String)
 }

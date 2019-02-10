@@ -1,8 +1,9 @@
 package com.fcpunlimited.ubersport
 
 import android.app.Application
-import com.fcpunlimited.ubersport.di.GraphQlClient
-import com.fcpunlimited.ubersport.di.GraphQlClientImpl
+import com.fcpunlimited.ubersport.di.gql.GraphQlClient
+import com.fcpunlimited.ubersport.di.gql.GraphQlClientImpl
+import com.fcpunlimited.ubersport.di.user.UserModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -10,8 +11,8 @@ import org.koin.dsl.module
 class App : Application() {
 
     private val myModules = module {
-//        single { SearchPresenter() }
         single<GraphQlClient> { GraphQlClientImpl() }
+        single { UserModel(get()) }
     }
 
     override fun onCreate() {
