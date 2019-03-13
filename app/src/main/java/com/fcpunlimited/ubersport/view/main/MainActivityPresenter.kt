@@ -13,23 +13,23 @@ import com.fcpunlimited.ubersport.view.main.search.SearchMvpFragment
 @InjectViewState
 class MainActivityPresenter : MvpPresenter<MainView>() {
 
-    private lateinit var searchFragment: SearchMvpFragment
-    private lateinit var createEventFragment: CreateEventMvpFragment
-    private lateinit var profileFragment: ProfileMvpFragment
+//    private lateinit var searchFragment: SearchMvpFragment
+//    private lateinit var createEventFragment: CreateEventMvpFragment
+//    private lateinit var profileFragment: ProfileMvpFragment
 
     fun initFragments() {
-        searchFragment = SearchMvpFragment.newInstance("", "")
-        createEventFragment = CreateEventMvpFragment.newInstance("", "")
-        profileFragment = ProfileMvpFragment.newInstance("", "")
+//        searchFragment = SearchMvpFragment.newInstance("", "")
+//        createEventFragment = CreateEventMvpFragment.newInstance("", "")
+//        profileFragment = ProfileMvpFragment.newInstance("", "")
     }
 
-    fun showFragmentByTag(tag: String) {
-        val fragment = when (tag) {
-            SEARCH_FRAGMENT_TAG -> searchFragment
-            CREATE_EVENT_FRAGMENT_TAG -> createEventFragment
-            PROFILE_FRAGMENT_TAG -> profileFragment
-            else -> searchFragment
-        }
-        viewState.replaceFragmentAndMenu(fragment)
-    }
+//    fun showFragmentByTag(tag: String) {
+//        val fragment = when (tag) {
+//            SEARCH_FRAGMENT_TAG -> searchFragment
+//            CREATE_EVENT_FRAGMENT_TAG -> createEventFragment
+//            PROFILE_FRAGMENT_TAG -> profileFragment
+//            else -> searchFragment
+//        }
+//        viewState.replaceFragmentAndMenu(fragment)
+//    }
 }
