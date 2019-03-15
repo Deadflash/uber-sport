@@ -3,14 +3,17 @@ package com.fcpunlimited.ubersport.view.main.search
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.fcpunlimited.ubersport.GamesQuery
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.di.user.UserModel
-import com.fcpunlimited.ubersport.struct.event.EventDto
-import com.fcpunlimited.ubersport.struct.event.EventType
+import com.fcpunlimited.ubersport.di.game.GameModel
+import com.fcpunlimited.ubersport.struct.game.GameDto
+import com.fcpunlimited.ubersport.struct.game.GameDtoDiffUtilCallback
 import com.fcpunlimited.ubersport.utils.layout.FragmentTags.SEARCH_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.utils.toDp
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
@@ -25,17 +28,14 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class SearchMvpFragment : BaseMvpFragment(), SearchView {
-    override fun test(message: String) {
-        context?.runOnUiThread { toast(message) }
-    }
 
-    private val userModel: UserModel by inject()
+    private val gameModel: GameModel by inject()
 
     @InjectPresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
     lateinit var presenter: SearchPresenter
 
     @ProvidePresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
-    fun providePresenter() = SearchPresenter(userModel)
+    fun providePresenter() = SearchPresenter(gameModel)
 
     private var param1: String? = null
     private var param2: String? = null
@@ -57,31 +57,37 @@ class SearchMvpFragment : BaseMvpFragment(), SearchView {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        lifecycle.addObserver(presenter)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        swipe_refresh.setProgressViewOffset(true,0.toDp,84.toDp)
-
-        val events = arrayListOf<IListItem>(EventDto("Football", 123L, "address", EventType.FOOTBALL),
-                EventDto("Alco Trash", 321, "address", EventType.ALCO_TRASH),
-                EventDto("Football", 123L, "address", EventType.FOOTBALL),
-                EventDto("Football", 123L, "address", EventType.FOOTBALL),
-                EventDto("Alco Trash", 321, "address", EventType.ALCO_TRASH),
-                EventDto("Football", 123L, "address", EventType.FOOTBALL),
-                EventDto("Football", 123L, "address", EventType.FOOTBALL))
+        swipe_refresh.setProgressViewOffset(true, 0.toDp, 84.toDp)
+        swipe_refresh.setOnRefreshListener {
+            presenter.onSwipeRefresh()
+        }
 
         val adapter = CustomAdapter()
-        adapter.add(events)
 
         recycler.layoutManager = LinearLayoutManager(this.context)
         recycler.adapter = adapter
         recycler.setHasFixedSize(true)
 
-        swipe_refresh.setOnRefreshListener {
-            presenter.onSwipeRefresh()
-        }
+        presenter.getGameData().observe(this, Observer<GamesQuery.Games> {
+            val gameItemsDto: ArrayList<IListItem> = it.games().map(::GameDto).toCollection(arrayListOf())
+            val oldGamesDto = adapter.getData() as ArrayList<GameDto>
+            val newGamesDto = gameItemsDto as ArrayList<GameDto>
+            val gameDtoDiffUtilCallback = GameDtoDiffUtilCallback(oldGamesDto, newGamesDto)
+
+            adapter.setData(gameItemsDto)
+            val difResult = DiffUtil.calculateDiff(gameDtoDiffUtilCallback)
+            difResult.dispatchUpdatesTo(adapter)
+        })
+    }
+
+    override fun showMessage(message: String) {
+        context?.runOnUiThread { toast(message) }
     }
 
     override fun onSwipeRefresh(isRefreshing: Boolean) {

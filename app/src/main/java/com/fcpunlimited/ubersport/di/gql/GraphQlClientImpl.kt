@@ -12,7 +12,6 @@ class GraphQlClientImpl: GraphQlClient {
     }
 
     private fun setupApollo(): ApolloClient {
-        println("test")
         val okHttp = OkHttpClient
                 .Builder()
                 .addInterceptor { chain ->

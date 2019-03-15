@@ -1,6 +1,7 @@
 package com.fcpunlimited.ubersport
 
 import android.app.Application
+import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.gql.GraphQlClient
 import com.fcpunlimited.ubersport.di.gql.GraphQlClientImpl
 import com.fcpunlimited.ubersport.di.user.UserModel
@@ -13,6 +14,7 @@ class App : Application() {
     private val myModules = module {
         single<GraphQlClient> { GraphQlClientImpl() }
         single { UserModel(get()) }
+        single { GameModel(get()) }
     }
 
     override fun onCreate() {

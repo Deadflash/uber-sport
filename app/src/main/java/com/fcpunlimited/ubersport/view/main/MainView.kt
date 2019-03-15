@@ -5,5 +5,4 @@ import com.fcpunlimited.ubersport.view.BaseMvpFragment
 
 interface MainView : MvpView {
 
-//    fun replaceFragmentAndMenu(fragment: BaseMvpFragment)
 }

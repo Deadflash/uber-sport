@@ -2,6 +2,5 @@ query Sports{
   sports{
     name
     id
-    participantsLimit
   }
 }

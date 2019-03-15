@@ -3,19 +3,23 @@ package com.fcpunlimited.ubersport.view.adapters
 import android.content.Context
 import android.content.Intent
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.event.CreateEventDto
-import com.fcpunlimited.ubersport.struct.event.EventDto
+import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.user.ParticipantDto
+import com.fcpunlimited.ubersport.utils.SportType
 import com.fcpunlimited.ubersport.view.adapters.holders.CreateEventViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.ParticipantViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.SearchEventViewHolder
 import com.fcpunlimited.ubersport.view.description.DescriptionActivity
 import com.squareup.picasso.Picasso
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.image
 import org.jetbrains.anko.singleTop
 import org.jetbrains.anko.toast
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CustomAdapter : BaseListAdapter() {
 
@@ -64,27 +68,57 @@ class CustomAdapter : BaseListAdapter() {
                 .error(R.color.colorAccent)
                 .into(holder.ivEventIcon)
 
-        holder.itemView.onClick { context.toast(event.eventName) }
+        holder.itemView.setOnClickListener { context.toast(event.eventName) }
     }
 
     private fun bindSearchView(holder: SearchEventViewHolder, position: Int,
                                items: ArrayList<IListItem>, context: Context) {
-        val event = items[position] as EventDto
 
-//        holder.tvEventName.text = event.eventName
-//        holder.tvEventAddress.text = "Октябрьская улица дом 1"
-//        holder.tvEventDate.text = "1.09.2018"
+        val game = (items[position] as GameDto).game
 
-//        when (event.eventType) {
-//            EventType.FOOTBALL -> {
-//                holder.ivEventTypeHeader.image =
-//                        ContextCompat.getDrawable(context, R.drawable.football_header)
-//                holder.ivEventHeaderGradient.image =
-//                        ContextCompat.getDrawable(context, R.drawable.rounded_border_rect)
-//            }
-//            else -> holder.ivEventTypeHeader.image =
-//                    ContextCompat.getDrawable(context, R.drawable.football_header)
-//        }
+        holder.tvEventName.text = game.name()
+        holder.tvEventDate.text = SimpleDateFormat("EEE dd-MMM h:mm", Locale.ROOT)
+                .format(game.dateStart().toLong())
+        game.location()?.let { holder.tvEventAddress.text = it.address() }
+        game.author()?.let {
+            holder.tvAuthor.text = it.nickname()
+            holder.tvSubtitle.text = "${it.firstName()} ${it.lastName()}"
+        }
+        game.length()?.let { holder.tvGameTime.text = SimpleDateFormat("HH:mm", Locale.ROOT).format(it) }
+        game.participants()?.let {
+            val participantsLimit = game.participantsLimit()?.toInt() ?: 0
+            holder.progressBar.max = participantsLimit
+            holder.progressBar.progress = it.size
+            holder.tvParticipantsCount.text = "${it.size}/$participantsLimit"
+        }
+        game.sport()?.let {
+            when (it.name()) {
+                SportType.Football.name -> {
+                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football)
+                }
+                SportType.Basketball.name -> {
+                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_baseball)
+
+                }
+                SportType.Bicycle.name -> {
+                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football)
+
+                }
+                SportType.Paintball.name -> {
+                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football)
+
+                }
+                SportType.Tennis.name -> {
+                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_tennisball)
+
+                }
+                SportType.Volleyball.name -> {
+                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_tennisball)
+
+                }
+                else -> holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football)
+            }
+        }
 
 //        Picasso.get().load("http://i.imgur.com/DvpvklR.png")
 //                .fit()
@@ -99,7 +133,7 @@ class CustomAdapter : BaseListAdapter() {
 //                .fit()
 //                .into(holder.ivEventPlayerThree)
 
-        holder.itemView.onClick {
+        holder.itemView.setOnClickListener {
             context
                     .startActivity(Intent(context, DescriptionActivity::class.java)
                             .singleTop())

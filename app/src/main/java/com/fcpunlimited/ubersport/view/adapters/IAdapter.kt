@@ -6,4 +6,6 @@ interface IAdapter<T> {
     fun addAtPosition(pos : Int, newItem : T)
     fun remove(position: Int)
     fun clearAll()
+    fun getData(): ArrayList<T>
+    fun setData(items: ArrayList<T>)
 }

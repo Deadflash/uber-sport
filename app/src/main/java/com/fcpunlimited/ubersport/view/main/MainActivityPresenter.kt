@@ -1,5 +1,9 @@
 package com.fcpunlimited.ubersport.view.main
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.fcpunlimited.ubersport.di.gql.GraphQlClient
@@ -11,25 +15,20 @@ import com.fcpunlimited.ubersport.view.main.profile.ProfileMvpFragment
 import com.fcpunlimited.ubersport.view.main.search.SearchMvpFragment
 
 @InjectViewState
-class MainActivityPresenter : MvpPresenter<MainView>() {
+class MainActivityPresenter : MvpPresenter<MainView>(), LifecycleObserver {
 
-//    private lateinit var searchFragment: SearchMvpFragment
-//    private lateinit var createEventFragment: CreateEventMvpFragment
-//    private lateinit var profileFragment: ProfileMvpFragment
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun initFragments(owner: LifecycleOwner) {
 
-    fun initFragments() {
-//        searchFragment = SearchMvpFragment.newInstance("", "")
-//        createEventFragment = CreateEventMvpFragment.newInstance("", "")
-//        profileFragment = ProfileMvpFragment.newInstance("", "")
     }
 
-//    fun showFragmentByTag(tag: String) {
-//        val fragment = when (tag) {
-//            SEARCH_FRAGMENT_TAG -> searchFragment
-//            CREATE_EVENT_FRAGMENT_TAG -> createEventFragment
-//            PROFILE_FRAGMENT_TAG -> profileFragment
-//            else -> searchFragment
-//        }
-//        viewState.replaceFragmentAndMenu(fragment)
-//    }
+    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
+    fun anyLifecycleEvent(owner: LifecycleOwner, event: Lifecycle.Event){
+
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun onDestroyLifecycle(){
+
+    }
 }

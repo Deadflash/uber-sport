@@ -1,5 +1,5 @@
-query Users($userFilters: userFilters){
-    users(userFilters: $userFilters){
+query Users{
+    users{
     email
     password
     nickname
@@ -12,7 +12,6 @@ query Users($userFilters: userFilters){
     favouriteSports{
          name
          id
-         participantsLimit
        }
   }
 }

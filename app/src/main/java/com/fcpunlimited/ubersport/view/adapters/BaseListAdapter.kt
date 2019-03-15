@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), IAdapter<IListItem> {
 
-    protected val items: ArrayList<IListItem> = ArrayList()
+    protected var items: ArrayList<IListItem> = ArrayList()
 
     override fun getItemCount() = items.size
 
@@ -18,29 +18,35 @@ abstract class BaseListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
     override fun add(newItem: IListItem) {
         items.add(newItem)
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
     }
 
     override fun add(newItems: ArrayList<IListItem>?) {
 
         for (newItem in newItems ?: return) {
             items.add(newItem)
-            notifyDataSetChanged()
+//        notifyDataSetChanged()
         }
     }
 
     override fun addAtPosition(pos: Int, newItem: IListItem) {
         items.add(pos, newItem)
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
     }
 
     override fun clearAll() {
         items.clear()
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
     }
 
     override fun remove(position: Int) {
         items.removeAt(position)
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
+    }
+
+    override fun getData(): ArrayList<IListItem> = items
+
+    override fun setData(items: ArrayList<IListItem>) {
+        this.items = items
     }
 }

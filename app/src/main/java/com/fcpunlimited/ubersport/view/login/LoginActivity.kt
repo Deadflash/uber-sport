@@ -15,7 +15,7 @@ class LoginActivity : BaseMvpActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        et_password.error = " test error"
+        et_password.error = " showMessage error"
 
         bt_login.onClick {
             startActivity(Intent(this@LoginActivity,
