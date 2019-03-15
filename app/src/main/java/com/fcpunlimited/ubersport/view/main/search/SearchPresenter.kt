@@ -6,6 +6,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.fcpunlimited.ubersport.GamesQuery
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.gql.GraphQlResponseCallback
+import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.type.GameFiltersInput
 import com.fcpunlimited.ubersport.type.GameStatus
 
@@ -13,9 +14,9 @@ import com.fcpunlimited.ubersport.type.GameStatus
 class SearchPresenter(private val gameModel: GameModel) : MvpPresenter<SearchView>(),
         GraphQlResponseCallback<GamesQuery.Data>, LifecycleObserver {
 
-    private val gameData: MutableLiveData<GamesQuery.Games> = MutableLiveData()
+    private val gameData: MutableLiveData<List<GameDto>> = MutableLiveData()
 
-    fun getGameData(): LiveData<GamesQuery.Games> = gameData
+    fun getGameData(): LiveData<List<GameDto>> = gameData
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreateSearchView() {
@@ -33,7 +34,7 @@ class SearchPresenter(private val gameModel: GameModel) : MvpPresenter<SearchVie
     }
 
     override fun onOkResponse(data: GamesQuery.Data) {
-        gameData.postValue(data.games())
+        gameData.postValue(data.games()?.games()?.map(::GameDto)?.toCollection(arrayListOf()))
         viewState.onSwipeRefresh(false)
     }
 

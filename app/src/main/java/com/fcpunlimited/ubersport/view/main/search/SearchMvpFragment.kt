@@ -1,9 +1,11 @@
 package com.fcpunlimited.ubersport.view.main.search
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -19,15 +21,18 @@ import com.fcpunlimited.ubersport.utils.toDp
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem
+import com.fcpunlimited.ubersport.view.adapters.INavigation
+import com.fcpunlimited.ubersport.view.description.DescriptionActivity
 import kotlinx.android.synthetic.main.swipe_refresh_recycler_container.*
 import org.jetbrains.anko.runOnUiThread
+import org.jetbrains.anko.singleTop
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class SearchMvpFragment : BaseMvpFragment(), SearchView {
+class SearchMvpFragment : BaseMvpFragment(), SearchView, INavigation {
 
     private val gameModel: GameModel by inject()
 
@@ -69,20 +74,17 @@ class SearchMvpFragment : BaseMvpFragment(), SearchView {
         }
 
         val adapter = CustomAdapter()
+        lifecycle.addObserver(adapter)
 
         recycler.layoutManager = LinearLayoutManager(this.context)
         recycler.adapter = adapter
         recycler.setHasFixedSize(true)
 
-        presenter.getGameData().observe(this, Observer<GamesQuery.Games> {
-            val gameItemsDto: ArrayList<IListItem> = it.games().map(::GameDto).toCollection(arrayListOf())
-            val oldGamesDto = adapter.getData() as ArrayList<GameDto>
-            val newGamesDto = gameItemsDto as ArrayList<GameDto>
-            val gameDtoDiffUtilCallback = GameDtoDiffUtilCallback(oldGamesDto, newGamesDto)
-
-            adapter.setData(gameItemsDto)
-            val difResult = DiffUtil.calculateDiff(gameDtoDiffUtilCallback)
-            difResult.dispatchUpdatesTo(adapter)
+        presenter.getGameData().observe(this, Observer<List<GameDto>> {
+            val gameDtoDiffUtilCallback =
+                    GameDtoDiffUtilCallback(adapter.getData() as ArrayList<GameDto>, it)
+            adapter.setData(it as ArrayList<IListItem>)
+            DiffUtil.calculateDiff(gameDtoDiffUtilCallback).dispatchUpdatesTo(adapter)
         })
     }
 
@@ -92,6 +94,11 @@ class SearchMvpFragment : BaseMvpFragment(), SearchView {
 
     override fun onSwipeRefresh(isRefreshing: Boolean) {
         swipe_refresh.isRefreshing = isRefreshing
+    }
+
+    override fun navigate() {
+        Navigation.findNavController(recycler).navigate(R.id.action_searchMvpFragment_to_descriptionActivity)
+
     }
 
     override fun onAttach(context: Context) {

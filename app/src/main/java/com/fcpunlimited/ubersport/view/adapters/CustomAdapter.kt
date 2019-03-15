@@ -1,9 +1,12 @@
 package com.fcpunlimited.ubersport.view.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.RecyclerView
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.event.CreateEventDto
@@ -13,15 +16,27 @@ import com.fcpunlimited.ubersport.utils.SportType
 import com.fcpunlimited.ubersport.view.adapters.holders.CreateEventViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.ParticipantViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.SearchEventViewHolder
-import com.fcpunlimited.ubersport.view.description.DescriptionActivity
+import com.fcpunlimited.ubersport.view.main.search.SearchMvpFragment
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.image
-import org.jetbrains.anko.singleTop
 import org.jetbrains.anko.toast
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CustomAdapter : BaseListAdapter() {
+class CustomAdapter : BaseListAdapter(), LifecycleObserver {
+
+    private var iNavigation: INavigation? = null
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun addListener(owner: LifecycleOwner) {
+        if (owner is SearchMvpFragment)
+            this.iNavigation = owner
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun removeListener() {
+        iNavigation = null
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val context = parent.context
@@ -134,9 +149,7 @@ class CustomAdapter : BaseListAdapter() {
 //                .into(holder.ivEventPlayerThree)
 
         holder.itemView.setOnClickListener {
-            context
-                    .startActivity(Intent(context, DescriptionActivity::class.java)
-                            .singleTop())
+            iNavigation?.navigate()
         }
     }
 }
