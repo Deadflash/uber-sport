@@ -38,8 +38,8 @@ class SearchPresenter(private val gameModel: GameModel) : MvpPresenter<SearchVie
         viewState.onSwipeRefresh(false)
     }
 
-    override fun onErrorResponse() {
-        viewState.showMessage("error")
+    override fun onErrorResponse(message: String) {
+        viewState.showMessage(message)
         viewState.onSwipeRefresh(false)
     }
 }

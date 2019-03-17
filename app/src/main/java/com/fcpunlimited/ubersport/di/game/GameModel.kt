@@ -16,12 +16,12 @@ class GameModel(private val graphQlClient: GraphQlClient) {
                 .build())
                 .enqueue(object : ApolloCall.Callback<GamesQuery.Data>() {
                     override fun onFailure(e: ApolloException) {
-                        callBack.onErrorResponse()
+                        e.message?.let { callBack.onErrorResponse(it) }
                     }
 
                     override fun onResponse(response: Response<GamesQuery.Data>) {
                         if (response.hasErrors())
-                            callBack.onErrorResponse()
+                            callBack.onErrorResponse(response.errors().toString())
                         else
                             callBack.onOkResponse(response.data()!!)
                     }

@@ -1,7 +1,6 @@
 package com.fcpunlimited.ubersport.view.main.search
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -22,10 +21,9 @@ import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem
 import com.fcpunlimited.ubersport.view.adapters.INavigation
-import com.fcpunlimited.ubersport.view.description.DescriptionActivity
+import com.fcpunlimited.ubersport.view.description.DescriptionActivityParcel
 import kotlinx.android.synthetic.main.swipe_refresh_recycler_container.*
 import org.jetbrains.anko.runOnUiThread
-import org.jetbrains.anko.singleTop
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
@@ -35,6 +33,7 @@ private const val ARG_PARAM2 = "param2"
 class SearchMvpFragment : BaseMvpFragment(), SearchView, INavigation {
 
     private val gameModel: GameModel by inject()
+    private val descriptionActivityParcel: DescriptionActivityParcel by inject()
 
     @InjectPresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
     lateinit var presenter: SearchPresenter
@@ -96,7 +95,8 @@ class SearchMvpFragment : BaseMvpFragment(), SearchView, INavigation {
         swipe_refresh.isRefreshing = isRefreshing
     }
 
-    override fun navigate() {
+    override fun navigate(game: GamesQuery.Game) {
+        descriptionActivityParcel.game = game
         Navigation.findNavController(recycler).navigate(R.id.action_searchMvpFragment_to_descriptionActivity)
 
     }

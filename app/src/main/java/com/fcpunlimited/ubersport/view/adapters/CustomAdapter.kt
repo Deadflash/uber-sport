@@ -135,21 +135,8 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
             }
         }
 
-//        Picasso.get().load("http://i.imgur.com/DvpvklR.png")
-//                .fit()
-//                .error(R.color.colorAccent)
-//                .into(holder.ivEventPlayerOne)
-//
-//        Picasso.get().load("http://i.imgur.com/DvpvklR.png")
-//                .fit()
-//                .into(holder.ivEventPlayerTwo)
-//
-//        Picasso.get().load("http://i.imgur.com/DvpvklR.png")
-//                .fit()
-//                .into(holder.ivEventPlayerThree)
-
         holder.itemView.setOnClickListener {
-            iNavigation?.navigate()
+            iNavigation?.navigate(game)
         }
     }
 }
