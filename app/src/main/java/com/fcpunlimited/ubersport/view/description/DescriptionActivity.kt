@@ -3,7 +3,9 @@ package com.fcpunlimited.ubersport.view.description
 import android.os.Bundle
 import android.view.View
 import android.widget.ScrollView
+import androidx.core.content.ContextCompat
 import com.fcpunlimited.ubersport.R
+import com.fcpunlimited.ubersport.utils.SportType
 import com.fcpunlimited.ubersport.view.BaseMvpActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -13,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_description.*
 import kotlinx.android.synthetic.main.container_game_header.*
+import org.jetbrains.anko.image
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -57,6 +60,33 @@ class DescriptionActivity : BaseMvpActivity(), OnMapReadyCallback {
             progressBar.max = participantsLimit
             progressBar.progress = it.size
             tv_participants_count.text = "${it.size}/$participantsLimit"
+        }
+        game.sport()?.let {
+            when (it.name()) {
+                SportType.Football.name -> {
+                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_football)
+                }
+                SportType.Basketball.name -> {
+                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_baseball)
+
+                }
+                SportType.Bicycle.name -> {
+                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_football)
+
+                }
+                SportType.Paintball.name -> {
+                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_football)
+
+                }
+                SportType.Tennis.name -> {
+                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_tennisball)
+
+                }
+                SportType.Volleyball.name -> {
+                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_tennisball)
+                }
+                else -> iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_football)
+            }
         }
     }
 

@@ -129,7 +129,6 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
                 }
                 SportType.Volleyball.name -> {
                     holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_tennisball)
-
                 }
                 else -> holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football)
             }
