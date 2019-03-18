@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/create_game"
-        android:name="com.fcpunlimited.ubersport.view.main.search.SearchMvpFragment"
+        android:name="com.fcpunlimited.ubersport.view.main.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
         <action

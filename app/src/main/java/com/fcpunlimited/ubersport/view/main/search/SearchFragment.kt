@@ -21,7 +21,7 @@ import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem
 import com.fcpunlimited.ubersport.view.adapters.INavigation
-import com.fcpunlimited.ubersport.view.description.DescriptionParcel
+import com.fcpunlimited.ubersport.view.main.MainActivity
 import kotlinx.android.synthetic.main.swipe_refresh_recycler_container.*
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
@@ -30,10 +30,10 @@ import org.koin.android.ext.android.inject
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class SearchMvpFragment : BaseMvpFragment(), SearchView, INavigation {
+class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
 
     private val gameModel: GameModel by inject()
-    private val descriptionParcel: DescriptionParcel by inject()
+    private var gameProvider: IGameShare.IGameProvider? = null
 
     @InjectPresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
     lateinit var presenter: SearchPresenter
@@ -85,17 +85,19 @@ class SearchMvpFragment : BaseMvpFragment(), SearchView, INavigation {
     }
 
     override fun navigate(game: GamesQuery.Game) {
-        descriptionParcel.game = game
-//        Navigation.findNavController(recycler).navigate(R.id.action_searchMvpFragment_to_descriptionActivity)
+        gameProvider?.provideGame(game)
         findNavController().navigate(R.id.action_create_game_to_description_game)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        if (context is MainActivity)
+            gameProvider = context
     }
 
     override fun onDetach() {
         super.onDetach()
+        gameProvider = null
     }
 
     override fun getFragmentLayout(): Int = R.layout.fragment_search

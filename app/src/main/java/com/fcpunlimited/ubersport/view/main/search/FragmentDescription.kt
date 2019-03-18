@@ -1,15 +1,17 @@
 package com.fcpunlimited.ubersport.view.main.search
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
+import com.fcpunlimited.ubersport.GamesQuery
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.utils.SportType
 import com.fcpunlimited.ubersport.utils.layout.FragmentTags.DESCRIPTION_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
-import com.fcpunlimited.ubersport.view.description.DescriptionParcel
+import com.fcpunlimited.ubersport.view.main.MainActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -19,7 +21,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.container_game_header.*
 import kotlinx.android.synthetic.main.fragment_description.*
 import org.jetbrains.anko.image
-import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,24 +28,39 @@ class Description : BaseMvpFragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
-    private val descriptionParcel: DescriptionParcel by inject()
+    private var gameConsumer: IGameShare.IGameConsumer? = null
+    private var game: GamesQuery.Game? = null
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is MainActivity) {
+            gameConsumer = context
+            game = gameConsumer?.consumeGame()
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        gameConsumer = null
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         scrollView.fullScroll(ScrollView.FOCUS_UP)
-        initMap()
-        initParticipants()
+        game?.let {
+            setupView(it)
+            initMap()
+        }
     }
 
-    private fun initParticipants() {
+    private fun setupView(game: GamesQuery.Game) {
+
         iv_participant_1?.visibility = View.VISIBLE
         iv_participant_2?.visibility = View.VISIBLE
         iv_participant_3?.visibility = View.VISIBLE
         iv_participant_4?.visibility = View.VISIBLE
         iv_participant_5?.visibility = View.VISIBLE
         iv_participant_plus?.visibility = View.VISIBLE
-
-        val game = descriptionParcel.game
 
         game.author()?.let {
             tv_author.text = it.nickname()
@@ -101,7 +117,7 @@ class Description : BaseMvpFragment(), OnMapReadyCallback {
         mMap = googleMap
         mMap.uiSettings.isScrollGesturesEnabled = false
         mMap.uiSettings.isZoomGesturesEnabled = false
-        val location = descriptionParcel.game?.location()
+        val location = game?.location()
         location?.latitude()?.let { lat ->
             location.longitude().let { lng ->
                 val latlng = LatLng(lat, lng)

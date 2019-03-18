@@ -16,7 +16,7 @@ import com.fcpunlimited.ubersport.utils.SportType
 import com.fcpunlimited.ubersport.view.adapters.holders.CreateEventViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.ParticipantViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.SearchEventViewHolder
-import com.fcpunlimited.ubersport.view.main.search.SearchMvpFragment
+import com.fcpunlimited.ubersport.view.main.search.SearchFragment
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.image
 import org.jetbrains.anko.toast
@@ -29,7 +29,7 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun addListener(owner: LifecycleOwner) {
-        if (owner is SearchMvpFragment)
+        if (owner is SearchFragment)
             this.iNavigation = owner
     }
 
