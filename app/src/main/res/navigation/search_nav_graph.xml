@@ -2,16 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_nav_graph"
-    app:startDestination="@id/searchMvpFragment">
+    android:id="@+id/search"
+    app:startDestination="@id/create_game">
+
 
     <fragment
-        android:id="@+id/createEventMvpFragment"
-        android:name="com.fcpunlimited.ubersport.view.main.create_event.CreateEventMvpFragment"
-        android:label="fragment_create_event"
-        tools:layout="@layout/fragment_create_event" />
-    <fragment
-        android:id="@+id/searchMvpFragment"
+        android:id="@+id/create_game"
         android:name="com.fcpunlimited.ubersport.view.main.search.SearchMvpFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
@@ -20,11 +16,6 @@
             app:destination="@id/descriptionActivity"
             app:launchSingleTop="true" />
     </fragment>
-    <fragment
-        android:id="@+id/profileMvpFragment"
-        android:name="com.fcpunlimited.ubersport.view.main.profile.ProfileMvpFragment"
-        android:label="ProfileMvpFragment"
-        tools:layout="@layout/fragment_profile"/>
     <activity
         android:id="@+id/descriptionActivity"
         android:name="com.fcpunlimited.ubersport.view.description.DescriptionActivity"

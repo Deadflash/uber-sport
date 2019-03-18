@@ -30,14 +30,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation group: 'androidx.core', name: 'core-ktx', version: '1.0.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     implementation 'com.arello-mobile:moxy:1.5.5'
     implementation 'androidx.annotation:annotation:1.0.2'
     kapt 'com.arello-mobile:moxy-compiler:1.5.5'
-//    implementation 'com.arello-mobile:moxy-android:1.5.5'
     implementation 'com.arello-mobile:moxy-app-compat:1.5.5'
-//    implementation 'com.google.android.material:material:1.0.0-rc01'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -52,6 +51,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation "com.apollographql.apollo:apollo-runtime:$gql_version"
     testImplementation 'junit:junit:4.12'
-    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
-    implementation 'android.arch.navigation:navigation-ui:1.0.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
+    implementation "androidx.navigation:navigation-ui-ktx:2.0.0"
 }
