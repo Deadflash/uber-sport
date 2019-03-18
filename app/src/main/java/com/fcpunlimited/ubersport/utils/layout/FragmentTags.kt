@@ -4,4 +4,5 @@ object FragmentTags {
     const val SEARCH_FRAGMENT_TAG = "searchFragment"
     const val PROFILE_FRAGMENT_TAG = "profileFragment"
     const val CREATE_EVENT_FRAGMENT_TAG = "createEventFragment"
+    const val DESCRIPTION_FRAGMENT_TAG = "descriptionFragment"
 }

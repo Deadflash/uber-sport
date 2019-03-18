@@ -8,7 +8,7 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="createEventMvpFragment">
+                  <entry key="create_game">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -119,7 +119,7 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="createEventMvpFragment">
+                  <entry key="create_game">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -128,16 +128,37 @@
                             <option name="y" value="12" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_searchMvpFragment_to_descriptionActivity">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="profileMvpFragment">
+                  <entry key="descriptionActivity">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="168" />
+                            <option name="x" value="256" />
                             <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="description_game">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="259" />
+                            <option name="y" value="275" />
                           </Point>
                         </option>
                       </LayoutPositions>

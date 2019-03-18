@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -97,8 +98,8 @@ class SearchMvpFragment : BaseMvpFragment(), SearchView, INavigation {
 
     override fun navigate(game: GamesQuery.Game) {
         descriptionActivityParcel.game = game
-        Navigation.findNavController(recycler).navigate(R.id.action_searchMvpFragment_to_descriptionActivity)
-
+//        Navigation.findNavController(recycler).navigate(R.id.action_searchMvpFragment_to_descriptionActivity)
+        findNavController().navigate(R.id.action_create_game_to_description_game)
     }
 
     override fun onAttach(context: Context) {

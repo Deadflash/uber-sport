@@ -6,8 +6,6 @@
     <string name="title_statistics">Статистика</string>
     <string name="title_activity_description">Map</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank mvpFragment</string>
     <string name="filter">filter</string>
     <string name="create">create</string>
     <string name="title_activity_login">Sign in</string>

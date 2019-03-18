@@ -12,13 +12,12 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
         <action
-            android:id="@+id/action_searchMvpFragment_to_descriptionActivity"
-            app:destination="@id/descriptionActivity"
-            app:launchSingleTop="true" />
+            android:id="@+id/action_create_game_to_description_game"
+            app:destination="@id/description_game" />
     </fragment>
-    <activity
-        android:id="@+id/descriptionActivity"
-        android:name="com.fcpunlimited.ubersport.view.description.DescriptionActivity"
-        android:label="DescriptionActivity"
-        tools:layout="@layout/activity_description"/>
+    <fragment
+        android:id="@+id/description_game"
+        android:name="com.fcpunlimited.ubersport.view.main.search.Description"
+        android:label="fragment_description"
+        tools:layout="@layout/fragment_description" />
 </navigation>

@@ -1,4 +1,5 @@
-package com.fcpunlimited.ubersport.view.description
+package com.fcpunlimited.ubersport.view.main.search
+
 
 import android.os.Bundle
 import android.view.View
@@ -6,29 +7,30 @@ import android.widget.ScrollView
 import androidx.core.content.ContextCompat
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.utils.SportType
-import com.fcpunlimited.ubersport.view.BaseMvpActivity
+import com.fcpunlimited.ubersport.utils.layout.FragmentTags.DESCRIPTION_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.view.BaseMvpFragment
+import com.fcpunlimited.ubersport.view.description.DescriptionActivityParcel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_description.*
 import kotlinx.android.synthetic.main.container_game_header.*
+import kotlinx.android.synthetic.main.fragment_description.*
 import org.jetbrains.anko.image
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DescriptionActivity : BaseMvpActivity(), OnMapReadyCallback {
+class Description : BaseMvpFragment(), OnMapReadyCallback {
 
-    private val descriptionActivityParcel: DescriptionActivityParcel by inject()
     private lateinit var mMap: GoogleMap
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_description)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+    private val descriptionActivityParcel: DescriptionActivityParcel by inject()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         scrollView.fullScroll(ScrollView.FOCUS_UP)
         initMap()
         initParticipants()
@@ -61,38 +63,37 @@ class DescriptionActivity : BaseMvpActivity(), OnMapReadyCallback {
             progressBar.progress = it.size
             tv_participants_count.text = "${it.size}/$participantsLimit"
         }
-        game.sport()?.let {
-            when (it.name()) {
+        game.sport().let {
+            when (it?.name()) {
                 SportType.Football.name -> {
-                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_football)
+                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football) }
                 }
                 SportType.Basketball.name -> {
-                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_baseball)
+                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_baseball) }
 
                 }
                 SportType.Bicycle.name -> {
-                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_football)
+                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football) }
 
                 }
                 SportType.Paintball.name -> {
-                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_football)
+                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football) }
 
                 }
                 SportType.Tennis.name -> {
-                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_tennisball)
+                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_tennisball) }
 
                 }
                 SportType.Volleyball.name -> {
-                    iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_tennisball)
+                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_tennisball) }
                 }
-                else -> iv_sport_icon.image = ContextCompat.getDrawable(this, R.drawable.ic__ionicons_svg_md_football)
+                else -> iv_sport_icon.image = context?.let { ContextCompat.getDrawable(it, R.drawable.ic__ionicons_svg_md_football) }
             }
         }
     }
 
     private fun initMap() {
-        val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
@@ -109,4 +110,10 @@ class DescriptionActivity : BaseMvpActivity(), OnMapReadyCallback {
             }
         }
     }
+
+    override fun getFragmentLayout(): Int = R.layout.fragment_description
+
+    override fun getFragmentTag(): String = DESCRIPTION_FRAGMENT_TAG
+
+    override fun getFragmentMenu(): Int? = null
 }
