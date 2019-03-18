@@ -9,7 +9,7 @@ import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.utils.SportType
 import com.fcpunlimited.ubersport.utils.layout.FragmentTags.DESCRIPTION_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
-import com.fcpunlimited.ubersport.view.description.DescriptionActivityParcel
+import com.fcpunlimited.ubersport.view.description.DescriptionParcel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,7 +27,7 @@ class Description : BaseMvpFragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
-    private val descriptionActivityParcel: DescriptionActivityParcel by inject()
+    private val descriptionParcel: DescriptionParcel by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,7 +44,7 @@ class Description : BaseMvpFragment(), OnMapReadyCallback {
         iv_participant_5?.visibility = View.VISIBLE
         iv_participant_plus?.visibility = View.VISIBLE
 
-        val game = descriptionActivityParcel.game
+        val game = descriptionParcel.game
 
         game.author()?.let {
             tv_author.text = it.nickname()
@@ -101,7 +101,7 @@ class Description : BaseMvpFragment(), OnMapReadyCallback {
         mMap = googleMap
         mMap.uiSettings.isScrollGesturesEnabled = false
         mMap.uiSettings.isZoomGesturesEnabled = false
-        val location = descriptionActivityParcel.game?.location()
+        val location = descriptionParcel.game?.location()
         location?.latitude()?.let { lat ->
             location.longitude().let { lng ->
                 val latlng = LatLng(lat, lng)
