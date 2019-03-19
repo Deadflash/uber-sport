@@ -18,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.container_game_header.*
 import kotlinx.android.synthetic.main.fragment_description.*
 import org.jetbrains.anko.image
@@ -55,12 +56,8 @@ class FragmentDescription : BaseMvpFragment(), OnMapReadyCallback {
 
     private fun setupView(game: GamesQuery.Game) {
 
-        iv_participant_1?.visibility = View.VISIBLE
-        iv_participant_2?.visibility = View.VISIBLE
-        iv_participant_3?.visibility = View.VISIBLE
-        iv_participant_4?.visibility = View.VISIBLE
-        iv_participant_5?.visibility = View.VISIBLE
-        iv_participant_plus?.visibility = View.VISIBLE
+        val participantsAvatars = arrayOf(iv_participant_1, iv_participant_2,
+                iv_participant_3, iv_participant_4, iv_participant_5, iv_participant_plus)
 
         game.author()?.let {
             tv_author.text = it.nickname()
@@ -78,6 +75,15 @@ class FragmentDescription : BaseMvpFragment(), OnMapReadyCallback {
             progressBar.max = participantsLimit
             progressBar.progress = it.size
             tv_participants_count.text = "${it.size}/$participantsLimit"
+
+            for (position in 0 until it.size){
+                val participantAvatar = participantsAvatars[position]
+                participantAvatar.visibility = View.VISIBLE
+                Picasso.get().load(R.drawable.avatar)
+                        .fit()
+                        .error(R.color.colorAccent)
+                        .into(participantAvatar)
+            }
         }
         game.sport().let {
             when (it?.name()) {
