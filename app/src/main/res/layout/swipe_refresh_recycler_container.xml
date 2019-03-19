@@ -15,9 +15,10 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingStart="8dp"
+            android:overScrollMode="never"
             android:paddingTop="72dp"
             android:paddingEnd="8dp"
-            android:paddingBottom="8dp">
+            android:paddingBottom="64dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 

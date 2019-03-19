@@ -135,7 +135,7 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
         }
 
         holder.itemView.setOnClickListener {
-            iNavigation?.navigate(game)
+            iNavigation?.navigate((items[position] as GameDto).copy().game)
         }
     }
 }

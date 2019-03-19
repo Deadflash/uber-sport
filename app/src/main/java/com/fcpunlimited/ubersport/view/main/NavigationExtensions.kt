@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.fcpunlimited.ubersport.R
+import com.fcpunlimited.ubersport.view.main.search.CurvedBottomNavigationView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
@@ -17,7 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
  *
  * This sample is a workaround until the Navigation Component supports multiple back stacks.
  */
-fun BottomNavigationView.setupWithNavController(
+fun CurvedBottomNavigationView.setupWithNavController(
         navGraphIds: List<Int>,
         fragmentManager: FragmentManager,
         containerId: Int,
@@ -75,7 +76,7 @@ fun BottomNavigationView.setupWithNavController(
             false
         } else {
             val newlySelectedItemTag = graphIdToTagMap[item.itemId]
-            if (selectedItemTag != newlySelectedItemTag) {
+            if (newlySelectedItemTag != null && selectedItemTag != newlySelectedItemTag) {
                 // Pop everything above the first fragment (the "fixed start destination")
                 fragmentManager.popBackStack(firstFragmentTag,
                         FragmentManager.POP_BACK_STACK_INCLUSIVE)

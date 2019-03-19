@@ -8,25 +8,30 @@
     android:orientation="vertical"
     tools:context=".view.main.MainActivity">
 
-    <!--<include-->
-    <!--layout="@layout/fragment_container"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_above="@id/navigation" />-->
-
     <FrameLayout
         android:id="@+id/main_nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/navigation" />
+        android:layout_height="match_parent" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="28dp"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <com.fcpunlimited.ubersport.view.main.search.CurvedBottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/transparent"
         app:elevation="5dp"
+        app:itemBackground="@color/transparent"
         app:itemIconTint="@color/bottom_icon_color_selector"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/navigation" />

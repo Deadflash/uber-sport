@@ -24,7 +24,7 @@ import org.jetbrains.anko.image
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Description : BaseMvpFragment(), OnMapReadyCallback {
+class FragmentDescription : BaseMvpFragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 

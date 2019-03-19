@@ -12,6 +12,15 @@
         android:title="" />
 
     <item
+        android:id="@+id/create"
+        android:title="" />
+
+    <item
+        android:id="@+id/message"
+        android:icon="@drawable/baseline_note_add_24"
+        android:title="" />
+
+    <item
         android:id="@+id/profile"
         android:icon="@drawable/baseline_person_24"
         android:title="" />
