@@ -5,14 +5,14 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.fcpunlimited.ubersport.GamesQuery
 import com.fcpunlimited.ubersport.di.game.GameModel
-import com.fcpunlimited.ubersport.di.gql.GraphQlResponseCallback
+import com.fcpunlimited.ubersport.di.api.HttpResponseCallBack
 import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.type.GameFiltersInput
 import com.fcpunlimited.ubersport.type.GameStatus
 
 @InjectViewState
 class SearchPresenter(private val gameModel: GameModel) : MvpPresenter<SearchView>(),
-        GraphQlResponseCallback<GamesQuery.Data>, LifecycleObserver {
+        HttpResponseCallBack<GamesQuery.Data>, LifecycleObserver {
 
     private val gameData: MutableLiveData<List<GameDto>> = MutableLiveData()
 

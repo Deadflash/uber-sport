@@ -11,17 +11,12 @@ import com.arellomobile.mvp.MvpPresenter
 class MainActivityPresenter : MvpPresenter<MainView>(), LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun initFragments(owner: LifecycleOwner) {
-
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
-    fun anyLifecycleEvent(owner: LifecycleOwner, event: Lifecycle.Event){
+    fun onCreateActivity(owner: LifecycleOwner) {
 
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroyLifecycle(){
+    fun onDestroyActivity() {
 
     }
 }

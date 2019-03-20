@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseMvpActivity(), MainView, IGameShare.IGameProvider, IGameShare.IGameConsumer {
 
+
     @InjectPresenter(type = PresenterType.GLOBAL, tag = "MAIN_PRESENTER")
     lateinit var presenter: MainActivityPresenter
 

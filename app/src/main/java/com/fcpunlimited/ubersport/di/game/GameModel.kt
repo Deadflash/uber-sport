@@ -4,14 +4,14 @@ import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.fcpunlimited.ubersport.GamesQuery
-import com.fcpunlimited.ubersport.di.gql.GraphQlClient
-import com.fcpunlimited.ubersport.di.gql.GraphQlResponseCallback
+import com.fcpunlimited.ubersport.di.api.HttpRequestClients
+import com.fcpunlimited.ubersport.di.api.HttpResponseCallBack
 import com.fcpunlimited.ubersport.type.GameFiltersInput
 
-class GameModel(private val graphQlClient: GraphQlClient) {
+class GameModel(private val httpRequestClients: HttpRequestClients) {
 
-    fun getGames(filters: GameFiltersInput, callBack: GraphQlResponseCallback<GamesQuery.Data>) {
-        graphQlClient.getApolloClient().query(GamesQuery.builder()
+    fun getGames(filters: GameFiltersInput, callBack: HttpResponseCallBack<GamesQuery.Data>) {
+        httpRequestClients.getApolloClient().query(GamesQuery.builder()
                 .filters(filters)
                 .build())
                 .enqueue(object : ApolloCall.Callback<GamesQuery.Data>() {
