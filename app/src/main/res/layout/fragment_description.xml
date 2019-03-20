@@ -147,12 +147,26 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:id="@+id/bt_join_game"
         android:layout_gravity="bottom"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="88dp"
         android:elevation="8dp"
-        android:text="JOIN"
+        android:text="JOIN GAME"
         app:backgroundTint="@color/green_light" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/bt_leave_game"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="88dp"
+        android:visibility="gone"
+        android:elevation="8dp"
+        android:text="LEAVE GAME"
+        app:backgroundTint="@color/red_light" />
 
 </FrameLayout>

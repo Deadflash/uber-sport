@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.view.main.search
+package com.fcpunlimited.ubersport.view.main.search.description
 
 
 import android.content.Context
@@ -6,12 +6,18 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.PresenterType
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.fcpunlimited.ubersport.GamesQuery
 import com.fcpunlimited.ubersport.R
+import com.fcpunlimited.ubersport.di.game.GameModel
+import com.fcpunlimited.ubersport.di.user.UserModel
 import com.fcpunlimited.ubersport.utils.SportType
 import com.fcpunlimited.ubersport.utils.layout.FragmentTags.DESCRIPTION_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.main.MainActivity
+import com.fcpunlimited.ubersport.view.main.search.IGameShare
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,13 +28,24 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.container_game_header.*
 import kotlinx.android.synthetic.main.fragment_description.*
 import org.jetbrains.anko.image
+import org.jetbrains.anko.runOnUiThread
+import org.jetbrains.anko.toast
+import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FragmentDescription : BaseMvpFragment(), OnMapReadyCallback {
+class FragmentDescription : BaseMvpFragment(), DescriptionView, OnMapReadyCallback {
+
+    private val gameModel: GameModel by inject()
+    private val userModel: UserModel by inject()
+
+    @InjectPresenter(type = PresenterType.GLOBAL, tag = "DESCRIPTION_PRESENTER")
+    lateinit var presenter: DescriptionPresenter
+
+    @ProvidePresenter(type = PresenterType.GLOBAL, tag = "DESCRIPTION_PRESENTER")
+    fun providePresenter() = DescriptionPresenter(gameModel, userModel)
 
     private lateinit var mMap: GoogleMap
-
     private var gameConsumer: IGameShare.IGameConsumer? = null
     private var game: GamesQuery.Game? = null
 
@@ -76,13 +93,21 @@ class FragmentDescription : BaseMvpFragment(), OnMapReadyCallback {
             progressBar.progress = it.size
             tv_participants_count.text = "${it.size}/$participantsLimit"
 
-            for (position in 0 until it.size){
+            for (position in 0 until it.size) {
                 val participantAvatar = participantsAvatars[position]
                 participantAvatar.visibility = View.VISIBLE
                 Picasso.get().load(R.drawable.avatar)
                         .fit()
                         .error(R.color.colorAccent)
                         .into(participantAvatar)
+            }
+            if (it.map { participant -> participant.id() }.contains(userModel.getUserId())) {
+
+                bt_join_game.visibility = View.GONE
+                bt_leave_game.visibility = View.VISIBLE
+            } else {
+                bt_leave_game.visibility = View.GONE
+                bt_join_game.visibility = View.VISIBLE
             }
         }
         game.sport().let {
@@ -111,6 +136,39 @@ class FragmentDescription : BaseMvpFragment(), OnMapReadyCallback {
                 }
                 else -> iv_sport_icon.image = context?.let { ContextCompat.getDrawable(it, R.drawable.ic__ionicons_svg_md_football) }
             }
+        }
+
+        bt_join_game.setOnClickListener {
+            bt_join_game.isClickable = false
+            presenter.joinGame(game.id())
+        }
+        bt_leave_game.setOnClickListener {
+            bt_leave_game.isClickable = false
+            presenter.leaveGame(game.id())
+        }
+    }
+
+    override fun joinedToGame() {
+        context?.runOnUiThread {
+            bt_join_game.isClickable = true
+            bt_join_game.visibility = View.GONE
+            bt_leave_game.visibility = View.VISIBLE
+        }
+    }
+
+    override fun leavedGame() {
+        context?.runOnUiThread {
+            bt_leave_game.isClickable = true
+            bt_join_game.visibility = View.VISIBLE
+            bt_leave_game.visibility = View.GONE
+        }
+    }
+
+    override fun showMessage(message: String) {
+        context?.runOnUiThread {
+            bt_join_game.isClickable = true
+            bt_leave_game.isClickable = true
+            toast(message)
         }
     }
 

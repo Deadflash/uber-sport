@@ -6,4 +6,5 @@ interface HttpRequestClients {
     fun getRetrofitApi(): RetrofitApi
     fun getApolloClient(): ApolloClient
     fun checkToken()
+    fun setToken(token: String)
 }

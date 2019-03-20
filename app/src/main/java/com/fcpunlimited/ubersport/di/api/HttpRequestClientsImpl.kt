@@ -52,7 +52,7 @@ class HttpRequestClientsImpl : HttpRequestClients {
     private fun setupApollo(): ApolloClient {
 
         return ApolloClient.builder()
-                .serverUrl("http://142.93.98.160/graphql")
+                .serverUrl("${BASE_URL}graphql")
                 .okHttpClient(okHttpClient)
                 .build()
     }
@@ -61,6 +61,10 @@ class HttpRequestClientsImpl : HttpRequestClients {
         if (token == null){
             retrofitApi.getToken()
         }
+    }
+
+    override fun setToken(token: String) {
+        this.token = token
     }
 
     override fun getApolloClient(): ApolloClient = apolloClient
