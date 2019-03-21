@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
-import com.fcpunlimited.ubersport.GamesQuery
 import com.fcpunlimited.ubersport.R
+import com.fcpunlimited.ubersport.fragment.GameFragment
 import com.fcpunlimited.ubersport.view.BaseMvpActivity
 import com.fcpunlimited.ubersport.view.main.search.IGameShare
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,7 +19,7 @@ class MainActivity : BaseMvpActivity(), MainView, IGameShare.IGameProvider, IGam
 
     private var currentNavController: LiveData<NavController>? = null
 
-    private var game: GamesQuery.Game? = null
+    private var game: GameFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +39,11 @@ class MainActivity : BaseMvpActivity(), MainView, IGameShare.IGameProvider, IGam
         currentNavController = controller
     }
 
-    override fun provideGame(game: GamesQuery.Game) {
+    override fun provideGame(game: GameFragment) {
         this.game = game
     }
 
-    override fun consumeGame(): GamesQuery.Game? = game
+    override fun consumeGame(): GameFragment? = game
 
     override fun onSupportNavigateUp(): Boolean {
         return currentNavController?.value?.navigateUp() ?: false

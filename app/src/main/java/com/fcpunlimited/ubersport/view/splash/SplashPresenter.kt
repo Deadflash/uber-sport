@@ -18,12 +18,12 @@ class SplashPresenter(private val userModel: UserModel) : MvpPresenter<SplashVie
         }
     }
 
-    override fun onOkResponse(data: Token) {
+    override fun onResponse(data: Token) {
         viewState?.showMessage(data.accessToken)
         viewState?.setAuthorized(true)
     }
 
-    override fun onErrorResponse(message: String) {
+    override fun onFailure(message: String) {
         viewState?.showMessage(message)
         viewState?.setAuthorized(true)
     }

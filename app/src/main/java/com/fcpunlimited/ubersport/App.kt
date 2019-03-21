@@ -1,8 +1,11 @@
 package com.fcpunlimited.ubersport
 
 import android.app.Application
+import androidx.lifecycle.MutableLiveData
 import com.fcpunlimited.ubersport.di.api.HttpRequestClients
 import com.fcpunlimited.ubersport.di.api.HttpRequestClientsImpl
+import com.fcpunlimited.ubersport.di.game.GameContainer
+import com.fcpunlimited.ubersport.di.game.GameFilterContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.user.UserModel
 import org.koin.core.context.startKoin
@@ -13,8 +16,10 @@ class App : Application() {
 
     private val myModules = module {
         single<HttpRequestClients> { HttpRequestClientsImpl() }
+        single { GameContainer(MutableLiveData()) }
+        single { GameFilterContainer() }
         single { UserModel(get()) }
-        single { GameModel(get()) }
+        single { GameModel(get(), get(), get(), get()) }
     }
 
     override fun onCreate() {

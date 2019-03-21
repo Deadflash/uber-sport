@@ -1,7 +1,7 @@
 package com.fcpunlimited.ubersport.view.adapters
 
-import com.fcpunlimited.ubersport.GamesQuery
+import com.fcpunlimited.ubersport.fragment.GameFragment
 
 interface INavigation {
-    fun navigate(game: GamesQuery.Game)
+    fun navigate(game: GameFragment)
 }

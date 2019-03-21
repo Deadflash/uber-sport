@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.event.CreateEventDto
-import com.fcpunlimited.ubersport.utils.layout.FragmentTags.CREATE_EVENT_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.utils.Constants.CREATE_EVENT_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem

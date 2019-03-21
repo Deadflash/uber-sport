@@ -9,12 +9,14 @@ import androidx.core.content.ContextCompat
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.fcpunlimited.ubersport.GamesQuery
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.user.UserModel
-import com.fcpunlimited.ubersport.utils.SportType
-import com.fcpunlimited.ubersport.utils.layout.FragmentTags.DESCRIPTION_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.fragment.GameFragment
+import com.fcpunlimited.ubersport.utils.Constants.DATE_FORMAT
+import com.fcpunlimited.ubersport.utils.Constants.DATE_HOUR_FORMAT
+import com.fcpunlimited.ubersport.utils.Constants.DESCRIPTION_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.utils.getSportIconByName
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.main.MainActivity
 import com.fcpunlimited.ubersport.view.main.search.IGameShare
@@ -43,16 +45,18 @@ class FragmentDescription : BaseMvpFragment(), DescriptionView, OnMapReadyCallba
     lateinit var presenter: DescriptionPresenter
 
     @ProvidePresenter(type = PresenterType.GLOBAL, tag = "DESCRIPTION_PRESENTER")
-    fun providePresenter() = DescriptionPresenter(gameModel, userModel)
+    fun providePresenter() = DescriptionPresenter(gameModel)
 
     private lateinit var mMap: GoogleMap
     private var gameConsumer: IGameShare.IGameConsumer? = null
-    private var game: GamesQuery.Game? = null
+    private var game: GameFragment? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is MainActivity) {
-            gameConsumer = context
+            context.apply {
+                gameConsumer = this
+            }
             game = gameConsumer?.consumeGame()
         }
     }
@@ -65,102 +69,85 @@ class FragmentDescription : BaseMvpFragment(), DescriptionView, OnMapReadyCallba
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         scrollView.fullScroll(ScrollView.FOCUS_UP)
-        game?.let {
-            setupView(it)
+        game?.apply {
+            setupView(this)
             initMap()
+            bt_join_game.setOnClickListener {
+                bt_join_game.isClickable = false
+                presenter.joinGame(id())
+            }
+            bt_leave_game.setOnClickListener {
+                bt_leave_game.isClickable = false
+                presenter.leaveGame(id())
+            }
         }
     }
 
-    private fun setupView(game: GamesQuery.Game) {
+    private fun setupView(game: GameFragment) {
 
-        val participantsAvatars = arrayOf(iv_participant_1, iv_participant_2,
+        val avatarViews = arrayOf(iv_participant_1, iv_participant_2,
                 iv_participant_3, iv_participant_4, iv_participant_5, iv_participant_plus)
 
-        game.author()?.let {
-            tv_author.text = it.nickname()
-            tv_author_subtitle.text = "${it.firstName()} ${it.lastName()}"
+        avatarViews.forEach { iv -> iv.visibility = View.GONE }
 
-        }
-        tv_game_title.text = game.name()
-        tv_game_description.text = game.description()
-        game.length()?.let { tv_game_time.text = SimpleDateFormat("HH:mm", Locale.ROOT).format(it) }
-        tv_address.text = game.location()?.address()
-        tv_date.text = SimpleDateFormat("EEE dd-MMM h:mm", Locale.ROOT)
-                .format(game.dateStart().toLong())
-        game.participants()?.let {
-            val participantsLimit = game.participantsLimit()?.toInt() ?: 0
-            progressBar.max = participantsLimit
-            progressBar.progress = it.size
-            tv_participants_count.text = "${it.size}/$participantsLimit"
+        game.apply {
+            author()?.apply {
+                tv_author.text = nickname()
+                tv_author_subtitle.text = "${firstName()} ${lastName()}"
 
-            for (position in 0 until it.size) {
-                val participantAvatar = participantsAvatars[position]
-                participantAvatar.visibility = View.VISIBLE
-                Picasso.get().load(R.drawable.avatar)
-                        .fit()
-                        .error(R.color.colorAccent)
-                        .into(participantAvatar)
             }
-            if (it.map { participant -> participant.id() }.contains(userModel.getUserId())) {
+            tv_game_title.text = name()
+            tv_game_description.text = description()
+            length()?.let { tv_game_time.text = SimpleDateFormat(DATE_HOUR_FORMAT, Locale.ROOT).format(it) }
+            tv_address.text = location()?.address()
+            tv_date.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT)
+                    .format(dateStart().toLong())
+            participants()?.apply {
+                val participantsLimit = participantsLimit()?.toInt() ?: 0
+                progressBar.max = participantsLimit
+                progressBar.progress = size
+                tv_participants_count.text = "$size/$participantsLimit"
 
-                bt_join_game.visibility = View.GONE
-                bt_leave_game.visibility = View.VISIBLE
-            } else {
-                bt_leave_game.visibility = View.GONE
-                bt_join_game.visibility = View.VISIBLE
+                for (position in 0 until size) {
+                    val avatarView = avatarViews[position]
+                    avatarView.visibility = View.VISIBLE
+                    Picasso.get().load(R.drawable.avatar)
+                            .fit()
+                            .error(R.color.colorAccent)
+                            .into(avatarView)
+                }
+                if (map { participant -> participant.id() }.contains(userModel.getUserId())) {
+                    bt_join_game.visibility = View.GONE
+                    bt_leave_game.visibility = View.VISIBLE
+                } else {
+                    bt_leave_game.visibility = View.GONE
+                    bt_join_game.visibility = View.VISIBLE
+                }
             }
-        }
-        game.sport().let {
-            when (it?.name()) {
-                SportType.Football.name -> {
-                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football) }
-                }
-                SportType.Basketball.name -> {
-                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_baseball) }
-
-                }
-                SportType.Bicycle.name -> {
-                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football) }
-
-                }
-                SportType.Paintball.name -> {
-                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football) }
-
-                }
-                SportType.Tennis.name -> {
-                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_tennisball) }
-
-                }
-                SportType.Volleyball.name -> {
-                    iv_sport_icon.image = context?.let { context -> ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_tennisball) }
-                }
-                else -> iv_sport_icon.image = context?.let { ContextCompat.getDrawable(it, R.drawable.ic__ionicons_svg_md_football) }
+            sport()?.apply {
+                context?.let { iv_sport_icon.image = ContextCompat.getDrawable(it, getSportIconByName(name())) }
             }
-        }
-
-        bt_join_game.setOnClickListener {
-            bt_join_game.isClickable = false
-            presenter.joinGame(game.id())
-        }
-        bt_leave_game.setOnClickListener {
-            bt_leave_game.isClickable = false
-            presenter.leaveGame(game.id())
         }
     }
 
-    override fun joinedToGame() {
+    override fun joinedGame(game: GameFragment) {
+
         context?.runOnUiThread {
+            this@FragmentDescription.game = game
             bt_join_game.isClickable = true
             bt_join_game.visibility = View.GONE
             bt_leave_game.visibility = View.VISIBLE
+            setupView(this@FragmentDescription.game!!)
         }
     }
 
-    override fun leavedGame() {
+    override fun leavedGame(game: GameFragment) {
         context?.runOnUiThread {
+            this@FragmentDescription.game = game
             bt_leave_game.isClickable = true
             bt_join_game.visibility = View.VISIBLE
             bt_leave_game.visibility = View.GONE
+            setupView(this@FragmentDescription.game!!)
         }
     }
 
@@ -179,14 +166,14 @@ class FragmentDescription : BaseMvpFragment(), DescriptionView, OnMapReadyCallba
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.uiSettings.isScrollGesturesEnabled = false
-        mMap.uiSettings.isZoomGesturesEnabled = false
-        val location = game?.location()
-        location?.latitude()?.let { lat ->
-            location.longitude().let { lng ->
-                val latlng = LatLng(lat, lng)
-                mMap.addMarker(MarkerOptions().position(latlng).title(location.address()))
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 11f))
+        mMap.apply {
+            uiSettings.isScrollGesturesEnabled = false
+            uiSettings.isZoomGesturesEnabled = false
+            val location = game?.location()
+            location?.apply {
+                val latlng = LatLng(latitude(), longitude())
+                addMarker(MarkerOptions().position(latlng).title(location.address()))
+                moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 11f))
             }
         }
     }

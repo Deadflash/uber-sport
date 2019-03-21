@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.fcpunlimited.ubersport.GamesQuery
 import com.fcpunlimited.ubersport.R
+import com.fcpunlimited.ubersport.di.game.GameContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
+import com.fcpunlimited.ubersport.fragment.GameFragment
 import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.game.GameDtoDiffUtilCallback
-import com.fcpunlimited.ubersport.utils.layout.FragmentTags.SEARCH_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.utils.Constants.SEARCH_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.utils.toDp
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
@@ -33,13 +34,14 @@ private const val ARG_PARAM2 = "param2"
 class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
 
     private val gameModel: GameModel by inject()
+    private val gameContainer: GameContainer by inject()
     private var gameProvider: IGameShare.IGameProvider? = null
 
     @InjectPresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
     lateinit var presenter: SearchPresenter
 
     @ProvidePresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
-    fun providePresenter() = SearchPresenter(gameModel)
+    fun providePresenter() = SearchPresenter(gameModel, gameContainer)
 
     private var param1: String? = null
     private var param2: String? = null
@@ -56,24 +58,27 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        swipe_refresh.setProgressViewOffset(true, 0.toDp, 84.toDp)
-        swipe_refresh.setOnRefreshListener {
-            presenter.onSwipeRefresh()
+        swipe_refresh.apply {
+            setProgressViewOffset(true, 0.toDp, 84.toDp)
+            setOnRefreshListener {
+                presenter.loadGames()
+            }
         }
 
-        val adapter = CustomAdapter()
-        lifecycle.addObserver(adapter)
+        CustomAdapter().apply {
+            lifecycle.addObserver(this)
 
-        recycler.layoutManager = LinearLayoutManager(this.context)
-        recycler.adapter = adapter
-        recycler.setHasFixedSize(true)
+            recycler.layoutManager = LinearLayoutManager(this@SearchFragment.context)
+            recycler.adapter = this
+            recycler.setHasFixedSize(true)
 
-        presenter.getGameData().observe(this, Observer<List<GameDto>> {
-            val gameDtoDiffUtilCallback =
-                    GameDtoDiffUtilCallback(adapter.getData() as ArrayList<GameDto>, it)
-            adapter.setData(it as ArrayList<IListItem>)
-            DiffUtil.calculateDiff(gameDtoDiffUtilCallback).dispatchUpdatesTo(adapter)
-        })
+            gameContainer.gameData.observe(this@SearchFragment, Observer<List<GameDto>> {
+                val gameDtoDiffUtilCallback =
+                        GameDtoDiffUtilCallback(getData() as ArrayList<GameDto>, it)
+                setData(it as ArrayList<IListItem>)
+                DiffUtil.calculateDiff(gameDtoDiffUtilCallback).dispatchUpdatesTo(this)
+            })
+        }
     }
 
     override fun showMessage(message: String) {
@@ -84,7 +89,7 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
         swipe_refresh.isRefreshing = isRefreshing
     }
 
-    override fun navigate(game: GamesQuery.Game) {
+    override fun navigate(game: GameFragment) {
         gameProvider?.provideGame(game)
         findNavController().navigate(R.id.action_create_game_to_description_game)
     }

@@ -1,11 +1,11 @@
 mutation JoinGame($gameId: ID!,$userId: String!){
   joinGame(gameId:$gameId,userId:$userId){
-    id
-  }
+    ...GameFragment
+     }
 }
 
 mutation LeaveGame($gameId: ID!,$userId: String!){
   leaveGame(gameId:$gameId,userId:$userId){
-    id
+    ...GameFragment
   }
 }

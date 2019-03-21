@@ -4,7 +4,7 @@ package com.fcpunlimited.ubersport.view.main.profile
 import android.os.Bundle
 import android.view.View
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.utils.layout.FragmentTags.PROFILE_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.utils.Constants.PROFILE_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 
 private const val ARG_PARAM1 = "param1"

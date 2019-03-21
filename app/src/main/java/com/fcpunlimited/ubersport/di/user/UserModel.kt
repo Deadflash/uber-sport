@@ -24,14 +24,14 @@ class UserModel(private val httpRequestClients: HttpRequestClients) {
                 .build())
                 .enqueue(object : ApolloCall.Callback<UsersQuery.Data>() {
                     override fun onFailure(e: ApolloException) {
-                        e.message?.let { callBack.onErrorResponse(it) }
+                        e.message?.let { callBack.onFailure(it) }
                     }
 
                     override fun onResponse(response: Response<UsersQuery.Data>) {
                         if (response.hasErrors())
-                            callBack.onErrorResponse(response.errors().toString())
+                            callBack.onFailure(response.errors().toString())
                         else
-                            callBack.onOkResponse(response.data()!!)
+                            callBack.onResponse(response.data()!!)
                     }
 
                 })
@@ -40,7 +40,7 @@ class UserModel(private val httpRequestClients: HttpRequestClients) {
     fun getToken(callBack: HttpResponseCallBack<Token>) {
         httpRequestClients.getRetrofitApi().getToken()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ token -> callBack.onOkResponse(token) }, { error -> error.message?.let { callBack.onErrorResponse(it) } })
+                .subscribe({ token -> callBack.onResponse(token) }, { error -> error.message?.let { callBack.onFailure(it) } })
     }
 
     fun getUserId(): String = userId

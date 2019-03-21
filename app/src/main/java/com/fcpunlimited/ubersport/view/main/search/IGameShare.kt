@@ -1,13 +1,13 @@
 package com.fcpunlimited.ubersport.view.main.search
 
-import com.fcpunlimited.ubersport.GamesQuery
+import com.fcpunlimited.ubersport.fragment.GameFragment
 
 interface IGameShare {
     interface IGameProvider {
-        fun provideGame(game: GamesQuery.Game)
+        fun provideGame(game: GameFragment)
     }
 
     interface IGameConsumer {
-        fun consumeGame(): GamesQuery.Game?
+        fun consumeGame(): GameFragment?
     }
 }

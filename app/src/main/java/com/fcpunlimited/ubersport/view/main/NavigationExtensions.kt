@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.view.main.search.CurvedBottomNavigationView
+import com.fcpunlimited.ubersport.utils.layout.CurvedBottomNavigationView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**

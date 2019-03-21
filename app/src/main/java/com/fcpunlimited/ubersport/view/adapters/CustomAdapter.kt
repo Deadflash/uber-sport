@@ -12,7 +12,9 @@ import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.event.CreateEventDto
 import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.user.ParticipantDto
-import com.fcpunlimited.ubersport.utils.SportType
+import com.fcpunlimited.ubersport.utils.Constants.DATE_FORMAT
+import com.fcpunlimited.ubersport.utils.Constants.DATE_HOUR_FORMAT
+import com.fcpunlimited.ubersport.utils.getSportIconByName
 import com.fcpunlimited.ubersport.view.adapters.holders.CreateEventViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.ParticipantViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.SearchEventViewHolder
@@ -90,52 +92,31 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
                                items: ArrayList<IListItem>, context: Context) {
 
         val game = (items[position] as GameDto).game
+        holder.apply {
+            game.apply {
+                tvEventName.text = name()
+                tvEventDate.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT)
+                        .format(dateStart().toLong())
+                location()?.apply { tvEventAddress.text = address() }
+                author()?.apply {
+                    tvAuthor.text = nickname()
+                    tvSubtitle.text = "${firstName()} ${lastName()}"
+                }
+                length()?.let { tvGameTime.text = SimpleDateFormat(DATE_HOUR_FORMAT, Locale.ROOT).format(it) }
+                participants()?.apply {
+                    val participantsLimit = participantsLimit()?.toInt() ?: 0
+                    progressBar.max = participantsLimit
+                    progressBar.progress = size
+                    tvParticipantsCount.text = "$size/$participantsLimit"
+                }
+                sport()?.apply {
+                    ivSportIcon.image = ContextCompat.getDrawable(context, getSportIconByName(name()))
+                }
 
-        holder.tvEventName.text = game.name()
-        holder.tvEventDate.text = SimpleDateFormat("EEE dd-MMM h:mm", Locale.ROOT)
-                .format(game.dateStart().toLong())
-        game.location()?.let { holder.tvEventAddress.text = it.address() }
-        game.author()?.let {
-            holder.tvAuthor.text = it.nickname()
-            holder.tvSubtitle.text = "${it.firstName()} ${it.lastName()}"
-        }
-        game.length()?.let { holder.tvGameTime.text = SimpleDateFormat("HH:mm", Locale.ROOT).format(it) }
-        game.participants()?.let {
-            val participantsLimit = game.participantsLimit()?.toInt() ?: 0
-            holder.progressBar.max = participantsLimit
-            holder.progressBar.progress = it.size
-            holder.tvParticipantsCount.text = "${it.size}/$participantsLimit"
-        }
-        game.sport()?.let {
-            when (it.name()) {
-                SportType.Football.name -> {
-                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football)
+                itemView.setOnClickListener {
+                    iNavigation?.navigate((items[position] as GameDto).game)
                 }
-                SportType.Basketball.name -> {
-                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_baseball)
-
-                }
-                SportType.Bicycle.name -> {
-                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football)
-
-                }
-                SportType.Paintball.name -> {
-                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football)
-
-                }
-                SportType.Tennis.name -> {
-                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_tennisball)
-
-                }
-                SportType.Volleyball.name -> {
-                    holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_tennisball)
-                }
-                else -> holder.ivSportIcon.image = ContextCompat.getDrawable(context, R.drawable.ic__ionicons_svg_md_football)
             }
-        }
-
-        holder.itemView.setOnClickListener {
-            iNavigation?.navigate((items[position] as GameDto).copy().game)
         }
     }
 }
