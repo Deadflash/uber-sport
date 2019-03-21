@@ -3,6 +3,8 @@ package com.fcpunlimited.ubersport.utils.layout
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import androidx.core.content.ContextCompat
+import com.fcpunlimited.ubersport.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CurvedBottomNavigationView @JvmOverloads constructor(
@@ -32,12 +34,12 @@ class CurvedBottomNavigationView @JvmOverloads constructor(
 
     init {
         // radius of fab button
-        radius = 156 / 2
+        radius = 140 / 2
         mPath = Path()
         mPaint = Paint()
         with(mPaint) {
             style = Paint.Style.FILL_AND_STROKE
-            color = Color.WHITE
+            color = ContextCompat.getColor(this@CurvedBottomNavigationView.context, R.color.white_dark)
         }
         setBackgroundColor(Color.TRANSPARENT)
     }
@@ -48,12 +50,12 @@ class CurvedBottomNavigationView @JvmOverloads constructor(
         mNavigationBarWidth = width
         mNavigationBarHeight = height
         // the coordinates (x,y) of the start point before curve
-        mFirstCurveStartPoint.set(mNavigationBarWidth / 2 - radius * 2 - radius / 3, 0)
+        mFirstCurveStartPoint.set(mNavigationBarWidth / 2 - radius * 2 - radius / 8, 0)
         // the coordinates (x,y) of the end point after curve
         mFirstCurveEndPoint.set(mNavigationBarWidth / 2, radius + radius / 4)
         // same thing for the second curve
         mSecondCurveStartPoint = mFirstCurveEndPoint
-        mSecondCurveEndPoint.set(mNavigationBarWidth / 2 + radius * 2 + radius / 3, 0)
+        mSecondCurveEndPoint.set(mNavigationBarWidth / 2 + radius * 2 + radius / 8, 0)
 
         // the coordinates (x,y)  of the 1st control point on a cubic curve
         mFirstCurveControlPoint1.set(

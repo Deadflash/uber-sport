@@ -5,10 +5,9 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.fcpunlimited.ubersport.di.game.GamesResponseCallBack
 import com.fcpunlimited.ubersport.di.game.GameContainer
-import com.fcpunlimited.ubersport.di.game.GameFilterContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
+import com.fcpunlimited.ubersport.di.game.GamesResponseCallBack
 
 @InjectViewState
 class SearchPresenter(private val gameModel: GameModel, private val gameContainer: GameContainer)

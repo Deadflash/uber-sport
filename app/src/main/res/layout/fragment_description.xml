@@ -42,7 +42,7 @@
                     android:id="@+id/map"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="200dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -144,29 +144,39 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/bt_join_game"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="88dp"
-        android:elevation="8dp"
-        android:text="JOIN GAME"
-        app:backgroundTint="@color/green_light" />
+        android:layout_height="match_parent">
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/bt_leave_game"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="88dp"
-        android:visibility="gone"
-        android:elevation="8dp"
-        android:text="LEAVE GAME"
-        app:backgroundTint="@color/red_light" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bt_join_game"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="88dp"
+            android:elevation="8dp"
+            android:text="JOIN GAME"
+            app:backgroundTint="@color/green_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bt_leave_game"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="88dp"
+            android:elevation="8dp"
+            android:text="LEAVE GAME"
+            android:visibility="gone"
+            app:backgroundTint="@color/red_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

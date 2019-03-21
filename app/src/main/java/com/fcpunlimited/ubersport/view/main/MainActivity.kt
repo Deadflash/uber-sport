@@ -10,6 +10,7 @@ import com.fcpunlimited.ubersport.fragment.GameFragment
 import com.fcpunlimited.ubersport.view.BaseMvpActivity
 import com.fcpunlimited.ubersport.view.main.search.IGameShare
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
 class MainActivity : BaseMvpActivity(), MainView, IGameShare.IGameProvider, IGameShare.IGameConsumer {
 
@@ -37,6 +38,7 @@ class MainActivity : BaseMvpActivity(), MainView, IGameShare.IGameProvider, IGam
         )
 
         currentNavController = controller
+        fab.setOnClickListener {toast("Create game")}
     }
 
     override fun provideGame(game: GameFragment) {
