@@ -76,4 +76,23 @@ class GameModel(private val httpRequestClients: HttpRequestClients,
                     }
                 })
     }
+
+    fun excludeParticipant(gameId: String, userId: String, callBack: HttpResponseCallBack<LeaveGameMutation.Data>) {
+        httpRequestClients.getApolloClient().mutate(LeaveGameMutation.builder()
+                .gameId(gameId)
+                .userId(userId)
+                .build())
+                .enqueue(object : ApolloCall.Callback<LeaveGameMutation.Data>() {
+                    override fun onFailure(e: ApolloException) {
+                        e.message?.let { callBack.onFailure(it) }
+                    }
+
+                    override fun onResponse(response: Response<LeaveGameMutation.Data>) {
+                        if (response.hasErrors())
+                            callBack.onFailure(response.errors().toString())
+                        else
+                            callBack.onResponse(response.data()!!)
+                    }
+                })
+    }
 }

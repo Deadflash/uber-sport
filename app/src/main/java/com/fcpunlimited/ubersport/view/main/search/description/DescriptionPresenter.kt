@@ -38,6 +38,19 @@ class DescriptionPresenter(private val gameModel: GameModel)
         })
     }
 
+    fun excludeParticipant(gameId: String, userId: String) {
+        gameModel.excludeParticipant(gameId, userId, object : HttpResponseCallBack<LeaveGameMutation.Data> {
+            override fun onResponse(data: LeaveGameMutation.Data) {
+                viewState.leavedGame(data.leaveGame().fragments().gameFragment())
+                reloadGames()
+            }
+
+            override fun onFailure(message: String) {
+                viewState.showMessage(message)
+            }
+        })
+    }
+
     private fun reloadGames() {
         gameModel.getGames(object : HttpEmptyResponseCallBack {
             override fun onResponse() {

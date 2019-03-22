@@ -23,6 +23,7 @@ import com.fcpunlimited.ubersport.view.adapters.holders.DescriptionParticipantsV
 import com.fcpunlimited.ubersport.view.adapters.holders.ParticipantViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.SearchEventViewHolder
 import com.fcpunlimited.ubersport.view.main.search.SearchFragment
+import com.fcpunlimited.ubersport.view.main.search.description.DescriptionFragment
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.image
 import org.jetbrains.anko.toast
@@ -71,14 +72,17 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
         val participant = (items[position] as GameParticipantsDto).participant
         holder.apply {
             if (participant.__typename() == "STUB") {
-                btExcludeParticipant.visibility = View.GONE
                 loadImage(R.drawable.add, ivDescriptionParticipant)
                 tvParticipantName.text = "Add player"
                 return
             }
+            (lifecycleOwner as DescriptionFragment)
+            if ((lifecycleOwner as DescriptionFragment).isGameOwner){
+                btExcludeParticipant.visibility = View.VISIBLE
+                btExcludeParticipant.setOnClickListener { context.toast("exclude participant ${participant.nickname()}") }
+            }
             tvParticipantName.text = participant.nickname()
             loadImage(R.drawable.avatar, ivDescriptionParticipant)
-            btExcludeParticipant.setOnClickListener { context.toast("exclude participant ${participant.nickname()}") }
         }
     }
 

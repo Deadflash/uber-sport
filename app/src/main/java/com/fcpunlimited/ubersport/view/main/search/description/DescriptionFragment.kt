@@ -32,7 +32,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.container_game_header.*
 import kotlinx.android.synthetic.main.fragment_description.*
 import org.jetbrains.anko.image
@@ -42,10 +41,11 @@ import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FragmentDescription : BaseMvpFragment(), DescriptionView, OnMapReadyCallback {
+class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticipant, OnMapReadyCallback {
 
     private val gameModel: GameModel by inject()
     private val userModel: UserModel by inject()
+    var isGameOwner: Boolean = false
 
     @InjectPresenter(type = PresenterType.GLOBAL, tag = "DESCRIPTION_PRESENTER")
     lateinit var presenter: DescriptionPresenter
@@ -86,15 +86,12 @@ class FragmentDescription : BaseMvpFragment(), DescriptionView, OnMapReadyCallba
                 bt_leave_game.isClickable = false
                 presenter.leaveGame(id())
             }
+            //TODO change to local variable
+            author()?.let { isGameOwner = it.id() == userModel.getUserId() }
         }
     }
 
     private fun setupView(game: GameFragment) {
-
-//        val avatarViews = arrayOf(iv_participant_1, iv_participant_2,
-//                iv_participant_3, iv_participant_4, iv_participant_5, iv_participant_plus)
-
-//        avatarViews.forEach { iv -> iv.visibility = View.GONE }
 
         game.apply {
             author()?.apply {
@@ -117,9 +114,10 @@ class FragmentDescription : BaseMvpFragment(), DescriptionView, OnMapReadyCallba
                     bt_join_game.visibility = View.VISIBLE
                 }
                 CustomAdapter().apply {
-                    recycler.layoutManager = LinearLayoutManager(this@FragmentDescription.context, LinearLayoutManager.HORIZONTAL, false)
+                    recycler.layoutManager = LinearLayoutManager(this@DescriptionFragment.context, LinearLayoutManager.HORIZONTAL, false)
                     recycler.adapter = this
                     recycler.setHasFixedSize(true)
+                    lifecycle.addObserver(this)
 
                     val participants = arrayListOf<GameParticipantsDto>()
                     participants.addAll(it.map { participant -> GameParticipantsDto(participant) })
@@ -145,24 +143,28 @@ class FragmentDescription : BaseMvpFragment(), DescriptionView, OnMapReadyCallba
         }
     }
 
+    override fun excludeParticipant(gameId: String, userId: String) {
+        presenter.excludeParticipant(gameId, userId)
+    }
+
     override fun joinedGame(game: GameFragment) {
 
         context?.runOnUiThread {
-            this@FragmentDescription.game = game
+            this@DescriptionFragment.game = game
             bt_join_game.isClickable = true
             bt_join_game.visibility = View.GONE
             bt_leave_game.visibility = View.VISIBLE
-            setupView(this@FragmentDescription.game!!)
+            setupView(this@DescriptionFragment.game!!)
         }
     }
 
     override fun leavedGame(game: GameFragment) {
         context?.runOnUiThread {
-            this@FragmentDescription.game = game
+            this@DescriptionFragment.game = game
             bt_leave_game.isClickable = true
             bt_join_game.visibility = View.VISIBLE
             bt_leave_game.visibility = View.GONE
-            setupView(this@FragmentDescription.game!!)
+            setupView(this@DescriptionFragment.game!!)
         }
     }
 
