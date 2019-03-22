@@ -1,7 +1,7 @@
 package com.fcpunlimited.ubersport.di.api
 
-interface HttpResponseCallBack<T> {
-    fun onResponse(data: T)
+import com.fcpunlimited.ubersport.di.game.HttpEmptyResponseCallBack
 
-    fun onFailure(message: String)
+interface HttpResponseCallBack<T>: HttpEmptyResponseCallBack {
+    fun onResponse(data: T)
 }

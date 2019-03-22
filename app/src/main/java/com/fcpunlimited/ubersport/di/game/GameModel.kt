@@ -16,24 +16,24 @@ class GameModel(private val httpRequestClients: HttpRequestClients,
                 private val gameFilterContainer: GameFilterContainer,
                 private val userModel: UserModel) {
 
-    fun getGames(gamesCallback: GamesResponseCallBack) {
+    fun getGames(httpEmptyCallback: HttpEmptyResponseCallBack) {
         httpRequestClients.getApolloClient().query(GamesQuery.builder()
                 .filters(gameFilterContainer.getFilter())
                 .build())
                 .enqueue(object : ApolloCall.Callback<GamesQuery.Data>() {
                     override fun onFailure(e: ApolloException) {
-                        e.message?.let { gamesCallback.onFailure(it) }
+                        e.message?.let { httpEmptyCallback.onFailure(it) }
                     }
 
                     override fun onResponse(response: Response<GamesQuery.Data>) {
                         if (response.hasErrors()) {
-                            gamesCallback.onFailure(response.errors().toString())
+                            httpEmptyCallback.onFailure(response.errors().toString())
                         } else {
                             val games = response.data()?.games()?.games()
                                     ?.map { game -> GameDto(game.fragments().gameFragment()) }
                                     ?.toCollection(arrayListOf())
                             gameContainer.gameData.postValue(games)
-                            gamesCallback.onResponse()
+                            httpEmptyCallback.onResponse()
                         }
                     }
                 })

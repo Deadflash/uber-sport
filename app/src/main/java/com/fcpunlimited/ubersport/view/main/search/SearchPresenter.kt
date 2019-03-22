@@ -7,7 +7,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.fcpunlimited.ubersport.di.game.GameContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
-import com.fcpunlimited.ubersport.di.game.GamesResponseCallBack
+import com.fcpunlimited.ubersport.di.game.HttpEmptyResponseCallBack
 
 @InjectViewState
 class SearchPresenter(private val gameModel: GameModel, private val gameContainer: GameContainer)
@@ -22,7 +22,7 @@ class SearchPresenter(private val gameModel: GameModel, private val gameContaine
 
     fun loadGames() {
         viewState.onSwipeRefresh(true)
-        gameModel.getGames(object : GamesResponseCallBack {
+        gameModel.getGames(object : HttpEmptyResponseCallBack {
             override fun onResponse() {
                 viewState.onSwipeRefresh(false)
             }

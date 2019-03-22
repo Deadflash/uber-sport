@@ -49,6 +49,7 @@ class CreateEventMvpFragment : BaseMvpFragment() {
                 CreateEventDto("Cycling", 1))
 
         val adapter = CustomAdapter()
+        lifecycle.addObserver(adapter)
         adapter.add(events)
 
         recycler.layoutManager = GridLayoutManager(this.context, 3)

@@ -6,7 +6,7 @@ import com.fcpunlimited.ubersport.JoinGameMutation
 import com.fcpunlimited.ubersport.LeaveGameMutation
 import com.fcpunlimited.ubersport.di.api.HttpResponseCallBack
 import com.fcpunlimited.ubersport.di.game.GameModel
-import com.fcpunlimited.ubersport.di.game.GamesResponseCallBack
+import com.fcpunlimited.ubersport.di.game.HttpEmptyResponseCallBack
 
 @InjectViewState
 class DescriptionPresenter(private val gameModel: GameModel)
@@ -39,7 +39,7 @@ class DescriptionPresenter(private val gameModel: GameModel)
     }
 
     private fun reloadGames() {
-        gameModel.getGames(object : GamesResponseCallBack {
+        gameModel.getGames(object : HttpEmptyResponseCallBack {
             override fun onResponse() {
                 viewState.showMessage("Games updated")
             }

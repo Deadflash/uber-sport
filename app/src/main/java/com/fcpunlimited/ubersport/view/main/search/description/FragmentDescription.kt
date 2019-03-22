@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -13,11 +15,15 @@ import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.user.UserModel
 import com.fcpunlimited.ubersport.fragment.GameFragment
+import com.fcpunlimited.ubersport.struct.game.GameParticipantDiffUtilCallback
+import com.fcpunlimited.ubersport.struct.game.GameParticipantsDto
 import com.fcpunlimited.ubersport.utils.Constants.DATE_FORMAT
 import com.fcpunlimited.ubersport.utils.Constants.DATE_HOUR_FORMAT
 import com.fcpunlimited.ubersport.utils.Constants.DESCRIPTION_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.utils.getSportIconByName
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
+import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
+import com.fcpunlimited.ubersport.view.adapters.IListItem
 import com.fcpunlimited.ubersport.view.main.MainActivity
 import com.fcpunlimited.ubersport.view.main.search.IGameShare
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -85,10 +91,10 @@ class FragmentDescription : BaseMvpFragment(), DescriptionView, OnMapReadyCallba
 
     private fun setupView(game: GameFragment) {
 
-        val avatarViews = arrayOf(iv_participant_1, iv_participant_2,
-                iv_participant_3, iv_participant_4, iv_participant_5, iv_participant_plus)
+//        val avatarViews = arrayOf(iv_participant_1, iv_participant_2,
+//                iv_participant_3, iv_participant_4, iv_participant_5, iv_participant_plus)
 
-        avatarViews.forEach { iv -> iv.visibility = View.GONE }
+//        avatarViews.forEach { iv -> iv.visibility = View.GONE }
 
         game.apply {
             author()?.apply {
@@ -102,26 +108,35 @@ class FragmentDescription : BaseMvpFragment(), DescriptionView, OnMapReadyCallba
             tv_address.text = location()?.address()
             tv_date.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT)
                     .format(dateStart().toLong())
-            participants()?.apply {
-                val participantsLimit = participantsLimit()?.toInt() ?: 0
-                progressBar.max = participantsLimit
-                progressBar.progress = size
-                tv_participants_count.text = "$size/$participantsLimit"
-
-                for (position in 0 until size) {
-                    val avatarView = avatarViews[position]
-                    avatarView.visibility = View.VISIBLE
-                    Picasso.get().load(R.drawable.avatar)
-                            .fit()
-                            .error(R.color.colorAccent)
-                            .into(avatarView)
-                }
-                if (map { participant -> participant.id() }.contains(userModel.getUserId())) {
+            participants()?.let {
+                if (it.map { participant -> participant.id() }.contains(userModel.getUserId())) {
                     bt_join_game.visibility = View.GONE
                     bt_leave_game.visibility = View.VISIBLE
                 } else {
                     bt_leave_game.visibility = View.GONE
                     bt_join_game.visibility = View.VISIBLE
+                }
+                CustomAdapter().apply {
+                    recycler.layoutManager = LinearLayoutManager(this@FragmentDescription.context, LinearLayoutManager.HORIZONTAL, false)
+                    recycler.adapter = this
+                    recycler.setHasFixedSize(true)
+
+                    val participants = arrayListOf<GameParticipantsDto>()
+                    participants.addAll(it.map { participant -> GameParticipantsDto(participant) })
+                    println("limit: ${participantsLimit()?.toInt()}  participants: ${it.size}")
+                    if (participantsLimit()?.toInt()!! > (it.size)) {
+                        participants.add(GameParticipantsDto(GameFragment.Participant("STUB",
+                                "", null, null, null, null,
+                                null, null, null, null,
+                                null)))
+                    }
+
+//                    val participantDtos = it.map { participant -> GameParticipantsDto(participant) }
+
+                    val gameDtoDiffUtilCallback =
+                            GameParticipantDiffUtilCallback(getData() as ArrayList<GameParticipantsDto>, participants)
+                    setData(participants as ArrayList<IListItem>)
+                    DiffUtil.calculateDiff(gameDtoDiffUtilCallback).dispatchUpdatesTo(this)
                 }
             }
             sport()?.apply {
