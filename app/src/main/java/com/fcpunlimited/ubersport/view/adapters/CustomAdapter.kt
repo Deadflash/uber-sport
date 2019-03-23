@@ -14,13 +14,11 @@ import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.event.CreateEventDto
 import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.game.GameParticipantsDto
-import com.fcpunlimited.ubersport.struct.user.ParticipantDto
 import com.fcpunlimited.ubersport.utils.Constants.DATE_FORMAT
 import com.fcpunlimited.ubersport.utils.Constants.DATE_HOUR_FORMAT
 import com.fcpunlimited.ubersport.utils.getSportIconByName
 import com.fcpunlimited.ubersport.view.adapters.holders.CreateEventViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.DescriptionParticipantsViewHolder
-import com.fcpunlimited.ubersport.view.adapters.holders.ParticipantViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.SearchEventViewHolder
 import com.fcpunlimited.ubersport.view.main.search.SearchFragment
 import com.fcpunlimited.ubersport.view.main.search.description.DescriptionFragment
@@ -48,7 +46,6 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
         val context = parent.context
 
         return when (viewType) {
-            R.layout.participant_item -> ParticipantViewHolder(inflateByViewType(context, viewType, parent))
             R.layout.event_item -> CreateEventViewHolder(inflateByViewType(context, viewType, parent))
             R.layout.search_item -> SearchEventViewHolder(inflateByViewType(context, viewType, parent))
             R.layout.description_participant_item -> DescriptionParticipantsViewHolder(inflateByViewType(context, viewType, parent))
@@ -59,7 +56,6 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val context = holder.itemView.context
         when (holder) {
-            is ParticipantViewHolder -> bindParticipantsView(holder, position, items, context)
             is CreateEventViewHolder -> bindCreateEventView(holder, position, items, context)
             is SearchEventViewHolder -> bindSearchView(holder, position, items, context)
             is DescriptionParticipantsViewHolder -> bindDescriptionParticipantsView(holder, position, items, context)
@@ -78,21 +74,11 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
             }
             (lifecycleOwner as DescriptionFragment)
             if ((lifecycleOwner as DescriptionFragment).isGameOwner){
-                btExcludeParticipant.visibility = View.VISIBLE
-                btExcludeParticipant.setOnClickListener { context.toast("exclude participant ${participant.nickname()}") }
+                excludeParticipantLayout.visibility = View.VISIBLE
+                excludeParticipantLayout.setOnClickListener { context.toast("exclude participant ${participant.nickname()}") }
             }
             tvParticipantName.text = participant.nickname()
             loadImage(R.drawable.avatar, ivDescriptionParticipant)
-        }
-    }
-
-    private fun bindParticipantsView(holder: ParticipantViewHolder, position: Int,
-                                     items: ArrayList<IListItem>, context: Context) {
-        val participant = items[position] as ParticipantDto
-        holder.apply {
-            tvParticipantName.text = participant.name
-            tvAboutParticipant.text = participant.about
-            loadImage(R.drawable.avatar, ivParticipantAvatar)
         }
     }
 

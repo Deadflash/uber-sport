@@ -15,15 +15,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <FrameLayout
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:padding="8dp"
         android:visibility="gone"
-        android:id="@+id/bt_exclude_participant"
-        android:src="@drawable/baseline_close_24"
+        android:id="@+id/excludeParticipantLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/bt_exclude_participant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/baseline_close_24" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tv_participant_name"

@@ -8,4 +8,5 @@ class DescriptionParticipantsViewHolder(view: View) : RecyclerView.ViewHolder(vi
     val ivDescriptionParticipant = view.iv_participant_avatar!!
     val tvParticipantName = view.tv_participant_name!!
     val btExcludeParticipant = view.bt_exclude_participant!!
+    val excludeParticipantLayout = view.excludeParticipantLayout
 }

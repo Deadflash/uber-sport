@@ -14,5 +14,5 @@ class GameParticipantDiffUtilCallback(private val oldParticipant: List<GameParti
             oldParticipant[oldItemPosition].participant.id() == newParticipants[newItemPosition].participant.id()
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldParticipant[oldItemPosition] == newParticipants[oldItemPosition]
+            oldParticipant[oldItemPosition] == newParticipants[newItemPosition]
 }

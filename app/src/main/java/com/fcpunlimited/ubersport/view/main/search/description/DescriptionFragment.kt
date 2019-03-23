@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -15,6 +17,7 @@ import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.user.UserModel
 import com.fcpunlimited.ubersport.fragment.GameFragment
+import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.game.GameParticipantDiffUtilCallback
 import com.fcpunlimited.ubersport.struct.game.GameParticipantsDto
 import com.fcpunlimited.ubersport.utils.Constants.DATE_FORMAT
@@ -55,7 +58,8 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
 
     private lateinit var mMap: GoogleMap
     private var gameConsumer: IGameShare.IGameConsumer? = null
-    private var game: GameFragment? = null
+    private val gameData: MutableLiveData<GameFragment> = MutableLiveData()
+    private lateinit var adapter: CustomAdapter
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -63,7 +67,7 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
             context.apply {
                 gameConsumer = this
             }
-            game = gameConsumer?.consumeGame()
+            gameData.value = gameConsumer?.consumeGame()
         }
     }
 
@@ -74,20 +78,25 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter = CustomAdapter()
+        lifecycle.addObserver(adapter)
         scrollView.fullScroll(ScrollView.FOCUS_UP)
-        game?.apply {
-            setupView(this)
+        recycler.layoutManager = LinearLayoutManager(this@DescriptionFragment.context, LinearLayoutManager.HORIZONTAL, false)
+        recycler.adapter = adapter
+        recycler.setHasFixedSize(true)
+        gameData.observe(this, androidx.lifecycle.Observer<GameFragment> { game ->
+            setupView(game)
             initMap()
-            bt_join_game.setOnClickListener {
-                bt_join_game.isClickable = false
-                presenter.joinGame(id())
-            }
-            bt_leave_game.setOnClickListener {
-                bt_leave_game.isClickable = false
-                presenter.leaveGame(id())
-            }
             //TODO change to local variable
-            author()?.let { isGameOwner = it.id() == userModel.getUserId() }
+            game.author()?.let { isGameOwner = it.id() == userModel.getUserId() }
+        })
+        bt_join_game.setOnClickListener {
+            bt_join_game.isClickable = false
+            gameData.value?.id()?.let { gameId -> presenter.joinGame(gameId) }
+        }
+        bt_leave_game.setOnClickListener {
+            bt_leave_game.isClickable = false
+            gameData.value?.id()?.let { gameId -> presenter.leaveGame(gameId) }
         }
     }
 
@@ -113,23 +122,17 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
                     bt_leave_game.visibility = View.GONE
                     bt_join_game.visibility = View.VISIBLE
                 }
-                CustomAdapter().apply {
-                    recycler.layoutManager = LinearLayoutManager(this@DescriptionFragment.context, LinearLayoutManager.HORIZONTAL, false)
-                    recycler.adapter = this
-                    recycler.setHasFixedSize(true)
-                    lifecycle.addObserver(this)
+                adapter.apply {
+
 
                     val participants = arrayListOf<GameParticipantsDto>()
                     participants.addAll(it.map { participant -> GameParticipantsDto(participant) })
-                    println("limit: ${participantsLimit()?.toInt()}  participants: ${it.size}")
                     if (participantsLimit()?.toInt()!! > (it.size)) {
                         participants.add(GameParticipantsDto(GameFragment.Participant("STUB",
                                 "", null, null, null, null,
                                 null, null, null, null,
                                 null)))
                     }
-
-//                    val participantDtos = it.map { participant -> GameParticipantsDto(participant) }
 
                     val gameDtoDiffUtilCallback =
                             GameParticipantDiffUtilCallback(getData() as ArrayList<GameParticipantsDto>, participants)
@@ -150,21 +153,19 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
     override fun joinedGame(game: GameFragment) {
 
         context?.runOnUiThread {
-            this@DescriptionFragment.game = game
+            gameData.value = game
             bt_join_game.isClickable = true
             bt_join_game.visibility = View.GONE
             bt_leave_game.visibility = View.VISIBLE
-            setupView(this@DescriptionFragment.game!!)
         }
     }
 
     override fun leavedGame(game: GameFragment) {
         context?.runOnUiThread {
-            this@DescriptionFragment.game = game
+            gameData.value = game
             bt_leave_game.isClickable = true
             bt_join_game.visibility = View.VISIBLE
             bt_leave_game.visibility = View.GONE
-            setupView(this@DescriptionFragment.game!!)
         }
     }
 
@@ -186,7 +187,7 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
         mMap.apply {
             uiSettings.isScrollGesturesEnabled = false
             uiSettings.isZoomGesturesEnabled = false
-            val location = game?.location()
+            val location = gameData.value?.location()
             location?.apply {
                 val latlng = LatLng(latitude(), longitude())
                 addMarker(MarkerOptions().position(latlng).title(location.address()))
