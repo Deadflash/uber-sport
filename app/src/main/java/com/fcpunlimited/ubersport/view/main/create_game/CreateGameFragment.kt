@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.view.main.create_event
+package com.fcpunlimited.ubersport.view.main.create_game
 
 
 import android.os.Bundle
@@ -52,7 +52,7 @@ class CreateEventMvpFragment : BaseMvpFragment() {
         lifecycle.addObserver(adapter)
         adapter.add(events)
 
-        recycler.layoutManager = GridLayoutManager(this.context, 3)
+        recycler.layoutManager = GridLayoutManager(this.context, 2)
         recycler.adapter = adapter
         recycler.setHasFixedSize(true)
     }

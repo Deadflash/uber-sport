@@ -7,5 +7,5 @@ data class CreateEventDto(
         var eventName: String,
         var eventIcon: Int
 ) : IListItem {
-    override fun getLayoutId(): Int = R.layout.event_item
+    override fun getLayoutId(): Int = R.layout.create_game_item
 }

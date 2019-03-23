@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/create_game"
-        android:name="com.fcpunlimited.ubersport.view.main.create_event.CreateEventMvpFragment"
+        android:name="com.fcpunlimited.ubersport.view.main.create_game.CreateEventMvpFragment"
         android:label="fragment_create_event"
         tools:layout="@layout/fragment_create_event" />
 

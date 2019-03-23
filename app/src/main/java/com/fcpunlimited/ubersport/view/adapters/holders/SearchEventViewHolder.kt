@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_description.view.*
 import kotlinx.android.synthetic.main.container_game_header.view.*
-import kotlinx.android.synthetic.main.event_item.view.*
+import kotlinx.android.synthetic.main.create_game_item.view.*
 import kotlinx.android.synthetic.main.search_item.view.*
 
 class SearchEventViewHolder(view: View) : RecyclerView.ViewHolder(view) {

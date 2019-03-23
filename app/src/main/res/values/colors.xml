@@ -15,10 +15,14 @@
     <color name="blue">#102044</color>
     <color name="blue_med">#385C80</color>
     <color name="blue_light">#7DBEE0</color>
+
+    <color name="blue_transparent">#D9102044</color>
+    <color name="blue_med_transparent">#D9385C80</color>
+    <color name="blue_light_transparent">#D97DBEE0</color>
     <!--TRANSPARENT-->
     <color name="transparent">#00000000</color>
     <color name="blackTransparent">#46000000</color>
-    <color name="colorPrimaryTransparent">#64ac5eec</color>
+    <color name="greyTransparent">#CD696969</color>
     <color name="greenTransparent">#64196c00</color>
     <color name="black">#000000</color>
     <color name="natural_black">#313131</color>

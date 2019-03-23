@@ -46,7 +46,7 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
         val context = parent.context
 
         return when (viewType) {
-            R.layout.event_item -> CreateEventViewHolder(inflateByViewType(context, viewType, parent))
+            R.layout.create_game_item -> CreateEventViewHolder(inflateByViewType(context, viewType, parent))
             R.layout.search_item -> SearchEventViewHolder(inflateByViewType(context, viewType, parent))
             R.layout.description_participant_item -> DescriptionParticipantsViewHolder(inflateByViewType(context, viewType, parent))
             else -> throw RuntimeException("Unknown view type: $viewType")
@@ -128,6 +128,7 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
     private fun loadImage(imageId: Int, imageView: ImageView) {
         Picasso.get()
                 .load(imageId)
+                .centerCrop()
                 .fit()
                 .error(R.color.red_light)
                 .into(imageView)

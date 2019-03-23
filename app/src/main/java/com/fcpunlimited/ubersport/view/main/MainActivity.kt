@@ -1,5 +1,6 @@
 package com.fcpunlimited.ubersport.view.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
@@ -8,6 +9,7 @@ import com.arellomobile.mvp.presenter.PresenterType
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.fragment.GameFragment
 import com.fcpunlimited.ubersport.view.BaseMvpActivity
+import com.fcpunlimited.ubersport.view.main.create_game.CreateGameActivity
 import com.fcpunlimited.ubersport.view.main.search.IGameShare
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
@@ -38,7 +40,8 @@ class MainActivity : BaseMvpActivity(), MainView, IGameShare.IGameProvider, IGam
         )
 
         currentNavController = controller
-        fab.setOnClickListener {toast("Create game")}
+        fab.setOnClickListener {startActivity(Intent(this,
+                CreateGameActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))}
     }
 
     override fun provideGame(game: GameFragment) {
