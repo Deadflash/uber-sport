@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="75dp"
+    android:id="@+id/participant_layout"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -24,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/bt_exclude_participant"
+            android:id="@+id/iv_exclude_participant"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"

@@ -76,6 +76,7 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
                 excludeParticipantLayout.visibility = View.VISIBLE
                 excludeParticipantLayout.setOnClickListener { context.toast("exclude participant ${participant.nickname()}") }
             }
+            participantLayout.setOnClickListener { participant.nickname()?.let { it1 -> context.toast(it1) } }
             tvParticipantName.text = participant.nickname()
             loadImage(R.drawable.avatar, ivDescriptionParticipant)
         }
