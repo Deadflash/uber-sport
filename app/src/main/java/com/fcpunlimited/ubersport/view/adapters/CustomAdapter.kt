@@ -72,7 +72,6 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
                 tvParticipantName.text = "Add player"
                 return
             }
-            (lifecycleOwner as DescriptionFragment)
             if ((lifecycleOwner as DescriptionFragment).isGameOwner){
                 excludeParticipantLayout.visibility = View.VISIBLE
                 excludeParticipantLayout.setOnClickListener { context.toast("exclude participant ${participant.nickname()}") }

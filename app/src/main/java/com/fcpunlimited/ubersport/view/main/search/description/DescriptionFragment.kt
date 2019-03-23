@@ -127,7 +127,7 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
 
                     val participants = arrayListOf<GameParticipantsDto>()
                     participants.addAll(it.map { participant -> GameParticipantsDto(participant) })
-                    if (participantsLimit()?.toInt()!! > (it.size)) {
+                    if (participantsLimit()?.toInt()!! > (it.size) && isGameOwner) {
                         participants.add(GameParticipantsDto(GameFragment.Participant("STUB",
                                 "", null, null, null, null,
                                 null, null, null, null,
