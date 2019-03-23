@@ -42,7 +42,8 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/roboto_light"
         android:gravity="center"
-        android:textSize="@dimen/extra_small_text"
+        android:textSize="@dimen/participant_text_size"
+        android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_participant_avatar" />
