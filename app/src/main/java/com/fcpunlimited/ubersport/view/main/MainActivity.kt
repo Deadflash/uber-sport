@@ -29,8 +29,7 @@ class MainActivity : BaseMvpActivity(), MainView, IGameShare.IGameProvider, IGam
         setContentView(R.layout.activity_main)
         lifecycle.addObserver(presenter)
 
-        val navGraphIds = listOf(R.navigation.search_nav_graph,
-                R.navigation.create_game_nav_graph, R.navigation.profile_nav_graph)
+        val navGraphIds = listOf(R.navigation.search_nav_graph, R.navigation.profile_nav_graph)
 
         val controller = navigation.setupWithNavController(
                 navGraphIds = navGraphIds,

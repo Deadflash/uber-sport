@@ -114,6 +114,8 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
             tv_address.text = location()?.address()
             tv_date.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT)
                     .format(dateStart().toLong())
+            tv_description_participants_count.text = "${participants()?.size
+                    ?: 0}/${participantsLimit()?.toInt() ?: 0}"
             participants()?.let {
                 if (it.map { participant -> participant.id() }.contains(userModel.getUserId())) {
                     bt_join_game.visibility = View.GONE

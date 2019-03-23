@@ -11,9 +11,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.RecyclerView
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.struct.event.CreateEventDto
 import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.game.GameParticipantsDto
+import com.fcpunlimited.ubersport.struct.game.SportDto
 import com.fcpunlimited.ubersport.utils.Constants.DATE_FORMAT
 import com.fcpunlimited.ubersport.utils.Constants.DATE_HOUR_FORMAT
 import com.fcpunlimited.ubersport.utils.getSportIconByName
@@ -56,7 +56,7 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val context = holder.itemView.context
         when (holder) {
-            is CreateEventViewHolder -> bindCreateEventView(holder, position, items, context)
+            is CreateEventViewHolder -> bindCreateGameView(holder, position, items, context)
             is SearchEventViewHolder -> bindSearchView(holder, position, items, context)
             is DescriptionParticipantsViewHolder -> bindDescriptionParticipantsView(holder, position, items, context)
         }
@@ -81,13 +81,13 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
         }
     }
 
-    private fun bindCreateEventView(holder: CreateEventViewHolder, position: Int,
-                                    items: ArrayList<IListItem>, context: Context) {
-        val event = items[position] as CreateEventDto
+    private fun bindCreateGameView(holder: CreateEventViewHolder, position: Int,
+                                   items: ArrayList<IListItem>, context: Context) {
+        val sport = items[position] as SportDto
 
         holder.apply {
-            tvEventName.text = event.eventName
-            itemView.setOnClickListener { context.toast(event.eventName) }
+            tvEventName.text = sport.game.name()
+            itemView.setOnClickListener { context.toast(sport.game.name()) }
             loadImage(R.drawable.avatar, ivEventIcon)
         }
     }

@@ -16,7 +16,7 @@ class App : Application() {
 
     private val myModules = module {
         single<HttpRequestClients> { HttpRequestClientsImpl() }
-        single { GameContainer(MutableLiveData()) }
+        single { GameContainer(MutableLiveData(), MutableLiveData()) }
         single { GameFilterContainer() }
         single { UserModel(get()) }
         single { GameModel(get(), get(), get(), get()) }

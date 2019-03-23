@@ -6,6 +6,7 @@ import com.apollographql.apollo.exception.ApolloException
 import com.fcpunlimited.ubersport.GamesQuery
 import com.fcpunlimited.ubersport.JoinGameMutation
 import com.fcpunlimited.ubersport.LeaveGameMutation
+import com.fcpunlimited.ubersport.SportsQuery
 import com.fcpunlimited.ubersport.di.api.HttpRequestClients
 import com.fcpunlimited.ubersport.di.api.HttpResponseCallBack
 import com.fcpunlimited.ubersport.di.user.UserModel
@@ -33,6 +34,26 @@ class GameModel(private val httpRequestClients: HttpRequestClients,
                                     ?.map { game -> GameDto(game.fragments().gameFragment()) }
                                     ?.toCollection(arrayListOf())
                             gameContainer.gameData.postValue(games)
+                            httpEmptyCallback.onResponse()
+                        }
+                    }
+                })
+    }
+
+    fun getSports(httpEmptyCallback: HttpEmptyResponseCallBack) {
+        httpRequestClients.getApolloClient().query(SportsQuery.builder()
+                .build())
+                .enqueue(object : ApolloCall.Callback<SportsQuery.Data>() {
+                    override fun onFailure(e: ApolloException) {
+                        e.message?.let { httpEmptyCallback.onFailure(it) }
+                    }
+
+                    override fun onResponse(response: Response<SportsQuery.Data>) {
+                        if (response.hasErrors()){
+                            httpEmptyCallback.onFailure(response.errors().toString())
+                        }
+                        else{
+                            gameContainer.sportsData.postValue(response.data()?.sports())
                             httpEmptyCallback.onResponse()
                         }
                     }

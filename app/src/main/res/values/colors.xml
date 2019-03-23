@@ -16,9 +16,9 @@
     <color name="blue_med">#385C80</color>
     <color name="blue_light">#7DBEE0</color>
 
-    <color name="blue_transparent">#D9102044</color>
+    <color name="blue_transparent">#F2102044</color>
     <color name="blue_med_transparent">#D9385C80</color>
-    <color name="blue_light_transparent">#D97DBEE0</color>
+    <color name="blue_light_transparent">#F27DBEE0</color>
     <!--TRANSPARENT-->
     <color name="transparent">#00000000</color>
     <color name="blackTransparent">#46000000</color>

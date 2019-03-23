@@ -5,10 +5,10 @@
     android:id="@+id/create_game"
     app:startDestination="@id/create_game">
 
-    <fragment
-        android:id="@+id/create_game"
-        android:name="com.fcpunlimited.ubersport.view.main.create_game.CreateEventMvpFragment"
-        android:label="fragment_create_event"
-        tools:layout="@layout/fragment_create_event" />
+    <!--<fragment-->
+        <!--android:id="@+id/create_game"-->
+        <!--android:name="com.fcpunlimited.ubersport.view.main.create_game.CreateEventMvpFragment"-->
+        <!--android:label="fragment_create_event"-->
+        <!--tools:layout="@layout/fragment_create_event" />-->
 
 </navigation>
