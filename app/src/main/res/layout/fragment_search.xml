@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_gradient"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -10,7 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="-70dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include layout="@layout/swipe_refresh_recycler_container" />
@@ -20,30 +19,79 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        app:elevation="0dp"
         android:orientation="vertical">
 
-        <SearchView
-            android:id="@+id/search_view"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:queryHint="search here"
-            android:background="@drawable/white_rounded_corner_rect"
-            android:elevation="8dp"
-            android:theme="@style/SearchViewTheme"
-            android:searchIcon="@drawable/baseline_search_black_24"
-            android:queryBackground="@color/transparent"
-            android:focusable="false"
-            android:iconifiedByDefault="false"
-            app:layout_scrollFlags="scroll|enterAlways"/>
+            android:layout_height="match_parent"
+            app:expandedTitleGravity="top"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="8dp">
+
+                <SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/white_rounded_corner_rect"
+                    android:focusable="false"
+                    android:iconifiedByDefault="false"
+                    android:queryBackground="@color/transparent"
+                    android:queryHint="search here"
+                    android:searchIcon="@drawable/baseline_search_black_24"
+                    android:theme="@style/SearchViewTheme" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_games_filter"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/roboto_light"
+                        android:textColor="@color/white_dark"
+                        android:text="Game filters"
+                        android:textSize="@dimen/small_text"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_sorting_filter"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/roboto_light"
+                        android:textColor="@color/white_dark"
+                        android:text="Sorting"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="@dimen/small_text"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/iv_filters"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/roboto_light"
+                        android:src="@drawable/ic__ionicons_svg_md_tennisball"
+                        android:layout_alignParentEnd="true"
+                        android:textSize="@dimen/small_text"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

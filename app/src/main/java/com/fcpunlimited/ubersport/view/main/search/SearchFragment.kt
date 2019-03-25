@@ -23,6 +23,7 @@ import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem
 import com.fcpunlimited.ubersport.view.adapters.INavigation
 import com.fcpunlimited.ubersport.view.main.MainActivity
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.swipe_refresh_recycler_container.*
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
@@ -58,12 +59,13 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        swipe_refresh.apply {
-            setProgressViewOffset(true, 0.toDp, 84.toDp)
-            setOnRefreshListener {
-                presenter.loadGames()
-            }
+        swipe_refresh.setOnRefreshListener {
+            presenter.loadGames()
         }
+
+        tv_games_filter.setOnClickListener { context?.toast("Games type filter") }
+        tv_sorting_filter.setOnClickListener { context?.toast("Sorting filter") }
+        iv_filters.setOnClickListener { context?.toast("Other filters") }
 
         CustomAdapter().apply {
             lifecycle.addObserver(this)
