@@ -17,7 +17,6 @@ import com.fcpunlimited.ubersport.fragment.GameFragment
 import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.game.GameDtoDiffUtilCallback
 import com.fcpunlimited.ubersport.utils.Constants.SEARCH_FRAGMENT_TAG
-import com.fcpunlimited.ubersport.utils.toDp
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem
@@ -63,8 +62,8 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
             presenter.loadGames()
         }
 
-        tv_games_filter.setOnClickListener { context?.toast("Games type filter") }
-        tv_sorting_filter.setOnClickListener { context?.toast("Sorting filter") }
+        sports_layout.setOnClickListener { context?.toast("Games type filter") }
+        sorting_layout.setOnClickListener { context?.toast("Sorting filter") }
         iv_filters.setOnClickListener { context?.toast("Other filters") }
 
         CustomAdapter().apply {

@@ -51,29 +51,63 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp">
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tv_games_filter"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/roboto_light"
-                        android:textColor="@color/white_dark"
-                        android:text="Game filters"
-                        android:textSize="@dimen/small_text"/>
+                        android:layout_height="match_parent"
+                        android:id="@+id/sports_layout"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_sports"
+                            android:fontFamily="@font/roboto_light"
+                            android:textColor="@color/white_dark"
+                            android:text="Спорт"
+                            android:textSize="@dimen/small_text"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_sports_filter_count"
+                            android:textColor="@color/white_dark"
+                            android:textSize="@dimen/participant_text_size"
+                            android:text="5 видов"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tv_sorting_filter"
+                        android:layout_height="match_parent"
                         android:layout_centerVertical="true"
-                        android:fontFamily="@font/roboto_light"
-                        android:textColor="@color/white_dark"
-                        android:text="Sorting"
                         android:layout_centerHorizontal="true"
-                        android:textSize="@dimen/small_text"/>
+                        android:id="@+id/sorting_layout"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_sorting"
+                            android:fontFamily="@font/roboto_light"
+                            android:gravity="center"
+                            android:textColor="@color/white_dark"
+                            android:text="Сортировка"
+                            android:textSize="@dimen/small_text"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_sorting_filter"
+                            android:textColor="@color/white_dark"
+                            android:textSize="@dimen/participant_text_size"
+                            android:text="по времени"/>
+
+                    </LinearLayout>
 
                     <ImageView
                         android:layout_width="wrap_content"
