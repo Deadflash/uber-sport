@@ -42,6 +42,4 @@ class ProfileMvpFragment : BaseMvpFragment() {
     override fun getFragmentLayout(): Int = R.layout.fragment_profile
 
     override fun getFragmentTag(): String = PROFILE_FRAGMENT_TAG
-
-    override fun getFragmentMenu(): Int? = null
 }

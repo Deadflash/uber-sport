@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +16,6 @@ import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.user.UserModel
 import com.fcpunlimited.ubersport.fragment.GameFragment
-import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.game.GameParticipantDiffUtilCallback
 import com.fcpunlimited.ubersport.struct.game.GameParticipantsDto
 import com.fcpunlimited.ubersport.utils.Constants.DATE_FORMAT
@@ -125,8 +123,6 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
                     bt_join_game.visibility = View.VISIBLE
                 }
                 adapter.apply {
-
-
                     val participants = arrayListOf<GameParticipantsDto>()
                     participants.addAll(it.map { participant -> GameParticipantsDto(participant) })
                     if (participantsLimit()?.toInt()!! > (it.size) && isGameOwner) {
@@ -201,6 +197,4 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
     override fun getFragmentLayout(): Int = R.layout.fragment_description
 
     override fun getFragmentTag(): String = DESCRIPTION_FRAGMENT_TAG
-
-    override fun getFragmentMenu(): Int? = null
 }

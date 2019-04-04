@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/chooseGameFragment"
-        android:name="com.fcpunlimited.ubersport.view.main.create_game.ChooseGameFragment"
-        tools:layout="@layout/fragment_choose_game"
+        android:name="com.fcpunlimited.ubersport.view.main.create_game.ChooseSportFragment"
+        tools:layout="@layout/fragment_choose_sport"
         android:label="ChooseGameFragment" />
 </navigation>

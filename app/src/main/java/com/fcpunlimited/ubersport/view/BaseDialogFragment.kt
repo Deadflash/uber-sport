@@ -1,13 +1,31 @@
 package com.fcpunlimited.ubersport.view
 
+import android.graphics.Point
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.view.*
+import androidx.fragment.app.DialogFragment
 import com.arellomobile.mvp.MvpDelegate
 
-abstract class BaseMvpFragment : Fragment() {
+abstract class BaseDialogFragment : DialogFragment() {
+
+    override fun onResume() {
+        super.onResume()
+
+        super.onResume()
+        this.mIsStateSaved = false
+        this.getMvpDelegate().onAttach()
+
+        val window = dialog.window
+        val size = Point()
+
+        val display = window!!.windowManager.defaultDisplay
+        display.getSize(size)
+
+        val width = size.x
+
+        window.setLayout((width * 0.75).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
+        window.setGravity(Gravity.CENTER)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -15,7 +33,7 @@ abstract class BaseMvpFragment : Fragment() {
     }
 
     private var mIsStateSaved: Boolean = false
-    private var mMvpDelegate: MvpDelegate<out BaseMvpFragment>? = null
+    private var mMvpDelegate: MvpDelegate<out BaseDialogFragment>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,12 +42,6 @@ abstract class BaseMvpFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        this.mIsStateSaved = false
-        this.getMvpDelegate().onAttach()
-    }
-
-    override fun onResume() {
-        super.onResume()
         this.mIsStateSaved = false
         this.getMvpDelegate().onAttach()
     }

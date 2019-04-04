@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.view.main.create_game
+package com.fcpunlimited.ubersport.view.main.create_game.dialog
 
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
+import com.fcpunlimited.ubersport.view.main.create_game.ChooseSportFragment
 import java.util.*
 
 class DateDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
@@ -15,7 +16,7 @@ class DateDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         listener = when (parentFragment) {
-            parentFragment as ChooseGameFragment -> parentFragment as ChooseGameFragment
+            parentFragment as ChooseSportFragment -> parentFragment as ChooseSportFragment
             else -> null
         }
     }

@@ -22,6 +22,7 @@ import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem
 import com.fcpunlimited.ubersport.view.adapters.INavigation
 import com.fcpunlimited.ubersport.view.main.MainActivity
+import com.fcpunlimited.ubersport.view.main.search.dialog.SportsFilterDialogFragment
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.swipe_refresh_recycler_container.*
 import org.jetbrains.anko.runOnUiThread
@@ -62,7 +63,9 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
             presenter.loadGames()
         }
 
-        sports_layout.setOnClickListener { context?.toast("Games type filter") }
+        sports_layout.setOnClickListener {
+            SportsFilterDialogFragment().show(fragmentManager,"SportsFilter")
+        }
         sorting_layout.setOnClickListener { context?.toast("Sorting filter") }
         iv_filters.setOnClickListener { context?.toast("Other filters") }
 
@@ -75,7 +78,7 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
 
             gameContainer.gameData.observe(this@SearchFragment, Observer<List<GameDto>> {
                 val gameDtoDiffUtilCallback =
-                        GameDtoDiffUtilCallback(getData() as ArrayList<GameDto>, it)
+                        GameDtoDiffUtilCallback(getData() as List<GameDto>, it)
                 setData(it as ArrayList<IListItem>)
                 DiffUtil.calculateDiff(gameDtoDiffUtilCallback).dispatchUpdatesTo(this)
             })

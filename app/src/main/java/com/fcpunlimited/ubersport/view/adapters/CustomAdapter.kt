@@ -14,14 +14,18 @@ import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.game.GameParticipantsDto
 import com.fcpunlimited.ubersport.struct.game.SportDto
+import com.fcpunlimited.ubersport.struct.game.SportFilterDto
+import com.fcpunlimited.ubersport.type.GameFiltersInput
 import com.fcpunlimited.ubersport.utils.Constants.DATE_FORMAT
 import com.fcpunlimited.ubersport.utils.Constants.DATE_HOUR_FORMAT
 import com.fcpunlimited.ubersport.utils.getSportIconByName
-import com.fcpunlimited.ubersport.view.adapters.holders.CreateEventViewHolder
+import com.fcpunlimited.ubersport.view.adapters.holders.ChooseSportViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.DescriptionParticipantsViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.SearchEventViewHolder
+import com.fcpunlimited.ubersport.view.adapters.holders.SportsFilterViewHolder
 import com.fcpunlimited.ubersport.view.main.search.SearchFragment
 import com.fcpunlimited.ubersport.view.main.search.description.DescriptionFragment
+import com.fcpunlimited.ubersport.view.main.search.dialog.SportsFilterDialogFragment
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.image
 import org.jetbrains.anko.toast
@@ -31,14 +35,16 @@ import java.util.*
 class CustomAdapter : BaseListAdapter(), LifecycleObserver {
 
     private var lifecycleOwner: LifecycleOwner? = null
+    private lateinit var sportsFilter: GameFiltersInput
+    private lateinit var sportsFilterBuilder: GameFiltersInput.Builder
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun addListener(owner: LifecycleOwner) {
+    fun addLifecycleOwner(owner: LifecycleOwner) {
         this.lifecycleOwner = owner
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun removeListener() {
+    fun removeLifecycleOwner() {
         lifecycleOwner = null
     }
 
@@ -46,9 +52,16 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
         val context = parent.context
 
         return when (viewType) {
-            R.layout.create_game_item -> CreateEventViewHolder(inflateByViewType(context, viewType, parent))
+            R.layout.choose_sport_item -> ChooseSportViewHolder(inflateByViewType(context, viewType, parent))
             R.layout.search_item -> SearchEventViewHolder(inflateByViewType(context, viewType, parent))
             R.layout.description_participant_item -> DescriptionParticipantsViewHolder(inflateByViewType(context, viewType, parent))
+            R.layout.sport_filter_item -> {
+                if (lifecycleOwner is SportsFilterDialogFragment) {
+                    sportsFilter = (lifecycleOwner as SportsFilterDialogFragment).getFilter()
+                    sportsFilterBuilder = (lifecycleOwner as SportsFilterDialogFragment).getFilterBuilder()
+                }
+                SportsFilterViewHolder(inflateByViewType(context, viewType, parent))
+            }
             else -> throw RuntimeException("Unknown view type: $viewType")
         }
     }
@@ -56,9 +69,30 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val context = holder.itemView.context
         when (holder) {
-            is CreateEventViewHolder -> bindCreateGameView(holder, position, items, context)
+            is ChooseSportViewHolder -> bindChooseSportView(holder, position, items, context)
             is SearchEventViewHolder -> bindSearchView(holder, position, items, context)
             is DescriptionParticipantsViewHolder -> bindDescriptionParticipantsView(holder, position, items, context)
+            is SportsFilterViewHolder -> bindSportFilterView(holder, position, items, context)
+        }
+    }
+
+    private fun bindSportFilterView(holder: SportsFilterViewHolder, position: Int,
+                                    items: ArrayList<IListItem>, context: Context) {
+        val sport = items[position] as SportFilterDto
+        holder.apply {
+            tvSportCheckBox.text = sport.game.name()
+            sportsFilter.sportId()?.let {
+                tvSportCheckBox.isChecked = (it == sport.game.id())
+            }
+            tvSportCheckBox.setOnClickListener {
+                if (tvSportCheckBox.isChecked) {
+                    tvSportCheckBox.isChecked = false
+                    sportsFilterBuilder.sportId(null)
+                } else {
+                    tvSportCheckBox.isChecked = true
+                    sportsFilterBuilder.sportId(sport.game.id())
+                }
+            }
         }
     }
 
@@ -72,7 +106,7 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
                 tvParticipantName.text = "Add player"
                 return
             }
-            if ((lifecycleOwner as DescriptionFragment).isGameOwner){
+            if ((lifecycleOwner as DescriptionFragment).isGameOwner) {
                 excludeParticipantLayout.visibility = View.VISIBLE
                 excludeParticipantLayout.setOnClickListener { context.toast("exclude participant ${participant.nickname()}") }
             }
@@ -82,8 +116,8 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
         }
     }
 
-    private fun bindCreateGameView(holder: CreateEventViewHolder, position: Int,
-                                   items: ArrayList<IListItem>, context: Context) {
+    private fun bindChooseSportView(holder: ChooseSportViewHolder, position: Int,
+                                    items: ArrayList<IListItem>, context: Context) {
         val sport = items[position] as SportDto
 
         holder.apply {
@@ -102,20 +136,20 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
                 tvEventName.text = name()
                 tvEventDate.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT)
                         .format(dateStart().toLong())
-                location()?.apply { tvEventAddress.text = address() }
-                author()?.apply {
-                    tvAuthor.text = nickname()
-                    tvSubtitle.text = "${firstName()} ${lastName()}"
+                location()?.let { tvEventAddress.text = it.address() }
+                author()?.let {
+                    tvAuthor.text = it.nickname()
+                    tvSubtitle.text = "${it.firstName()} ${it.lastName()}"
                 }
                 length()?.let { tvGameTime.text = SimpleDateFormat(DATE_HOUR_FORMAT, Locale.ROOT).format(it) }
-                participants()?.apply {
+                participants()?.let {
                     val participantsLimit = participantsLimit()?.toInt() ?: 0
                     progressBar.max = participantsLimit
-                    progressBar.progress = size
-                    tvParticipantsCount.text = "$size/$participantsLimit"
+                    progressBar.progress = it.size
+                    tvParticipantsCount.text = "${it.size}/$participantsLimit"
                 }
-                sport()?.apply {
-                    ivSportIcon.image = ContextCompat.getDrawable(context, getSportIconByName(name()))
+                sport()?.let {
+                    ivSportIcon.image = ContextCompat.getDrawable(context, getSportIconByName(it.name()))
                 }
 
                 itemView.setOnClickListener {
