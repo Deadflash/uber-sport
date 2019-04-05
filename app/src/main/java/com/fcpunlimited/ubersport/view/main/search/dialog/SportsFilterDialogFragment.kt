@@ -1,5 +1,6 @@
 package com.fcpunlimited.ubersport.view.main.search.dialog
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,8 @@ import com.fcpunlimited.ubersport.struct.game.SportFilterDto
 import com.fcpunlimited.ubersport.utils.Constants.SPORT_FILTER_DIALOG_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
+import com.fcpunlimited.ubersport.view.main.search.IUpdateFilterView
+import com.fcpunlimited.ubersport.view.main.search.SearchFragment
 import kotlinx.android.synthetic.main.dialog_fragment_sports_filter.*
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
@@ -32,6 +35,18 @@ class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView {
 
     @ProvidePresenter(type = PresenterType.GLOBAL, tag = "SPORTS_FILTER_DIALOG_PRESENTER")
     fun providePresenter() = SportsFilterDialogPresenter(gameModel, gamesLiveDataContainer)
+
+    private var searchViewInterface: IUpdateFilterView? = null
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        searchViewInterface = targetFragment as SearchFragment
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        searchViewInterface = null
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -54,6 +69,7 @@ class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView {
         dialog.setCancelable(false)
         bt_dialog_ok.setOnClickListener {
             presenter.getGames()
+            searchViewInterface?.updateSportsFilter()
             dialog.dismiss()
         }
     }

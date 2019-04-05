@@ -12,8 +12,8 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.di.game.GamesLiveDataContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
+import com.fcpunlimited.ubersport.di.game.GamesLiveDataContainer
 import com.fcpunlimited.ubersport.fragment.GameFragment
 import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.game.GameDtoDiffUtilCallback
@@ -35,7 +35,7 @@ import org.koin.android.ext.android.inject
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
+class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilterView {
 
     private val gameModel: GameModel by inject()
     private val gamesLiveDataContainer: GamesLiveDataContainer by inject()
@@ -66,8 +66,12 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
             presenter.loadGames()
         }
 
+        updateSportsFilter()
+
         sports_layout.setOnClickListener {
-            SportsFilterDialogFragment().show(fragmentManager, "SportsFilter")
+            val dialog = SportsFilterDialogFragment()
+            dialog.setTargetFragment(this, 1)
+            dialog.show(fragmentManager, "SportsFilter")
         }
         sorting_layout.setOnClickListener { context?.toast("Sorting filter") }
         iv_filters.setOnClickListener { context?.toast("Other filters") }
@@ -88,8 +92,7 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun updateSportsFilter() {
         val prefs = context?.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
         val sportsSize = prefs?.getStringSet(SPORT_IDS, emptySet())?.size
         tv_sports_filter_count.text = "$sportsSize видов"
