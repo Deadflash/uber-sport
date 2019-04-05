@@ -39,8 +39,10 @@ class MainActivity : BaseMvpActivity(), MainView, IGameShare.IGameProvider, IGam
         )
 
         currentNavController = controller
-        fab.setOnClickListener {startActivity(Intent(this,
-                CreateGameActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))}
+        fab.setOnClickListener {
+            startActivity(Intent(this,
+                    CreateGameActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+        }
     }
 
     override fun provideGame(game: GameFragment) {
@@ -60,5 +62,9 @@ class MainActivity : BaseMvpActivity(), MainView, IGameShare.IGameProvider, IGam
         if (currentNavController?.value?.popBackStack() != true) {
             super.onBackPressed()
         }
+    }
+
+    override fun showMessage(message: String) {
+        runOnUiThread { toast(message) }
     }
 }

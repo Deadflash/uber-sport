@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.fcpunlimited.ubersport.di.api.HttpRequestClients
 import com.fcpunlimited.ubersport.di.api.HttpRequestClientsImpl
-import com.fcpunlimited.ubersport.di.game.GameContainer
+import com.fcpunlimited.ubersport.di.game.GamesLiveDataContainer
 import com.fcpunlimited.ubersport.di.game.GameFilterContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.user.UserModel
@@ -16,8 +16,8 @@ class App : Application() {
 
     private val myModules = module {
         single<HttpRequestClients> { HttpRequestClientsImpl() }
-        single { GameContainer(MutableLiveData(), MutableLiveData()) }
-        single { GameFilterContainer() }
+        single { GamesLiveDataContainer(MutableLiveData(), MutableLiveData()) }
+        single { GameFilterContainer(this@App) }
         single { UserModel(get()) }
         single { GameModel(get(), get(), get(), get()) }
     }

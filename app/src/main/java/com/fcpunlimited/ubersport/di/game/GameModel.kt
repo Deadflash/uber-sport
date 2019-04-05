@@ -13,7 +13,7 @@ import com.fcpunlimited.ubersport.di.user.UserModel
 import com.fcpunlimited.ubersport.struct.game.GameDto
 
 class GameModel(private val httpRequestClients: HttpRequestClients,
-                private val gameContainer: GameContainer,
+                private val gamesLiveDataContainer: GamesLiveDataContainer,
                 private val gameFilterContainer: GameFilterContainer,
                 private val userModel: UserModel) {
 
@@ -33,7 +33,7 @@ class GameModel(private val httpRequestClients: HttpRequestClients,
                             val games = response.data()?.games()?.games()
                                     ?.map { game -> GameDto(game.fragments().gameFragment()) }
                                     ?.toCollection(arrayListOf())
-                            gameContainer.gameData.postValue(games)
+                            gamesLiveDataContainer.gameData.postValue(games)
                             httpEmptyCallback.onResponse()
                         }
                     }
@@ -53,7 +53,7 @@ class GameModel(private val httpRequestClients: HttpRequestClients,
                             httpEmptyCallback.onFailure(response.errors().toString())
                         }
                         else{
-                            gameContainer.sportsData.postValue(response.data()?.sports())
+                            gamesLiveDataContainer.sportsData.postValue(response.data()?.sports())
                             httpEmptyCallback.onResponse()
                         }
                     }

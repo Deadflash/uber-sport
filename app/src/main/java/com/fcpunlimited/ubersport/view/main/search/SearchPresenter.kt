@@ -5,17 +5,17 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.fcpunlimited.ubersport.di.game.GameContainer
+import com.fcpunlimited.ubersport.di.game.GamesLiveDataContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.game.HttpEmptyResponseCallBack
 
 @InjectViewState
-class SearchPresenter(private val gameModel: GameModel, private val gameContainer: GameContainer)
+class SearchPresenter(private val gameModel: GameModel, private val gamesLiveDataContainer: GamesLiveDataContainer)
     : MvpPresenter<SearchView>(), LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreateSearchView() {
-        if (gameContainer.gameData.value == null) {
+        if (gamesLiveDataContainer.gameData.value == null) {
             loadGames()
         }
     }

@@ -10,59 +10,48 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.di.game.GameContainer
-import com.fcpunlimited.ubersport.di.game.GameFilterContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
-import com.fcpunlimited.ubersport.di.game.HttpEmptyResponseCallBack
+import com.fcpunlimited.ubersport.di.game.GamesLiveDataContainer
 import com.fcpunlimited.ubersport.struct.game.SportFilterDto
-import com.fcpunlimited.ubersport.view.BaseDialogFragment
+import com.fcpunlimited.ubersport.utils.Constants.SPORT_FILTER_DIALOG_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
-import kotlinx.android.synthetic.main.fragment_sports_filter_dialog.*
+import kotlinx.android.synthetic.main.dialog_fragment_sports_filter.*
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
 
-class SportsFilterDialogFragment : BaseDialogFragment(), SportsFilterDialogView {
+class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView {
 
-    private val filter: GameFilterContainer by inject()
-    private val gameContainer: GameContainer by inject()
+    private val gamesLiveDataContainer: GamesLiveDataContainer by inject()
     private val gameModel: GameModel by inject()
 
     @InjectPresenter(type = PresenterType.GLOBAL, tag = "SPORTS_FILTER_DIALOG_PRESENTER")
     lateinit var presenter: SportsFilterDialogPresenter
 
     @ProvidePresenter(type = PresenterType.GLOBAL, tag = "SPORTS_FILTER_DIALOG_PRESENTER")
-    fun providePresenter() = SportsFilterDialogPresenter(gameModel)
-
-    fun getFilter() = filter.getFilter()
-    fun getFilterBuilder() = filter.getFilterBuilderL()
+    fun providePresenter() = SportsFilterDialogPresenter(gameModel, gamesLiveDataContainer)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_sports_filter_dialog, container)
+        return inflater.inflate(R.layout.dialog_fragment_sports_filter, container)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sports = gameContainer.sportsData.value
-        if (sports == null || sports.isEmpty()) {
-            gameModel.getSports(object : HttpEmptyResponseCallBack {
-                override fun onFailure(message: String) {
-                    context?.runOnUiThread { toast(message) }
-                }
-            })
-        }
+        lifecycle.addObserver(presenter)
         val adapter = CustomAdapter()
         lifecycle.addObserver(adapter)
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = adapter
         recycler.setHasFixedSize(true)
 
-        gameContainer.sportsData.observe(this, Observer {
-            adapter.setData(it.map { sport -> SportFilterDto(sport) }.toCollection(arrayListOf()))
+        gamesLiveDataContainer.sportsData.observe(this, Observer {
+            adapter.setData(it.map { sportDto -> SportFilterDto(sportDto) }.toCollection(arrayListOf()))
         })
-
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
         bt_dialog_ok.setOnClickListener {
             presenter.getGames()
             dialog.dismiss()
@@ -73,7 +62,7 @@ class SportsFilterDialogFragment : BaseDialogFragment(), SportsFilterDialogView 
         context?.runOnUiThread { toast(message) }
     }
 
-    override fun getFragmentLayout(): Int = R.layout.fragment_sports_filter_dialog
+    override fun getFragmentLayout(): Int = R.layout.dialog_fragment_sports_filter
 
-    override fun getFragmentTag(): String = "sport_filter_dialog_fragment"
+    override fun getFragmentTag(): String = SPORT_FILTER_DIALOG_FRAGMENT_TAG
 }

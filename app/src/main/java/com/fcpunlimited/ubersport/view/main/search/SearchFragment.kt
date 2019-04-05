@@ -1,6 +1,7 @@
 package com.fcpunlimited.ubersport.view.main.search
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -11,12 +12,14 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.di.game.GameContainer
+import com.fcpunlimited.ubersport.di.game.GamesLiveDataContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.fragment.GameFragment
 import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.game.GameDtoDiffUtilCallback
 import com.fcpunlimited.ubersport.utils.Constants.SEARCH_FRAGMENT_TAG
+import com.fcpunlimited.ubersport.utils.Constants.SPORT_IDS
+import com.fcpunlimited.ubersport.utils.Constants.UBER_SPORT_PREFS
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem
@@ -35,14 +38,14 @@ private const val ARG_PARAM2 = "param2"
 class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
 
     private val gameModel: GameModel by inject()
-    private val gameContainer: GameContainer by inject()
+    private val gamesLiveDataContainer: GamesLiveDataContainer by inject()
     private var gameProvider: IGameShare.IGameProvider? = null
 
     @InjectPresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
     lateinit var presenter: SearchPresenter
 
     @ProvidePresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
-    fun providePresenter() = SearchPresenter(gameModel, gameContainer)
+    fun providePresenter() = SearchPresenter(gameModel, gamesLiveDataContainer)
 
     private var param1: String? = null
     private var param2: String? = null
@@ -64,7 +67,7 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
         }
 
         sports_layout.setOnClickListener {
-            SportsFilterDialogFragment().show(fragmentManager,"SportsFilter")
+            SportsFilterDialogFragment().show(fragmentManager, "SportsFilter")
         }
         sorting_layout.setOnClickListener { context?.toast("Sorting filter") }
         iv_filters.setOnClickListener { context?.toast("Other filters") }
@@ -76,13 +79,20 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation {
             recycler.adapter = this
             recycler.setHasFixedSize(true)
 
-            gameContainer.gameData.observe(this@SearchFragment, Observer<List<GameDto>> {
+            gamesLiveDataContainer.gameData.observe(this@SearchFragment, Observer<List<GameDto>> {
                 val gameDtoDiffUtilCallback =
                         GameDtoDiffUtilCallback(getData() as List<GameDto>, it)
                 setData(it as ArrayList<IListItem>)
                 DiffUtil.calculateDiff(gameDtoDiffUtilCallback).dispatchUpdatesTo(this)
             })
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val prefs = context?.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
+        val sportsSize = prefs?.getStringSet(SPORT_IDS, emptySet())?.size
+        tv_sports_filter_count.text = "$sportsSize видов"
     }
 
     override fun showMessage(message: String) {

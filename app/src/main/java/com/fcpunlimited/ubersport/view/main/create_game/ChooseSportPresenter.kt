@@ -1,4 +1,4 @@
-package com.fcpunlimited.ubersport.view.main.search.dialog
+package com.fcpunlimited.ubersport.view.main.create_game
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -10,9 +10,8 @@ import com.fcpunlimited.ubersport.di.game.GamesLiveDataContainer
 import com.fcpunlimited.ubersport.di.game.HttpEmptyResponseCallBack
 
 @InjectViewState
-class SportsFilterDialogPresenter(private val gameModel: GameModel,
-                                  private val gamesLiveDataContainer: GamesLiveDataContainer)
-    : MvpPresenter<SportsFilterDialogView>(), LifecycleObserver {
+class ChooseSportPresenter(private val gameModel: GameModel, private val gamesLiveDataContainer: GamesLiveDataContainer)
+    : MvpPresenter<ChooseSportView>(), LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
@@ -24,17 +23,5 @@ class SportsFilterDialogPresenter(private val gameModel: GameModel,
                 }
             })
         }
-    }
-
-    fun getGames() {
-        gameModel.getGames(object : HttpEmptyResponseCallBack {
-            override fun onResponse() {
-                viewState.showMessage("Games updated")
-            }
-
-            override fun onFailure(message: String) {
-                viewState.showMessage(message)
-            }
-        })
     }
 }
