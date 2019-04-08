@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val BASE_URL = "http://142.93.98.160/"
+const val BASE_URL = "https://ubersport.ru/"
 
 class HttpRequestClientsImpl : HttpRequestClients {
 

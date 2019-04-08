@@ -13,17 +13,12 @@ class SplashPresenter(private val userModel: UserModel, private val gameModel: G
 
     override fun attachView(view: SplashView?) {
         super.attachView(view)
-        if (!userModel.hasToken()) {
-            userModel.getToken(this)
-        } else {
-            viewState.setAuthorized(true)
-        }
+        userModel.getToken(this)
     }
 
     override fun onResponse(data: Token) {
         viewState.showMessage(data.accessToken)
-//        viewState?.setAuthorized(true)
-        gameModel.getSports(object : HttpEmptyResponseCallBack{
+        gameModel.getSports(object : HttpEmptyResponseCallBack {
             override fun onFailure(message: String) {
                 viewState.showMessage(message)
                 viewState.setAuthorized(true)

@@ -2,6 +2,7 @@ package com.fcpunlimited.ubersport.view.main.search
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.fcpunlimited.ubersport.R
+import com.fcpunlimited.ubersport.di.game.GameFilterContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.game.GamesLiveDataContainer
 import com.fcpunlimited.ubersport.fragment.GameFragment
@@ -39,6 +41,7 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilter
 
     private val gameModel: GameModel by inject()
     private val gamesLiveDataContainer: GamesLiveDataContainer by inject()
+    private val filter: GameFilterContainer by inject()
     private var gameProvider: IGameShare.IGameProvider? = null
 
     @InjectPresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
@@ -46,6 +49,8 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilter
 
     @ProvidePresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
     fun providePresenter() = SearchPresenter(gameModel, gamesLiveDataContainer)
+
+//    private var prefs: SharedPreferences? = null
 
     private var param1: String? = null
     private var param2: String? = null
@@ -61,6 +66,7 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        prefs = context?.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
 
         swipe_refresh.setOnRefreshListener {
             presenter.loadGames()
@@ -93,8 +99,7 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilter
     }
 
     override fun updateSportsFilter() {
-        val prefs = context?.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
-        val sportsSize = prefs?.getStringSet(SPORT_IDS, emptySet())?.size
+        val sportsSize = filter.getUserFilterSportIds().size
         tv_sports_filter_count.text = "$sportsSize видов"
     }
 

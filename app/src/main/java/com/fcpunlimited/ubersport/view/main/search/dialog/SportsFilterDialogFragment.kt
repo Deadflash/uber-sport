@@ -11,6 +11,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.fcpunlimited.ubersport.R
+import com.fcpunlimited.ubersport.di.game.GameFilterContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.game.GamesLiveDataContainer
 import com.fcpunlimited.ubersport.struct.game.SportFilterDto
@@ -25,10 +26,11 @@ import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
 
-class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView {
+class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView, ISportsFilter {
 
     private val gamesLiveDataContainer: GamesLiveDataContainer by inject()
     private val gameModel: GameModel by inject()
+    private val filter: GameFilterContainer by inject()
 
     @InjectPresenter(type = PresenterType.GLOBAL, tag = "SPORTS_FILTER_DIALOG_PRESENTER")
     lateinit var presenter: SportsFilterDialogPresenter
@@ -66,12 +68,23 @@ class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView {
             adapter.setData(it.map { sportDto -> SportFilterDto(sportDto) }.toCollection(arrayListOf()))
         })
         dialog.setCanceledOnTouchOutside(false)
-        dialog.setCancelable(false)
         bt_dialog_ok.setOnClickListener {
             presenter.getGames()
             searchViewInterface?.updateSportsFilter()
             dialog.dismiss()
         }
+    }
+
+    override fun addFilterSport(sportId: String) {
+        filter.addUserFilterSportId(sportId)
+    }
+
+    override fun removeFilterSportId(sportId: String) {
+        filter.removeUserFilterSportId(sportId)
+    }
+
+    override fun getFilteredSports(): MutableSet<String>? {
+        return filter.getUserFilterSportIds()
     }
 
     override fun showMessage(message: String) {

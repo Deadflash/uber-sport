@@ -1,12 +1,10 @@
 package com.fcpunlimited.ubersport.view.adapters
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -19,8 +17,6 @@ import com.fcpunlimited.ubersport.struct.game.SportDto
 import com.fcpunlimited.ubersport.struct.game.SportFilterDto
 import com.fcpunlimited.ubersport.utils.Constants.DATE_FORMAT
 import com.fcpunlimited.ubersport.utils.Constants.DATE_HOUR_FORMAT
-import com.fcpunlimited.ubersport.utils.Constants.SPORT_IDS
-import com.fcpunlimited.ubersport.utils.Constants.UBER_SPORT_PREFS
 import com.fcpunlimited.ubersport.utils.getSportIconByName
 import com.fcpunlimited.ubersport.view.adapters.holders.ChooseSportViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.DescriptionParticipantsViewHolder
@@ -28,6 +24,7 @@ import com.fcpunlimited.ubersport.view.adapters.holders.SearchEventViewHolder
 import com.fcpunlimited.ubersport.view.adapters.holders.SportsFilterViewHolder
 import com.fcpunlimited.ubersport.view.main.search.SearchFragment
 import com.fcpunlimited.ubersport.view.main.search.description.DescriptionFragment
+import com.fcpunlimited.ubersport.view.main.search.dialog.SportsFilterDialogFragment
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.image
 import org.jetbrains.anko.toast
@@ -38,19 +35,20 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
 
     private var lifecycleOwner: LifecycleOwner? = null
 
-    private lateinit var prefs: SharedPreferences
-    private lateinit var sportIds: MutableSet<String>
+    private var sportIds: MutableSet<String>? = null
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun addLifecycleOwner(owner: LifecycleOwner) {
         this.lifecycleOwner = owner
-        prefs = (lifecycleOwner as Fragment).activity?.getSharedPreferences(UBER_SPORT_PREFS, Context.MODE_PRIVATE)!!
-        sportIds = prefs.getStringSet(SPORT_IDS, mutableSetOf())!!
+        if (lifecycleOwner is SportsFilterDialogFragment) {
+            sportIds = (lifecycleOwner as SportsFilterDialogFragment).getFilteredSports()!!
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun removeLifecycleOwner() {
         lifecycleOwner = null
+        sportIds = null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -82,25 +80,21 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
         val sport = items[position] as SportFilterDto
         holder.apply {
             tvSportCheckBox.text = sport.game.name()
-            tvSportCheckBox.isChecked = (sportIds.contains(sport.game.id()))
+            tvSportCheckBox.isChecked = (sportIds!!.contains(sport.game.id()))
             tvSportCheckBox.setOnClickListener {
-                if (tvSportCheckBox.isChecked) {
-                    tvSportCheckBox.isChecked = false
-                    sportIds.remove(sport.game.id())
-                    updateSportFilterPrefs(sportIds)
-                } else {
-                    tvSportCheckBox.isChecked = true
-                    sport.game.id()?.let { id ->
-                        sportIds.add(id)
-                        updateSportFilterPrefs(sportIds)
+                sport.game.id()?.let { id ->
+                    if (tvSportCheckBox.isChecked) {
+                        tvSportCheckBox.isChecked = false
+                        (lifecycleOwner as SportsFilterDialogFragment).removeFilterSportId(id)
+                    } else {
+                        tvSportCheckBox.isChecked = true
+
+                        (lifecycleOwner as SportsFilterDialogFragment).addFilterSport(id)
+
                     }
                 }
             }
         }
-    }
-
-    private fun updateSportFilterPrefs(sportIds: MutableSet<String>) {
-        prefs.edit().putStringSet(SPORT_IDS, sportIds).apply()
     }
 
     private fun bindDescriptionParticipantsView(holder: DescriptionParticipantsViewHolder,

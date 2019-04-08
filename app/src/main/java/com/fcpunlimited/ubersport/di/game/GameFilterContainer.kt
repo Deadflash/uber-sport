@@ -18,4 +18,23 @@ class GameFilterContainer(app: App) {
     fun getFilter(): GameFiltersInput = filterBuilder
             .sportId(prefs.getStringSet(SPORT_IDS, mutableSetOf()).firstOrNull())!!
             .status(GameStatus.PENDING).build()
+
+    fun getUserFilterSportIds() = prefs.getStringSet(SPORT_IDS, mutableSetOf())
+
+    fun addUserFilterSportId(sportId: String) {
+        val sportIds = prefs.getStringSet(SPORT_IDS, mutableSetOf())!!
+        val updatedIds: MutableSet<String> = mutableSetOf(sportId)
+        updatedIds.addAll(sportIds)
+        prefs.edit().putStringSet(SPORT_IDS, updatedIds).apply()
+    }
+
+    fun removeUserFilterSportId(sportId: String) {
+        val sportIds = prefs.getStringSet(SPORT_IDS, mutableSetOf())!!
+        if (sportIds.contains(sportId)) {
+            sportIds.remove(sportId)
+            val updatedIds: MutableSet<String> = mutableSetOf()
+            updatedIds.addAll(sportIds)
+            prefs.edit().putStringSet(SPORT_IDS, sportIds).apply()
+        }
+    }
 }

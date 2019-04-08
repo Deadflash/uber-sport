@@ -53,6 +53,7 @@ class ChooseSportFragment : BaseMvpFragment(), DateDialogFragment.IDateSelector,
 
         gamesLiveDataContainer.sportsData.observe(this, Observer {
             adapter.setData(it.map { sport -> SportDto(sport) }.toCollection(arrayListOf()))
+            adapter.notifyDataSetChanged()
         })
     }
 
