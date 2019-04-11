@@ -35,7 +35,7 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
 
     private var lifecycleOwner: LifecycleOwner? = null
 
-    private var sportIds: MutableSet<String>? = null
+    private var sportIds: Set<String>? = null
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun addLifecycleOwner(owner: LifecycleOwner) {

@@ -4,7 +4,6 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.fcpunlimited.ubersport.di.api.HttpResponseCallBack
 import com.fcpunlimited.ubersport.di.game.GameModel
-import com.fcpunlimited.ubersport.di.game.HttpEmptyResponseCallBack
 import com.fcpunlimited.ubersport.di.user.UserModel
 import com.fcpunlimited.ubersport.struct.auth.Token
 
@@ -18,16 +17,7 @@ class SplashPresenter(private val userModel: UserModel, private val gameModel: G
 
     override fun onResponse(data: Token) {
         viewState.showMessage(data.accessToken)
-        gameModel.getSports(object : HttpEmptyResponseCallBack {
-            override fun onFailure(message: String) {
-                viewState.showMessage(message)
-                viewState.setAuthorized(true)
-            }
-
-            override fun onResponse() {
-                viewState.setAuthorized(true)
-            }
-        })
+        viewState.setAuthorized(true)
     }
 
     override fun onFailure(message: String) {

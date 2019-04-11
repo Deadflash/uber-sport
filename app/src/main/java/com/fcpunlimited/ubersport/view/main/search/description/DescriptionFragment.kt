@@ -42,16 +42,21 @@ import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticipant, OnMapReadyCallback {
+
+    companion object {
+        const val DESCRIPTION_PRESENTER = "descriptionPresenter"
+    }
 
     private val gameModel: GameModel by inject()
     private val userModel: UserModel by inject()
     var isGameOwner: Boolean = false
 
-    @InjectPresenter(type = PresenterType.GLOBAL, tag = "DESCRIPTION_PRESENTER")
+    @InjectPresenter(type = PresenterType.GLOBAL, tag = DESCRIPTION_PRESENTER)
     lateinit var presenter: DescriptionPresenter
 
-    @ProvidePresenter(type = PresenterType.GLOBAL, tag = "DESCRIPTION_PRESENTER")
+    @ProvidePresenter(type = PresenterType.GLOBAL, tag = DESCRIPTION_PRESENTER)
     fun providePresenter() = DescriptionPresenter(gameModel)
 
     private lateinit var mMap: GoogleMap

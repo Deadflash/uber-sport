@@ -9,4 +9,7 @@ interface SearchView : MvpView, IBaseView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun onSwipeRefresh(isRefreshing: Boolean)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showSportsFilterCount(filterSportCount: Int)
 }

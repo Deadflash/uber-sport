@@ -7,34 +7,40 @@ import com.fcpunlimited.ubersport.type.GameStatus
 import com.fcpunlimited.ubersport.utils.Constants.SPORT_IDS
 import com.fcpunlimited.ubersport.utils.Constants.UBER_SPORT_PREFS
 
-class GameFilterContainer(app: App) {
-
-    private val prefs = app.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
+class GameFilterContainer(private val app: App) {
 
     private val filterBuilder: GameFiltersInput.Builder = GameFiltersInput.builder()
 
     fun getFilterBuilder() = filterBuilder
 
-    fun getFilter(): GameFiltersInput = filterBuilder
-            .sportId(prefs.getStringSet(SPORT_IDS, mutableSetOf()).firstOrNull())!!
-            .status(GameStatus.PENDING).build()
+    fun getUserFilterSportIds(): Set<String> = app
+            .getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
+            .getStringSet(SPORT_IDS, mutableSetOf())!!
 
-    fun getUserFilterSportIds() = prefs.getStringSet(SPORT_IDS, mutableSetOf())
+    fun getFilter(): GameFiltersInput {
+        return filterBuilder
+                .sportId(getUserFilterSportIds().firstOrNull())
+                .status(GameStatus.PENDING).build()
+    }
 
     fun addUserFilterSportId(sportId: String) {
-        val sportIds = prefs.getStringSet(SPORT_IDS, mutableSetOf())!!
-        val updatedIds: MutableSet<String> = mutableSetOf(sportId)
-        updatedIds.addAll(sportIds)
-        prefs.edit().putStringSet(SPORT_IDS, updatedIds).apply()
+        var sportIds = getUserFilterSportIds()
+        sportIds = sportIds.plusElement(sportId)
+        val prefs = app.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
+        prefs.edit().putStringSet(SPORT_IDS, sportIds).apply()
     }
 
     fun removeUserFilterSportId(sportId: String) {
-        val sportIds = prefs.getStringSet(SPORT_IDS, mutableSetOf())!!
+        var sportIds = getUserFilterSportIds()
         if (sportIds.contains(sportId)) {
-            sportIds.remove(sportId)
-            val updatedIds: MutableSet<String> = mutableSetOf()
-            updatedIds.addAll(sportIds)
+            val prefs = app.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
+            sportIds = sportIds.minusElement(sportId)
             prefs.edit().putStringSet(SPORT_IDS, sportIds).apply()
         }
+    }
+
+    fun updateUserFilterSportIds(sportIds: Set<String>) {
+        val prefs = app.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
+        prefs.edit().putStringSet(SPORT_IDS, sportIds).apply()
     }
 }

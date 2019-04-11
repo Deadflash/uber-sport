@@ -1,10 +1,9 @@
 package com.fcpunlimited.ubersport.view.main.search.dialog
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -25,17 +24,20 @@ import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
-
 class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView, ISportsFilter {
+
+    companion object {
+        const val SPORT_FILTER_DIALOG_PRESENTER = "sportFilterDialogPresenter"
+    }
 
     private val gamesLiveDataContainer: GamesLiveDataContainer by inject()
     private val gameModel: GameModel by inject()
     private val filter: GameFilterContainer by inject()
 
-    @InjectPresenter(type = PresenterType.GLOBAL, tag = "SPORTS_FILTER_DIALOG_PRESENTER")
+    @InjectPresenter(type = PresenterType.GLOBAL, tag = SPORT_FILTER_DIALOG_PRESENTER)
     lateinit var presenter: SportsFilterDialogPresenter
 
-    @ProvidePresenter(type = PresenterType.GLOBAL, tag = "SPORTS_FILTER_DIALOG_PRESENTER")
+    @ProvidePresenter(type = PresenterType.GLOBAL, tag = SPORT_FILTER_DIALOG_PRESENTER)
     fun providePresenter() = SportsFilterDialogPresenter(gameModel, gamesLiveDataContainer)
 
     private var searchViewInterface: IUpdateFilterView? = null
@@ -49,6 +51,22 @@ class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView, IS
         super.onDetach()
         searchViewInterface = null
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//
+//        val window = dialog.window
+//        val size = Point()
+//
+//        val display = window!!.windowManager.defaultDisplay
+//        display.getSize(size)
+//
+//        val width = size.x
+//
+//        window.setLayout((width * 0.75).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
+//        window.setGravity(Gravity.CENTER)
+//    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -69,10 +87,14 @@ class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView, IS
         })
         dialog.setCanceledOnTouchOutside(false)
         bt_dialog_ok.setOnClickListener {
-            presenter.getGames()
-            searchViewInterface?.updateSportsFilter()
             dialog.dismiss()
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface?) {
+        super.onDismiss(dialog)
+        presenter.getGames()
+        searchViewInterface?.updateSportsFilterCount()
     }
 
     override fun addFilterSport(sportId: String) {
@@ -83,7 +105,7 @@ class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView, IS
         filter.removeUserFilterSportId(sportId)
     }
 
-    override fun getFilteredSports(): MutableSet<String>? {
+    override fun getFilteredSports(): Set<String> {
         return filter.getUserFilterSportIds()
     }
 

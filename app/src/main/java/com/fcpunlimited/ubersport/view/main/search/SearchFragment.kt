@@ -1,8 +1,6 @@
 package com.fcpunlimited.ubersport.view.main.search
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -13,6 +11,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.fcpunlimited.ubersport.R
+import com.fcpunlimited.ubersport.SportsQuery
 import com.fcpunlimited.ubersport.di.game.GameFilterContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
 import com.fcpunlimited.ubersport.di.game.GamesLiveDataContainer
@@ -20,8 +19,6 @@ import com.fcpunlimited.ubersport.fragment.GameFragment
 import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.struct.game.GameDtoDiffUtilCallback
 import com.fcpunlimited.ubersport.utils.Constants.SEARCH_FRAGMENT_TAG
-import com.fcpunlimited.ubersport.utils.Constants.SPORT_IDS
-import com.fcpunlimited.ubersport.utils.Constants.UBER_SPORT_PREFS
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem
@@ -39,18 +36,20 @@ private const val ARG_PARAM2 = "param2"
 
 class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilterView {
 
+    companion object {
+        const val SEARCH_PRESENTER = "searchPresenter"
+    }
+
     private val gameModel: GameModel by inject()
     private val gamesLiveDataContainer: GamesLiveDataContainer by inject()
     private val filter: GameFilterContainer by inject()
     private var gameProvider: IGameShare.IGameProvider? = null
 
-    @InjectPresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
+    @InjectPresenter(type = PresenterType.GLOBAL, tag = SEARCH_PRESENTER)
     lateinit var presenter: SearchPresenter
 
-    @ProvidePresenter(type = PresenterType.GLOBAL, tag = "SEARCH_PRESENTER")
-    fun providePresenter() = SearchPresenter(gameModel, gamesLiveDataContainer)
-
-//    private var prefs: SharedPreferences? = null
+    @ProvidePresenter(type = PresenterType.GLOBAL, tag = SEARCH_PRESENTER)
+    fun providePresenter() = SearchPresenter(gameModel, gamesLiveDataContainer, filter)
 
     private var param1: String? = null
     private var param2: String? = null
@@ -66,18 +65,15 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        prefs = context?.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
 
         swipe_refresh.setOnRefreshListener {
             presenter.loadGames()
         }
 
-        updateSportsFilter()
-
         sports_layout.setOnClickListener {
             val dialog = SportsFilterDialogFragment()
             dialog.setTargetFragment(this, 1)
-            dialog.show(fragmentManager, "SportsFilter")
+            dialog.show(fragmentManager, dialog.tag)
         }
         sorting_layout.setOnClickListener { context?.toast("Sorting filter") }
         iv_filters.setOnClickListener { context?.toast("Other filters") }
@@ -95,12 +91,22 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilter
                 setData(it as ArrayList<IListItem>)
                 DiffUtil.calculateDiff(gameDtoDiffUtilCallback).dispatchUpdatesTo(this)
             })
+            gamesLiveDataContainer.sportsData.observe(this@SearchFragment, Observer<List<SportsQuery.Sport>> {
+                presenter.updateUserSportFilterCount(it)
+            })
         }
     }
 
-    override fun updateSportsFilter() {
-        val sportsSize = filter.getUserFilterSportIds().size
-        tv_sports_filter_count.text = "$sportsSize видов"
+    override fun showSportsFilterCount(filterSportCount: Int) {
+//        context?.runOnUiThread {
+            tv_sports_filter_count.text = "$filterSportCount видов"
+//        }
+    }
+
+    override fun updateSportsFilterCount() {
+        gamesLiveDataContainer.sportsData.value?.let {
+            presenter.updateUserSportFilterCount(it)
+        }
     }
 
     override fun showMessage(message: String) {

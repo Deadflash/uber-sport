@@ -24,13 +24,17 @@ import org.koin.android.ext.android.inject
 
 class ChooseSportFragment : BaseMvpFragment(), DateDialogFragment.IDateSelector, ChooseSportView {
 
+    companion object {
+        const val CHOOSE_SPORT_FRAGMENT_PRESENTER = "chooseSportFragmentPresenter"
+    }
+
     private val gamesLiveDataContainer: GamesLiveDataContainer by inject()
     private val gameModel: GameModel by inject()
 
-    @InjectPresenter(type = PresenterType.GLOBAL, tag = "CHOOSE_SPORT_FRAGMENT_PRESENTER")
+    @InjectPresenter(type = PresenterType.GLOBAL, tag = CHOOSE_SPORT_FRAGMENT_PRESENTER)
     lateinit var presenter: ChooseSportPresenter
 
-    @ProvidePresenter(type = PresenterType.GLOBAL, tag = "CHOOSE_SPORT_FRAGMENT_PRESENTER")
+    @ProvidePresenter(type = PresenterType.GLOBAL, tag = CHOOSE_SPORT_FRAGMENT_PRESENTER)
     fun providePresenter() = ChooseSportPresenter(gameModel, gamesLiveDataContainer)
 
     override fun onAttach(context: Context) {
