@@ -19,7 +19,7 @@ class GameFilterContainer(private val app: App) {
 
     fun getFilter(): GameFiltersInput {
         return filterBuilder
-                .sportId(getUserFilterSportIds().firstOrNull())
+//                .sportId(getUserFilterSportIds().firstOrNull())
                 .status(GameStatus.PENDING).build()
     }
 

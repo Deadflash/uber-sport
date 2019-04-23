@@ -1,7 +1,6 @@
 query Users{
     users{
     email
-    password
     nickname
     id
     firstName

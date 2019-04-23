@@ -11,6 +11,8 @@ import com.fcpunlimited.ubersport.di.api.HttpRequestClients
 import com.fcpunlimited.ubersport.di.api.HttpResponseCallBack
 import com.fcpunlimited.ubersport.di.user.UserModel
 import com.fcpunlimited.ubersport.struct.game.GameDto
+import com.fcpunlimited.ubersport.type.GameFiltersInput
+import com.fcpunlimited.ubersport.type.GameStatus
 
 class GameModel(private val httpRequestClients: HttpRequestClients,
                 private val gamesLiveDataContainer: GamesLiveDataContainer,

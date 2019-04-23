@@ -90,7 +90,6 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
         gameData.observe(this, androidx.lifecycle.Observer<GameFragment> { game ->
             setupView(game)
             initMap()
-            //TODO change to local variable
             game.author()?.let { isGameOwner = it.id() == userModel.getUserId() }
         })
         bt_join_game.setOnClickListener {
@@ -104,48 +103,44 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
     }
 
     private fun setupView(game: GameFragment) {
+        game.author()?.apply {
+            tv_author.text = nickname()
+            tv_author_subtitle.text = "${nickname()}"
 
-        game.apply {
-            author()?.apply {
-                tv_author.text = nickname()
-                tv_author_subtitle.text = "${firstName()} ${lastName()}"
-
+        }
+        tv_game_title.text = game.name()
+        tv_game_description.text = game.description()
+        tv_game_time.text = SimpleDateFormat(DATE_HOUR_FORMAT, Locale.ROOT).format((game.dateEnd()
+                ?: 0.0).minus(game.dateStart() ?: 0.0))
+        tv_address.text = game.location()?.address()
+        tv_date.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT)
+                .format(game.dateStart()?.toLong())
+        tv_description_participants_count.text = "${game.participants()?.size
+                ?: 0}/${game.sport()?.participantsLimit()?.toInt() ?: 0}"
+        game.participants()?.let {
+            if (it.map { participant -> participant.id() }.contains(userModel.getUserId())) {
+                bt_join_game.visibility = View.GONE
+                bt_leave_game.visibility = View.VISIBLE
+            } else {
+                bt_leave_game.visibility = View.GONE
+                bt_join_game.visibility = View.VISIBLE
             }
-            tv_game_title.text = name()
-            tv_game_description.text = description()
-            length()?.let { tv_game_time.text = SimpleDateFormat(DATE_HOUR_FORMAT, Locale.ROOT).format(it) }
-            tv_address.text = location()?.address()
-            tv_date.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT)
-                    .format(dateStart().toLong())
-            tv_description_participants_count.text = "${participants()?.size
-                    ?: 0}/${participantsLimit()?.toInt() ?: 0}"
-            participants()?.let {
-                if (it.map { participant -> participant.id() }.contains(userModel.getUserId())) {
-                    bt_join_game.visibility = View.GONE
-                    bt_leave_game.visibility = View.VISIBLE
-                } else {
-                    bt_leave_game.visibility = View.GONE
-                    bt_join_game.visibility = View.VISIBLE
+            adapter.apply {
+                val participants = arrayListOf<GameParticipantsDto>()
+                participants.addAll(it.map { participant -> GameParticipantsDto(participant) })
+                if (game.sport()?.participantsLimit()?.toInt() ?: 0 > (it.size) && isGameOwner) {
+                    participants.add(GameParticipantsDto(GameFragment.Participant("STUB",
+                            "", null, null)))
                 }
-                adapter.apply {
-                    val participants = arrayListOf<GameParticipantsDto>()
-                    participants.addAll(it.map { participant -> GameParticipantsDto(participant) })
-                    if (participantsLimit()?.toInt()!! > (it.size) && isGameOwner) {
-                        participants.add(GameParticipantsDto(GameFragment.Participant("STUB",
-                                "", null, null, null, null,
-                                null, null, null, null,
-                                null)))
-                    }
 
-                    val gameDtoDiffUtilCallback =
-                            GameParticipantDiffUtilCallback(getData() as ArrayList<GameParticipantsDto>, participants)
-                    setData(participants as ArrayList<IListItem>)
-                    DiffUtil.calculateDiff(gameDtoDiffUtilCallback).dispatchUpdatesTo(this)
-                }
+                val gameDtoDiffUtilCallback =
+                        GameParticipantDiffUtilCallback(getData() as ArrayList<GameParticipantsDto>, participants)
+                setData(participants as ArrayList<IListItem>)
+                DiffUtil.calculateDiff(gameDtoDiffUtilCallback).dispatchUpdatesTo(this)
             }
-            sport()?.apply {
-                context?.let { iv_sport_icon.image = ContextCompat.getDrawable(it, getSportIconByName(name())) }
-            }
+        }
+        game.sport()?.apply {
+            context?.let { iv_sport_icon.image = ContextCompat.getDrawable(it, getSportIconByName(name())) }
         }
     }
 
@@ -192,7 +187,7 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
             uiSettings.isZoomGesturesEnabled = false
             val location = gameData.value?.location()
             location?.apply {
-                val latlng = LatLng(latitude(), longitude())
+                val latlng = LatLng(latitude() ?: 0.0, longitude() ?: 0.0)
                 addMarker(MarkerOptions().position(latlng).title(location.address()))
                 moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 11f))
             }

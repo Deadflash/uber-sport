@@ -1,52 +1,37 @@
 fragment GameFragment on Game{
-      id
-      name
-      location{
+    id
+    name
+    location{
         latitude
         longitude
         address
-      }
-      dateStart
-      description
-      participantsLimit
-      sport{
-              id
-              name
-            }
-      participants{
-              id
-              email
-              password
-              nickname
-              firstName
-              lastName
-              middleName
-              dateOfBirth
-              roles
-              favouriteSports{
-                name
-                id
-                participantsLimit
-              }
-            }
-      ageLimit{
+    }
+    description
+    ageLimit{
         min
         max
-      }
-      author{
+    }
+    author{
         id
         email
-        password
         nickname
-        firstName
-        lastName
-        middleName
-        dateOfBirth
-        roles
-        favouriteSports{
-          id
-          name
-        }
-      }
-      length
+    }
+    participants{
+        id
+        nickname
+        email
+    }
+    maxParticipants
+    minParticipants
+    sport{
+        id
+        name
+        participantsLimit
+    }
+    authorId
+    status
+    creationDate
+    updateDate
+    dateStart
+    dateEnd
 }

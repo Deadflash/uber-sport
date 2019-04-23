@@ -1,12 +1,15 @@
 package com.fcpunlimited.ubersport.di.user
 
+import android.annotation.SuppressLint
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.fcpunlimited.ubersport.UsersQuery
-import com.fcpunlimited.ubersport.di.api.HttpResponseCallBack
 import com.fcpunlimited.ubersport.di.api.HttpRequestClients
+import com.fcpunlimited.ubersport.di.api.HttpResponseCallBack
+import com.fcpunlimited.ubersport.struct.auth.LoginBody
 import com.fcpunlimited.ubersport.struct.auth.Token
+import com.fcpunlimited.ubersport.struct.auth.UberAuth
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 
@@ -37,10 +40,21 @@ class UserModel(private val httpRequestClients: HttpRequestClients) {
                 })
     }
 
+    @SuppressLint("CheckResult")
     fun getToken(callBack: HttpResponseCallBack<Token>) {
         httpRequestClients.getRetrofitApi().getToken()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ token -> callBack.onResponse(token) }, { error -> error.message?.let { callBack.onFailure(it) } })
+    }
+
+    @SuppressLint("CheckResult")
+    fun login(callBack: HttpResponseCallBack<UberAuth>) {
+        httpRequestClients.getRetrofitApi().login(LoginBody("l11p1a2@mail.ru", "123"))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ uberAuth ->
+                    httpRequestClients.setToken(uberAuth.accessToken)
+                    callBack.onResponse(uberAuth)
+                }, { error -> error.message?.let { callBack.onFailure(it) } })
     }
 
     fun getUserId(): String = userId

@@ -136,21 +136,25 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
             game.apply {
                 tvEventName.text = name()
                 tvEventDate.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT)
-                        .format(dateStart().toLong())
+                        .format(dateStart()?.toLong())
                 location()?.let { tvEventAddress.text = it.address() }
                 author()?.let {
                     tvAuthor.text = it.nickname()
-                    tvSubtitle.text = "${it.firstName()} ${it.lastName()}"
+                    tvSubtitle.text = "${it.nickname()}"
                 }
-                length()?.let { tvGameTime.text = SimpleDateFormat(DATE_HOUR_FORMAT, Locale.ROOT).format(it) }
-                participants()?.let {
-                    val participantsLimit = participantsLimit()?.toInt() ?: 0
-                    progressBar.max = participantsLimit
-                    progressBar.progress = it.size
-                    tvParticipantsCount.text = "${it.size}/$participantsLimit"
-                }
+                tvGameTime.text = SimpleDateFormat(DATE_HOUR_FORMAT, Locale.ROOT).format(dateEnd()?.minus(dateStart()!!) ?: 0)
+//                participants()?.let {
+//                    val participantsLimit = participantsLimit()?.toInt() ?: 0
+//                    progressBar.max = participantsLimit
+//                    progressBar.progress = it.size
+//                    tvParticipantsCount.text = "${it.size}/$participantsLimit"
+//                }
                 sport()?.let {
                     ivSportIcon.image = ContextCompat.getDrawable(context, getSportIconByName(it.name()))
+                    val participantsLimit = it.participantsLimit()?.toInt() ?: 0
+                    progressBar.max = participantsLimit
+                    progressBar.progress = participants()?.size ?: 0
+                    tvParticipantsCount.text = "${participants()?.size}/$participantsLimit"
                 }
 
                 itemView.setOnClickListener {
