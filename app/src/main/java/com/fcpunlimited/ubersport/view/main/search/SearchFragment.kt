@@ -31,9 +31,6 @@ import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilterView {
 
     companion object {
@@ -51,15 +48,8 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilter
     @ProvidePresenter(type = PresenterType.GLOBAL, tag = SEARCH_PRESENTER)
     fun providePresenter() = SearchPresenter(gameModel, gamesLiveDataContainer, filter)
 
-    private var param1: String? = null
-    private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
         lifecycle.addObserver(presenter)
     }
 
@@ -76,7 +66,7 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilter
             dialog.show(fragmentManager, dialog.tag)
         }
         sorting_layout.setOnClickListener { context?.toast("Sorting filter") }
-        iv_filters.setOnClickListener { context?.toast("Other filters") }
+//        iv_filters.setOnClickListener { context?.toast("Other filters") }
 
         CustomAdapter().apply {
             lifecycle.addObserver(this)

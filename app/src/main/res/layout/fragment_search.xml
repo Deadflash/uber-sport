@@ -82,8 +82,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"
+                        android:layout_alignParentEnd="true"
                         android:id="@+id/sorting_layout"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -108,15 +108,15 @@
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/iv_filters"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/roboto_light"
-                        android:src="@drawable/ic__ionicons_svg_md_tennisball"
-                        android:layout_alignParentEnd="true"
-                        android:textSize="@dimen/small_text"/>
+                    <!--<ImageView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:id="@+id/iv_filters"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:fontFamily="@font/roboto_light"-->
+                        <!--android:src="@drawable/ic__ionicons_svg_md_tennisball"-->
+                        <!--android:layout_alignParentEnd="true"-->
+                        <!--android:textSize="@dimen/small_text"/>-->
 
                 </RelativeLayout>
 

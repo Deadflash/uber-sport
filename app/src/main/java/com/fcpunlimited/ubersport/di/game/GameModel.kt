@@ -10,6 +10,7 @@ import com.fcpunlimited.ubersport.SportsQuery
 import com.fcpunlimited.ubersport.di.api.HttpRequestClients
 import com.fcpunlimited.ubersport.di.api.HttpResponseCallBack
 import com.fcpunlimited.ubersport.di.user.UserModel
+import com.fcpunlimited.ubersport.struct.game.ActiveGameDto
 import com.fcpunlimited.ubersport.struct.game.GameDto
 import com.fcpunlimited.ubersport.type.GameFiltersInput
 import com.fcpunlimited.ubersport.type.GameStatus
@@ -17,7 +18,8 @@ import com.fcpunlimited.ubersport.type.GameStatus
 class GameModel(private val httpRequestClients: HttpRequestClients,
                 private val gamesLiveDataContainer: GamesLiveDataContainer,
                 private val gameFilterContainer: GameFilterContainer,
-                private val userModel: UserModel) {
+                private val userModel: UserModel,
+                private val activeGamesLiveDataContainer: ActiveGamesLiveDataContainer) {
 
     fun getGames(httpEmptyCallback: HttpEmptyResponseCallBack) {
         httpRequestClients.getApolloClient().query(GamesQuery.builder()
@@ -42,6 +44,34 @@ class GameModel(private val httpRequestClients: HttpRequestClients,
                 })
     }
 
+    fun getActiveGames(httpEmptyCallback: HttpEmptyResponseCallBack) {
+        val activeGamesFilter = GameFiltersInput.builder()
+//                .status(GameStatus.PENDING)
+//                .participantsIds(arrayListOf(userModel.getUserId()))
+                .build()
+        httpRequestClients.getApolloClient().query(GamesQuery.builder()
+                .filters(activeGamesFilter)
+                .build())
+                .enqueue(object : ApolloCall.Callback<GamesQuery.Data>() {
+                    override fun onFailure(e: ApolloException) {
+                        e.message?.let { httpEmptyCallback.onFailure(it) }
+                    }
+
+                    override fun onResponse(response: Response<GamesQuery.Data>) {
+                        if (response.hasErrors()) {
+                            httpEmptyCallback.onFailure(response.errors().toString())
+                        } else {
+                            val games = response.data()?.games()?.games()
+                                    ?.map { game -> ActiveGameDto(game.fragments().gameFragment()) }
+                                    ?.toCollection(arrayListOf())
+                            activeGamesLiveDataContainer.activeGamesData.postValue(games)
+                            httpEmptyCallback.onResponse()
+                        }
+                    }
+
+                })
+    }
+
     fun getSports(httpEmptyCallback: HttpEmptyResponseCallBack) {
         httpRequestClients.getApolloClient().query(SportsQuery.builder()
                 .build())
@@ -51,10 +81,9 @@ class GameModel(private val httpRequestClients: HttpRequestClients,
                     }
 
                     override fun onResponse(response: Response<SportsQuery.Data>) {
-                        if (response.hasErrors()){
+                        if (response.hasErrors()) {
                             httpEmptyCallback.onFailure(response.errors().toString())
-                        }
-                        else{
+                        } else {
                             gamesLiveDataContainer.sportsData.postValue(response.data()?.sports())
                             httpEmptyCallback.onResponse()
                         }

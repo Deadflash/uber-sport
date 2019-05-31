@@ -24,5 +24,6 @@
     <string name="witch_game_to_create">Какую игру вы хотите создать?</string>
     <string name="rating">Рейтинг</string>
     <string name="reliability">Надежность</string>
+    <string name="active_games">Активные Игры</string>
 
 </resources>

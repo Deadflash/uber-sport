@@ -11,17 +11,11 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.RecyclerView
 import com.fcpunlimited.ubersport.R
-import com.fcpunlimited.ubersport.struct.game.GameDto
-import com.fcpunlimited.ubersport.struct.game.GameParticipantsDto
-import com.fcpunlimited.ubersport.struct.game.SportDto
-import com.fcpunlimited.ubersport.struct.game.SportFilterDto
+import com.fcpunlimited.ubersport.struct.game.*
 import com.fcpunlimited.ubersport.utils.Constants.DATE_FORMAT
 import com.fcpunlimited.ubersport.utils.Constants.DATE_HOUR_FORMAT
 import com.fcpunlimited.ubersport.utils.getSportIconByName
-import com.fcpunlimited.ubersport.view.adapters.holders.ChooseSportViewHolder
-import com.fcpunlimited.ubersport.view.adapters.holders.DescriptionParticipantsViewHolder
-import com.fcpunlimited.ubersport.view.adapters.holders.SearchEventViewHolder
-import com.fcpunlimited.ubersport.view.adapters.holders.SportsFilterViewHolder
+import com.fcpunlimited.ubersport.view.adapters.holders.*
 import com.fcpunlimited.ubersport.view.main.search.SearchFragment
 import com.fcpunlimited.ubersport.view.main.search.description.DescriptionFragment
 import com.fcpunlimited.ubersport.view.main.search.dialog.SportsFilterDialogFragment
@@ -30,6 +24,7 @@ import org.jetbrains.anko.image
 import org.jetbrains.anko.toast
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CustomAdapter : BaseListAdapter(), LifecycleObserver {
 
@@ -58,9 +53,8 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
             R.layout.choose_sport_item -> ChooseSportViewHolder(inflateByViewType(context, viewType, parent))
             R.layout.search_item -> SearchEventViewHolder(inflateByViewType(context, viewType, parent))
             R.layout.description_participant_item -> DescriptionParticipantsViewHolder(inflateByViewType(context, viewType, parent))
-            R.layout.sport_filter_item -> {
-                SportsFilterViewHolder(inflateByViewType(context, viewType, parent))
-            }
+            R.layout.sport_filter_item -> SportsFilterViewHolder(inflateByViewType(context, viewType, parent))
+            R.layout.active_game_item -> ActiveGameViewHolder(inflateByViewType(context, viewType, parent))
             else -> throw RuntimeException("Unknown view type: $viewType")
         }
     }
@@ -72,6 +66,16 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
             is SearchEventViewHolder -> bindSearchView(holder, position, items, context)
             is DescriptionParticipantsViewHolder -> bindDescriptionParticipantsView(holder, position, items, context)
             is SportsFilterViewHolder -> bindSportFilterView(holder, position, items, context)
+            is ActiveGameViewHolder -> bindActiveGamesViewHolder(holder,position,items, context)
+        }
+    }
+
+    private fun bindActiveGamesViewHolder(holder: ActiveGameViewHolder, position: Int, items: ArrayList<IListItem>, context: Context) {
+        val game = (items[position] as ActiveGameDto).game
+        holder.apply {
+            tvGameDate.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT).format(game.dateStart() ?: 0.0)
+            tvGameAuthor.text = game.author()?.nickname() ?: "null nickname"
+            tvEventName.text = game.name()
         }
     }
 
@@ -142,7 +146,8 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
                     tvAuthor.text = it.nickname()
                     tvSubtitle.text = "${it.nickname()}"
                 }
-                tvGameTime.text = SimpleDateFormat(DATE_HOUR_FORMAT, Locale.ROOT).format(dateEnd()?.minus(dateStart()!!) ?: 0)
+                tvGameTime.text = SimpleDateFormat(DATE_HOUR_FORMAT, Locale.ROOT).format(dateEnd()?.minus(dateStart()!!)
+                        ?: 0)
 //                participants()?.let {
 //                    val participantsLimit = participantsLimit()?.toInt() ?: 0
 //                    progressBar.max = participantsLimit
