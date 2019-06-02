@@ -18,7 +18,7 @@ class UserModel(private val httpRequestClients: HttpRequestClients) {
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private var token: String? = null
-    private val userId = "5ba405680a5d34363fba418c"
+    private var userId = "5ba405680a5d34363fba418c"
 
     fun hasToken() = token != null
 
@@ -53,6 +53,7 @@ class UserModel(private val httpRequestClients: HttpRequestClients) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ uberAuth ->
                     httpRequestClients.setToken(uberAuth.accessToken)
+                    userId = uberAuth.user._id
                     callBack.onResponse(uberAuth)
                 }, { error -> error.message?.let { callBack.onFailure(it) } })
     }
