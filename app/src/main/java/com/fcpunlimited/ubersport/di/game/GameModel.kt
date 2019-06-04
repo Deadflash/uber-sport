@@ -10,8 +10,9 @@ import com.fcpunlimited.ubersport.SportsQuery
 import com.fcpunlimited.ubersport.di.api.HttpRequestClients
 import com.fcpunlimited.ubersport.di.api.HttpResponseCallBack
 import com.fcpunlimited.ubersport.di.user.UserModel
-import com.fcpunlimited.ubersport.struct.game.ActiveGameDto
+import com.fcpunlimited.ubersport.struct.game.ActiveGamesDto
 import com.fcpunlimited.ubersport.struct.game.GameDto
+import com.fcpunlimited.ubersport.struct.game.GamesHistoryDto
 import com.fcpunlimited.ubersport.type.GameFiltersInput
 import com.fcpunlimited.ubersport.type.GameStatus
 
@@ -19,7 +20,8 @@ class GameModel(private val httpRequestClients: HttpRequestClients,
                 private val gamesLiveDataContainer: GamesLiveDataContainer,
                 private val gameFilterContainer: GameFilterContainer,
                 private val userModel: UserModel,
-                private val activeGamesLiveDataContainer: ActiveGamesLiveDataContainer) {
+                private val activeGamesLiveDataContainer: ActiveGamesLiveDataContainer,
+                private val gamesHistoryLiveDataContainer: GamesHistoryLiveDataContainer) {
 
     fun getGames(httpEmptyCallback: HttpEmptyResponseCallBack) {
         httpRequestClients.getApolloClient().query(GamesQuery.builder()
@@ -46,8 +48,8 @@ class GameModel(private val httpRequestClients: HttpRequestClients,
 
     fun getActiveGames(httpEmptyCallback: HttpEmptyResponseCallBack) {
         val activeGamesFilter = GameFiltersInput.builder()
-//                .status(GameStatus.PENDING)
-//                .participantsIds(arrayListOf(userModel.getUserId()))
+                .status(GameStatus.PENDING)
+                .participantsIds(arrayListOf(userModel.getUserId()))
                 .build()
         httpRequestClients.getApolloClient().query(GamesQuery.builder()
                 .filters(activeGamesFilter)
@@ -62,9 +64,37 @@ class GameModel(private val httpRequestClients: HttpRequestClients,
                             httpEmptyCallback.onFailure(response.errors().toString())
                         } else {
                             val games = response.data()?.games()?.games()
-                                    ?.map { game -> ActiveGameDto(game.fragments().gameFragment()) }
+                                    ?.map { game -> ActiveGamesDto(game.fragments().gameFragment()) }
                                     ?.toCollection(arrayListOf())
                             activeGamesLiveDataContainer.activeGamesData.postValue(games)
+                            httpEmptyCallback.onResponse()
+                        }
+                    }
+
+                })
+    }
+
+    fun getGamesHistory(httpEmptyCallback: HttpEmptyResponseCallBack) {
+        val gamesHistoryFilter = GameFiltersInput.builder()
+                .status(GameStatus.FINISHED)
+                .participantsIds(arrayListOf(userModel.getUserId()))
+                .build()
+        httpRequestClients.getApolloClient().query(GamesQuery.builder()
+                .filters(gamesHistoryFilter)
+                .build())
+                .enqueue(object : ApolloCall.Callback<GamesQuery.Data>() {
+                    override fun onFailure(e: ApolloException) {
+                        e.message?.let { httpEmptyCallback.onFailure(it) }
+                    }
+
+                    override fun onResponse(response: Response<GamesQuery.Data>) {
+                        if (response.hasErrors()) {
+                            httpEmptyCallback.onFailure(response.errors().toString())
+                        } else {
+                            val games = response.data()?.games()?.games()
+                                    ?.map { game -> GamesHistoryDto(game.fragments().gameFragment()) }
+                                    ?.toCollection(arrayListOf())
+                            gamesHistoryLiveDataContainer.activeGamesData.postValue(games)
                             httpEmptyCallback.onResponse()
                         }
                     }

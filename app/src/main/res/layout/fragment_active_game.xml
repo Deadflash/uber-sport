@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.main.active_game.ActiveGameFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar">
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_dark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_active_games_header"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/no_active_games"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="@dimen/extra_large_text" />
+
+        <include layout="@layout/swipe_refresh_recycler_container" />
+
+    </FrameLayout>
+
+</LinearLayout>

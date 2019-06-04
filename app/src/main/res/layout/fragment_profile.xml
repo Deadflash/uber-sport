@@ -125,32 +125,38 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/active_games"
+                android:text="@string/games_history"
                 android:textSize="@dimen/extra_large_text" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler"
-                android:layout_marginTop="16dp"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_active_games"
-                android:clipToPadding="false"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:layout_below="@id/tv_active_games">
 
-            </androidx.recyclerview.widget.RecyclerView>
-            
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/recycler"
-                android:fontFamily="@font/roboto_bold"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:maxLines="1"
-                android:textSize="@dimen/extra_large_text"
-                android:text="История игр"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_no_games_history"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="@dimen/medium_text"
+                    android:text="У вас еще нет завершенных игр"
+                    android:gravity="center"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+
+            </FrameLayout>
 
         </RelativeLayout>
 

@@ -7,8 +7,7 @@
         android:title="" />
 
     <item
-        android:id="@+id/create_game"
-        android:enabled="false"
+        android:id="@+id/activeGame"
         android:icon="@drawable/baseline_note_add_24"
         android:title="" />
 

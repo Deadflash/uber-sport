@@ -24,7 +24,6 @@ import org.jetbrains.anko.image
 import org.jetbrains.anko.toast
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class CustomAdapter : BaseListAdapter(), LifecycleObserver {
 
@@ -55,6 +54,7 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
             R.layout.description_participant_item -> DescriptionParticipantsViewHolder(inflateByViewType(context, viewType, parent))
             R.layout.sport_filter_item -> SportsFilterViewHolder(inflateByViewType(context, viewType, parent))
             R.layout.active_game_item -> ActiveGameViewHolder(inflateByViewType(context, viewType, parent))
+            R.layout.game_history_item -> GameHistoryViewHolder(inflateByViewType(context, viewType, parent))
             else -> throw RuntimeException("Unknown view type: $viewType")
         }
     }
@@ -66,14 +66,26 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
             is SearchEventViewHolder -> bindSearchView(holder, position, items, context)
             is DescriptionParticipantsViewHolder -> bindDescriptionParticipantsView(holder, position, items, context)
             is SportsFilterViewHolder -> bindSportFilterView(holder, position, items, context)
-            is ActiveGameViewHolder -> bindActiveGamesViewHolder(holder,position,items, context)
+            is ActiveGameViewHolder -> bindActiveGamesViewHolder(holder, position, items, context)
+            is GameHistoryViewHolder -> bindGamesHistoryViewHolder(holder, position, items, context)
+        }
+    }
+
+    private fun bindGamesHistoryViewHolder(holder: GameHistoryViewHolder, position: Int, items: ArrayList<IListItem>, context: Context?) {
+        val game = (items[position] as GamesHistoryDto).game
+        holder.apply {
+            tvGameDate.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT).format(game.dateStart()
+                    ?: 0.0)
+            tvGameAuthor.text = game.author()?.nickname() ?: "null nickname"
+            tvEventName.text = game.name()
         }
     }
 
     private fun bindActiveGamesViewHolder(holder: ActiveGameViewHolder, position: Int, items: ArrayList<IListItem>, context: Context) {
-        val game = (items[position] as ActiveGameDto).game
+        val game = (items[position] as ActiveGamesDto).game
         holder.apply {
-            tvGameDate.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT).format(game.dateStart() ?: 0.0)
+            tvGameDate.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT).format(game.dateStart()
+                    ?: 0.0)
             tvGameAuthor.text = game.author()?.nickname() ?: "null nickname"
             tvEventName.text = game.name()
         }

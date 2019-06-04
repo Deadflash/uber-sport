@@ -11,22 +11,26 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.fcpunlimited.ubersport.R
 import com.fcpunlimited.ubersport.di.game.ActiveGamesLiveDataContainer
 import com.fcpunlimited.ubersport.di.game.GameModel
-import com.fcpunlimited.ubersport.struct.game.ActiveGameDto
+import com.fcpunlimited.ubersport.di.game.GamesHistoryLiveDataContainer
+import com.fcpunlimited.ubersport.struct.game.ActiveGamesDto
+import com.fcpunlimited.ubersport.struct.game.GamesHistoryDto
 import com.fcpunlimited.ubersport.utils.Constants.PROFILE_FRAGMENT_TAG
 import com.fcpunlimited.ubersport.view.BaseMvpFragment
 import com.fcpunlimited.ubersport.view.adapters.CustomAdapter
 import com.fcpunlimited.ubersport.view.adapters.IListItem
-import com.fcpunlimited.ubersport.view.main.search.description.DescriptionPresenter
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.swipe_refresh_recycler_container.*
+import kotlinx.android.synthetic.main.swipe_refresh_recycler_container.recycler
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
 
-class ProfileMvpFragment : BaseMvpFragment(), ProfileView {
+class ProfileFragment : BaseMvpFragment(), ProfileView {
 
     private val gameModel: GameModel by inject()
-    private val activeGamesLiveDataContainer: ActiveGamesLiveDataContainer by inject()
+    private val gamesHistoryLiveDataContainer: GamesHistoryLiveDataContainer by inject()
+
 
     companion object {
         const val PROFILE_PRESENTER = "profilePresenter"
@@ -36,7 +40,7 @@ class ProfileMvpFragment : BaseMvpFragment(), ProfileView {
     lateinit var presenter: ProfilePresenter
 
     @ProvidePresenter(type = PresenterType.GLOBAL, tag = PROFILE_PRESENTER)
-    fun providePresenter() = ProfilePresenter(gameModel, activeGamesLiveDataContainer)
+    fun providePresenter() = ProfilePresenter(gameModel)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +54,9 @@ class ProfileMvpFragment : BaseMvpFragment(), ProfileView {
         recycler.adapter = adapter
         recycler.setHasFixedSize(true)
 
-        activeGamesLiveDataContainer.activeGamesData.observe(this@ProfileMvpFragment, Observer<List<ActiveGameDto>> {
+        gamesHistoryLiveDataContainer.activeGamesData.observe(this@ProfileFragment, Observer<List<GamesHistoryDto>> {
             adapter.setData(it as ArrayList<IListItem>)
+            tv_no_games_history.visibility = View.GONE
             adapter.notifyDataSetChanged()
         })
     }

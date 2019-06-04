@@ -26,4 +26,9 @@
     <string name="reliability">Надежность</string>
     <string name="active_games">Активные Игры</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_active_games">У вас пока нет активных игр</string>
+    <string name="games_history">История игр</string>
+
 </resources>
