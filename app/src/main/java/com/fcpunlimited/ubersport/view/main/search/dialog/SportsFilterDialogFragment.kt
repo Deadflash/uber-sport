@@ -42,7 +42,7 @@ class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView, IS
 
     private var searchViewInterface: IUpdateFilterView? = null
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         searchViewInterface = targetFragment as SearchFragment
     }
@@ -85,10 +85,10 @@ class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView, IS
         gamesLiveDataContainer.sportsData.observe(this, Observer {
             adapter.setData(it.map { sportDto -> SportFilterDto(sportDto) }.toCollection(arrayListOf()))
         })
-        dialog.setCanceledOnTouchOutside(false)
-        bt_dialog_ok.setOnClickListener {
-            dialog.dismiss()
-        }
+//        dialog.setCanceledOnTouchOutside(false)
+//        bt_dialog_ok.setOnClickListener {
+//            dialog.dismiss()
+//        }
     }
 
     override fun onDismiss(dialog: DialogInterface?) {
