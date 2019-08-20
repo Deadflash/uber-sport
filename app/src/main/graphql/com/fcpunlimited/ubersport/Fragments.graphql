@@ -1,32 +1,31 @@
-fragment GameFragment on Game{
+fragment GameFragment on Game {
     id
     name
-    location{
-        latitude
-        longitude
+    location {
+        coordinates
         address
     }
     description
-    ageLimit{
+    ageLimit {
         min
         max
     }
-    author{
+    author {
         id
         email
         nickname
     }
-    participants{
+    participants {
         id
         nickname
         email
     }
     maxParticipants
     minParticipants
-    sport{
+    sport {
         id
         name
-        participantsLimit
+        participantCount
     }
     authorId
     status

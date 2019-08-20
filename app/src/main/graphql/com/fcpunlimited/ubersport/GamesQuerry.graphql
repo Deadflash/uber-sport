@@ -1,8 +1,8 @@
-query Games($filters: GameFiltersInput){
-	games(filters: $filters){
-    count
-    games{
-      ...GameFragment
+query Games($filters: GameFiltersInput) {
+    games(filters: $filters) {
+        count
+        games {
+            ...GameFragment
+        }
     }
-  }
 }

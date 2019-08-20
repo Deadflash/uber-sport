@@ -1,16 +1,16 @@
 query Users{
     users{
-    email
-    nickname
-    id
-    firstName
-    lastName
-    middleName
-    dateOfBirth
-    roles
-    favouriteSports{
-         name
-         id
-       }
-  }
+        email
+        nickname
+        id
+        firstName
+        lastName
+        middleName
+        dateOfBirth
+        roles
+        favoriteSports{
+            name
+            id
+        }
+    }
 }
