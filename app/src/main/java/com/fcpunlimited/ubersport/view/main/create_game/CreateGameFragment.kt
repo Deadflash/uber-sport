@@ -3,7 +3,6 @@
 //import android.content.Context
 //import android.os.Bundle
 //import android.view.View
-//import androidx.preference.PreferenceFragmentCompat
 //import com.arellomobile.mvp.presenter.InjectPresenter
 //import com.arellomobile.mvp.presenter.PresenterType
 //import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -13,12 +12,7 @@
 //import org.jetbrains.anko.runOnUiThread
 //import org.jetbrains.anko.toast
 //
-//class CreateGameFragment : PreferenceFragmentCompat(), CreateGameView {
-//
-//    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-//        setPreferencesFromResource(R.xml.create_game_preferences, rootKey)
-//
-//    }
+//class CreateGameFragment : BaseMvpFragment(), CreateGameView {
 //
 //    companion object {
 //        const val CREATE_GAME_FRAGMENT_PRESENTER = "createGameFragmentPresenter"
@@ -54,7 +48,7 @@
 //        context?.runOnUiThread { toast(message) }
 //    }
 //
-////    override fun getFragmentLayout(): Int = R.layout.fragment_create_game
-////
-////    override fun getFragmentTag(): String = CREATE_GAME_FRAGMENT_TAG
+//    override fun getFragmentLayout(): Int = R.layout.fragment_create_game
+//
+//    override fun getFragmentTag(): String = CREATE_GAME_FRAGMENT_TAG
 //}

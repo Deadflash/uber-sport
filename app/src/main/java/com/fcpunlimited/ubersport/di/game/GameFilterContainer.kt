@@ -13,9 +13,9 @@ class GameFilterContainer(private val app: App) {
 
     fun getFilterBuilder() = filterBuilder
 
-    fun getUserFilterSportIds(): Set<String> = app
+    fun getUserFilterSportIds(): Set<String> = emptySet() /*app
             .getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
-            .getStringSet(SPORT_IDS, mutableSetOf())!!
+            .getStringSet(SPORT_IDS, mutableSetOf())!!*/
 
     fun getFilter(): GameFiltersInput {
         return filterBuilder
@@ -24,23 +24,23 @@ class GameFilterContainer(private val app: App) {
     }
 
     fun addUserFilterSportId(sportId: String) {
-        var sportIds = getUserFilterSportIds()
-        sportIds = sportIds.plusElement(sportId)
-        val prefs = app.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
-        prefs.edit().putStringSet(SPORT_IDS, sportIds).apply()
+//        var sportIds = getUserFilterSportIds()
+//        sportIds = sportIds.plusElement(sportId)
+//        val prefs = app.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
+//        prefs.edit().putInt(SPORT_IDS, sportIds).apply()
     }
 
     fun removeUserFilterSportId(sportId: String) {
-        var sportIds = getUserFilterSportIds()
-        if (sportIds.contains(sportId)) {
-            val prefs = app.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
-            sportIds = sportIds.minusElement(sportId)
-            prefs.edit().putStringSet(SPORT_IDS, sportIds).apply()
-        }
+//        var sportIds = getUserFilterSportIds()
+//        if (sportIds.contains(sportId)) {
+//            val prefs = app.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
+//            sportIds = sportIds.minusElement(sportId)
+//            prefs.edit().putStringSet(SPORT_IDS, sportIds).apply()
+//        }
     }
 
     fun updateUserFilterSportIds(sportIds: Set<String>) {
-        val prefs = app.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
-        prefs.edit().putStringSet(SPORT_IDS, sportIds).apply()
+//        val prefs = app.getSharedPreferences(UBER_SPORT_PREFS, MODE_PRIVATE)
+//        prefs.edit().putStringSet(SPORT_IDS, sportIds).apply()
     }
 }

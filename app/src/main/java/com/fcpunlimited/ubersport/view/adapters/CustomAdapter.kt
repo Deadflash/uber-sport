@@ -96,18 +96,19 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
         val sport = items[position] as SportFilterDto
         holder.apply {
             tvSportCheckBox.text = sport.game.name()
-            tvSportCheckBox.isChecked = (sportIds!!.contains(sport.game.id()))
+//            tvSportCheckBox.isChecked = (sportIds!!.contains(sport.game.id()))
+            tvSportCheckBox.isChecked = (false)
             tvSportCheckBox.setOnClickListener {
                 sport.game.id()?.let { id ->
-                    if (tvSportCheckBox.isChecked) {
-                        tvSportCheckBox.isChecked = false
-                        (lifecycleOwner as SportsFilterDialogFragment).removeFilterSportId(id)
-                    } else {
-                        tvSportCheckBox.isChecked = true
-
-                        (lifecycleOwner as SportsFilterDialogFragment).addFilterSport(id)
-
-                    }
+//                    if (tvSportCheckBox.isChecked) {
+//                        tvSportCheckBox.isChecked = false
+//                        (lifecycleOwner as SportsFilterDialogFragment).removeFilterSportId(id)
+//                    } else {
+//                        tvSportCheckBox.isChecked = true
+//
+//                        (lifecycleOwner as SportsFilterDialogFragment).addFilterSport(id)
+//
+//                    }
                 }
             }
         }
@@ -139,7 +140,7 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
 
         holder.apply {
             tvEventName.text = sport.game.name()
-            itemView.setOnClickListener { context.toast(sport.game.name()) }
+//            itemView.setOnClickListener { context.toast(sport.game.name()) }
             loadImage(R.drawable.avatar, ivEventIcon)
         }
     }
@@ -167,8 +168,8 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
 //                    tvParticipantsCount.text = "${it.size}/$participantsLimit"
 //                }
                 sport()?.let {
-                    ivSportIcon.image = ContextCompat.getDrawable(context, getSportIconByName(it.name()))
-                    val participantsLimit = it.participantsLimit()?.toInt() ?: 0
+                    ivSportIcon.image = ContextCompat.getDrawable(context, getSportIconByName(it.name()!!))
+                    val participantsLimit = it.participantCount()?.toInt() ?: 0
                     progressBar.max = participantsLimit
                     progressBar.progress = participants()?.size ?: 0
                     tvParticipantsCount.text = "${participants()?.size}/$participantsLimit"

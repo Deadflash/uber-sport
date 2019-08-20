@@ -116,7 +116,7 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
         tv_date.text = SimpleDateFormat(DATE_FORMAT, Locale.ROOT)
                 .format(game.dateStart()?.toLong())
         tv_description_participants_count.text = "${game.participants()?.size
-                ?: 0}/${game.sport()?.participantsLimit()?.toInt() ?: 0}"
+                ?: 0}/${game.sport()?.participantCount()?.toInt() ?: 0}"
         game.participants()?.let {
             if (it.map { participant -> participant.id() }.contains(userModel.getUserId())) {
                 bt_join_game.visibility = View.GONE
@@ -128,7 +128,7 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
             adapter.apply {
                 val participants = arrayListOf<GameParticipantsDto>()
                 participants.addAll(it.map { participant -> GameParticipantsDto(participant) })
-                if (game.sport()?.participantsLimit()?.toInt() ?: 0 > (it.size) && isGameOwner) {
+                if (game.sport()?.participantCount()?.toInt() ?: 0 > (it.size) && isGameOwner) {
                     participants.add(GameParticipantsDto(GameFragment.Participant("STUB",
                             "", null, null)))
                 }
@@ -140,7 +140,7 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
             }
         }
         game.sport()?.apply {
-            context?.let { iv_sport_icon.image = ContextCompat.getDrawable(it, getSportIconByName(name())) }
+            context?.let { iv_sport_icon.image = ContextCompat.getDrawable(it, getSportIconByName(name()!!)) }
         }
     }
 
@@ -187,7 +187,7 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
             uiSettings.isZoomGesturesEnabled = false
             val location = gameData.value?.location()
             location?.apply {
-                val latlng = LatLng(latitude() ?: 0.0, longitude() ?: 0.0)
+                val latlng = LatLng(coordinates()?.get(0) ?: 0.0, coordinates()?.get(1) ?: 0.0)
                 addMarker(MarkerOptions().position(latlng).title(location.address()))
                 moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 11f))
             }

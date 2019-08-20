@@ -52,10 +52,11 @@ class SearchPresenter(private val gameModel: GameModel,
     fun updateUserSportFilterCount(sports: List<SportsQuery.Sport>) {
         val userSportIds = filter.getUserFilterSportIds()
         val sportIds = sports.map { it.id() }
-        val currentSportFilterIds = userSportIds
-                .filter { userSportId -> sportIds.contains(userSportId) }
-                .toSet()
-        filter.updateUserFilterSportIds(currentSportFilterIds)
-        viewState.showSportsFilterCount(currentSportFilterIds.size)
+//        val currentSportFilterIds = userSportIds
+//                .filter { userSportId -> sportIds.contains(userSportId) }
+//                .toSet()
+//        filter.updateUserFilterSportIds(currentSportFilterIds)
+//        viewState.showSportsFilterCount(currentSportFilterIds.size)
+        viewState.showSportsFilterCount(0)
     }
 }
