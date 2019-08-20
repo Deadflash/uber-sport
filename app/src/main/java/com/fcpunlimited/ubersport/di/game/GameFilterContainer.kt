@@ -18,9 +18,9 @@ class GameFilterContainer(private val app: App) {
             .getStringSet(SPORT_IDS, mutableSetOf())!!*/
 
     fun getFilter(): GameFiltersInput {
-        return filterBuilder
+        return filterBuilder.build()
 //                .sportId(getUserFilterSportIds().firstOrNull())
-                .status(GameStatus.PENDING).build()
+//                .status(GameStatus.PENDING).build()
     }
 
     fun addUserFilterSportId(sportId: String) {
