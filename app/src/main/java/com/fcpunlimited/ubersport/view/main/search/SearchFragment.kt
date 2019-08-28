@@ -63,7 +63,7 @@ class SearchFragment : BaseMvpFragment(), SearchView, INavigation, IUpdateFilter
         sports_layout.setOnClickListener {
             val dialog = SportsFilterDialogFragment()
             dialog.setTargetFragment(this, 1)
-            dialog.show(fragmentManager, dialog.tag)
+            dialog.show(fragmentManager!!, dialog.tag)
         }
         sorting_layout.setOnClickListener { context?.toast("Sorting filter") }
 //        iv_filters.setOnClickListener { context?.toast("Other filters") }

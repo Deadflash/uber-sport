@@ -47,22 +47,22 @@ class ActiveGameFragment : BaseMvpFragment(), ActiveGameView {
         toolbar.setTitle(R.string.active_games)
         toolbar.setTitleTextColor(ContextCompat.getColor(context!!, R.color.white))
 
-        val adapter = CustomAdapter()
-        recycler.layoutManager = LinearLayoutManager(this.context)
-        recycler.adapter = adapter
-        recycler.setHasFixedSize(true)
-
-        activeGamesLiveDataContainer.activeGamesData.observe(this@ActiveGameFragment, Observer<List<ActiveGamesDto>> {
-            if (it.isNotEmpty())
-                tv_active_games_header.visibility = View.GONE
-
-            adapter.setData(it as ArrayList<IListItem>)
-            adapter.notifyDataSetChanged()
-        })
-
-        swipe_refresh.setOnRefreshListener {
-            presenter.onCreateProfileView()
-        }
+//        val adapter = CustomAdapter()
+//        recycler.layoutManager = LinearLayoutManager(this.context)
+//        recycler.adapter = adapter
+//        recycler.setHasFixedSize(true)
+//
+//        activeGamesLiveDataContainer.activeGamesData.observe(this@ActiveGameFragment, Observer<List<ActiveGamesDto>> {
+//            if (it.isNotEmpty())
+//                tv_active_games_header.visibility = View.GONE
+//
+//            adapter.setData(it as ArrayList<IListItem>)
+//            adapter.notifyDataSetChanged()
+//        })
+//
+//        swipe_refresh.setOnRefreshListener {
+//            presenter.onCreateProfileView()
+//        }
     }
 
     override fun onSwipeRefresh(isRefreshing: Boolean) {

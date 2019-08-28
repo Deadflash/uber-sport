@@ -1,6 +1,7 @@
 package com.fcpunlimited.ubersport.view.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -15,7 +16,11 @@ import com.fcpunlimited.ubersport.struct.game.*
 import com.fcpunlimited.ubersport.utils.Constants.DATE_FORMAT
 import com.fcpunlimited.ubersport.utils.Constants.DATE_HOUR_FORMAT
 import com.fcpunlimited.ubersport.utils.getSportIconByName
+import com.fcpunlimited.ubersport.view.BaseMvpActivity
 import com.fcpunlimited.ubersport.view.adapters.holders.*
+import com.fcpunlimited.ubersport.view.main.create_game.CreateGameActivity
+import com.fcpunlimited.ubersport.view.main.create_game.CreateGameFragment
+import com.fcpunlimited.ubersport.view.main.create_game.SetupGameActivity
 import com.fcpunlimited.ubersport.view.main.search.SearchFragment
 import com.fcpunlimited.ubersport.view.main.search.description.DescriptionFragment
 import com.fcpunlimited.ubersport.view.main.search.dialog.SportsFilterDialogFragment
@@ -100,7 +105,7 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
             tvSportCheckBox.isChecked = (false)
             tvSportCheckBox.setOnClickListener {
                 sport.game.id()?.let { id ->
-//                    if (tvSportCheckBox.isChecked) {
+                    //                    if (tvSportCheckBox.isChecked) {
 //                        tvSportCheckBox.isChecked = false
 //                        (lifecycleOwner as SportsFilterDialogFragment).removeFilterSportId(id)
 //                    } else {
@@ -140,7 +145,11 @@ class CustomAdapter : BaseListAdapter(), LifecycleObserver {
 
         holder.apply {
             tvEventName.text = sport.game.name()
-//            itemView.setOnClickListener { context.toast(sport.game.name()) }
+            itemView.setOnClickListener {
+                context.toast(sport.game.name()!!)
+                context.startActivity(Intent(context,
+                        CreateGameFragment::class.java))
+            }
             loadImage(R.drawable.avatar, ivEventIcon)
         }
     }

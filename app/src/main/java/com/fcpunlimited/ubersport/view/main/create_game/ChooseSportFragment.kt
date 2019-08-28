@@ -22,7 +22,7 @@ import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
-class ChooseSportFragment : BaseMvpFragment(), DateDialogFragment.IDateSelector, ChooseSportView {
+class ChooseSportFragment : BaseMvpFragment(), ChooseSportView {
 
     companion object {
         const val CHOOSE_SPORT_FRAGMENT_PRESENTER = "chooseSportFragmentPresenter"
@@ -48,7 +48,7 @@ class ChooseSportFragment : BaseMvpFragment(), DateDialogFragment.IDateSelector,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(presenter)
-        bt_date_picker.setOnClickListener { DateDialogFragment().show(childFragmentManager, "date_picker") }
+//        bt_date_picker.setOnClickListener { DateDialogFragment().show(childFragmentManager, "date_picker") }
         val adapter = CustomAdapter()
         lifecycle.addObserver(adapter)
         recycler.layoutManager = GridLayoutManager(context, 2)
@@ -61,9 +61,9 @@ class ChooseSportFragment : BaseMvpFragment(), DateDialogFragment.IDateSelector,
         })
     }
 
-    override fun dateSelected(date: String) {
-        context?.toast(date)
-    }
+//    override fun dateSelected(date: String) {
+//        context?.toast(date)
+//    }
 
     override fun showMessage(message: String) {
         context?.runOnUiThread { toast(message) }

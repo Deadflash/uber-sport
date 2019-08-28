@@ -91,7 +91,7 @@ class SportsFilterDialogFragment : BaseMvpFragment(), SportsFilterDialogView, IS
 //        }
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         presenter.getGames()
         searchViewInterface?.updateSportsFilterCount()

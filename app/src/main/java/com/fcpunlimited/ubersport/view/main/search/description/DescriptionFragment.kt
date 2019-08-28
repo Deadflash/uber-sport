@@ -64,7 +64,7 @@ class DescriptionFragment : BaseMvpFragment(), DescriptionView, IExcludeParticip
     private val gameData: MutableLiveData<GameFragment> = MutableLiveData()
     private lateinit var adapter: CustomAdapter
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MainActivity) {
             context.apply {
