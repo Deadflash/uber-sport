@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Время и место">
+
+        <CheckBoxPreference
+            android:key="checkbox"
+            android:summary="Tap to check if on or off"
+            android:title="Checkbox Preference" />
+
+        <com.fcpunlimited.ubersport.view.main.create_game.dialog.DateDialogFragment
+            android:defaultValue="1111-11-11"
+            android:key="date"
+            android:summary="summary"
+            android:title="Дата" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="параметры игры">
+
+        <EditTextPreference
+            android:dialogTitle="Enter a text"
+            android:key="text"
+            android:summary="Click to show a text entry dialog"
+            android:title="EditText Preference" />
+        <RingtonePreference
+            android:key="ringtone"
+            android:showDefault="true"
+            android:showSilent="true"
+            android:summary="Pick a ringtone you like"
+            android:title="Ringtone Preference" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="switch"
+            android:summary="Click to switch on or off"
+            android:title="Switch Preference" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
